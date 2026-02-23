@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的个人空间 - 欢迎来到我的世界</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <i class="fas fa-heart"></i>
+                <span>我的空间</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">首页</a></li>
+                <li><a href="about.html" class="nav-link">关于我</a></li>
+                <li><a href="skills.html" class="nav-link">技能与兴趣</a></li>
+                <li><a href="blog.html" class="nav-link">日志</a></li>
+                <li><a href="plans.html" class="nav-link">计划</a></li>
+                <li><a href="contact.html" class="nav-link">联系我</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero 区域 -->
+    <section class="hero">
+        <div class="hero-background">
+            <div class="floating-shape shape-1"></div>
+            <div class="floating-shape shape-2"></div>
+            <div class="floating-shape shape-3"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-avatar">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=300&fit=crop" alt="个人头像" onerror="this.src='https://placehold.co/300x300/e0c3fc/8b5cf6?text=我的头像'">
+            </div>
+            <h1 class="hero-title">你好，我是 <span class="highlight">小雅</span></h1>
+            <p class="hero-subtitle">
+                <span class="typing-text"></span>
+                <span class="cursor">|</span>
+            </p>
+            <p class="hero-description">
+                热爱生活，喜欢探索新事物。在这里记录我的成长、分享我的故事。
+            </p>
+            <div class="hero-buttons">
+                <a href="about.html" class="btn btn-primary">
+                    <i class="fas fa-user"></i> 了解更多
+                </a>
+                <a href="contact.html" class="btn btn-secondary">
+                    <i class="fas fa-envelope"></i> 联系我
+                </a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- 导航卡片区域 -->
+    <section class="nav-cards">
+        <div class="container">
+            <h2 class="section-title">探索我的空间</h2>
+            <p class="section-subtitle">点击卡片，发现更多精彩内容</p>
+            <div class="cards-grid">
+                <a href="about.html" class="nav-card">
+                    <div class="card-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>关于我</h3>
+                    <p>教育背景与工作经历</p>
+                    <div class="card-hover-effect"></div>
+                </a>
+                <a href="skills.html" class="nav-card">
+                    <div class="card-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>技能与兴趣</h3>
+                    <p>我的能力与爱好</p>
+                    <div class="card-hover-effect"></div>
+                </a>
+                <a href="blog.html" class="nav-card">
+                    <div class="card-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3>日志</h3>
+                    <p>记录生活的点滴</p>
+                    <div class="card-hover-effect"></div>
+                </a>
+                <a href="plans.html" class="nav-card">
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>计划</h3>
+                    <p>目标与梦想清单</p>
+                    <div class="card-hover-effect"></div>
+                </a>
+                <a href="about.html#certificates" class="nav-card">
+                    <div class="card-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>获奖证书</h3>
+                    <p>荣誉与成就展示</p>
+                    <div class="card-hover-effect"></div>
+                </a>
+                <a href="contact.html" class="nav-card">
+                    <div class="card-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>联系我</h3>
+                    <p>期待与你交流</p>
+                    <div class="card-hover-effect"></div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 最新动态 -->
+    <section class="latest-section">
+        <div class="container">
+            <h2 class="section-title">最新动态</h2>
+            <div class="latest-content">
+                <div class="latest-blog">
+                    <h3><i class="fas fa-pen-fancy"></i> 最新日志</h3>
+                    <div class="blog-preview">
+                        <div class="blog-item">
+                            <span class="blog-date">2026-02-20</span>
+                            <h4>开启我的个人网站之旅</h4>
+                            <p>终于完成了自己的个人网站，记录一下这个特别的时刻...</p>
+                            <a href="blog.html" class="read-more">阅读更多 <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="latest-plan">
+                    <h3><i class="fas fa-bullseye"></i> 近期目标</h3>
+                    <div class="plan-preview">
+                        <div class="plan-item">
+                            <div class="plan-progress">
+                                <div class="progress-bar" style="width: 80%"></div>
+                            </div>
+                            <span class="plan-name">学习前端开发</span>
+                            <span class="plan-status">进行中 80%</span>
+                        </div>
+                        <div class="plan-item">
+                            <div class="plan-progress">
+                                <div class="progress-bar" style="width: 45%"></div>
+                            </div>
+                            <span class="plan-name">坚持运动健身</span>
+                            <span class="plan-status">进行中 45%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-social">
+                    <a href="#" class="social-link" title="抖音">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="#" class="social-link" title="B站">
+                        <i class="fas fa-tv"></i>
+                    </a>
+                    <a href="#" class="social-link" title="微信">
+                        <i class="fab fa-weixin"></i>
+                    </a>
+                    <a href="#" class="social-link" title="微博">
+                        <i class="fab fa-weibo"></i>
+                    </a>
+                </div>
+                <p class="footer-text">
+                    <i class="fas fa-heart" style="color: #ec4899;"></i> 
+                    用心制作 © 2026 我的个人空间
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

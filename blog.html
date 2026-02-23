@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日志 - 我的个人空间</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/blog.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <i class="fas fa-heart"></i>
+                <span>我的空间</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">首页</a></li>
+                <li><a href="about.html" class="nav-link">关于我</a></li>
+                <li><a href="skills.html" class="nav-link">技能与兴趣</a></li>
+                <li><a href="blog.html" class="nav-link active">日志</a></li>
+                <li><a href="plans.html" class="nav-link">计划</a></li>
+                <li><a href="contact.html" class="nav-link">联系我</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题区域 -->
+    <section class="page-header">
+        <div class="page-header-content">
+            <h1>我的日志</h1>
+            <p>记录生活的点滴与思考</p>
+        </div>
+        <div class="floating-decorations">
+            <div class="float-shape shape-1">📝</div>
+            <div class="float-shape shape-2">📖</div>
+            <div class="float-shape shape-3">💭</div>
+        </div>
+    </section>
+
+    <!-- 日志筛选区域 -->
+    <section class="blog-filter">
+        <div class="container">
+            <div class="filter-bar">
+                <div class="filter-tags">
+                    <button class="filter-btn active" data-filter="all">全部</button>
+                    <button class="filter-btn" data-filter="life">生活</button>
+                    <button class="filter-btn" data-filter="study">学习</button>
+                    <button class="filter-btn" data-filter="work">工作</button>
+                    <button class="filter-btn" data-filter="travel">旅行</button>
+                </div>
+                <div class="search-box">
+                    <input type="text" placeholder="搜索日志..." id="searchInput">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 日志列表区域 -->
+    <section class="blog-section">
+        <div class="container">
+            <div class="blog-grid">
+                <!-- 日志卡片 1 -->
+                <article class="blog-card" data-category="life">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop" alt="开启个人网站之旅" onerror="this.src='https://placehold.co/600x400/e0c3fc/8b5cf6?text=开启个人网站之旅'">
+                        <span class="blog-category life">生活</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">
+                                <i class="far fa-calendar"></i> 2026-02-20
+                            </span>
+                            <span class="blog-read-time">
+                                <i class="far fa-clock"></i> 3分钟阅读
+                            </span>
+                        </div>
+                        <h3 class="blog-title">开启我的个人网站之旅</h3>
+                        <p class="blog-excerpt">终于完成了自己的个人网站，记录一下这个特别的时刻。从构思到实现，每一步都充满挑战...</p>
+                        <div class="blog-tags">
+                            <span class="tag">#个人成长</span>
+                            <span class="tag">#网站制作</span>
+                        </div>
+                        <a href="#" class="read-more-btn">
+                            阅读全文 <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- 日志卡片 2 -->
+                <article class="blog-card" data-category="travel">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop" alt="春日旅行" onerror="this.src='https://placehold.co/600x400/fbcfe8/db2777?text=春日旅行'">
+                        <span class="blog-category travel">旅行</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">
+                                <i class="far fa-calendar"></i> 2026-02-15
+                            </span>
+                            <span class="blog-read-time">
+                                <i class="far fa-clock"></i> 5分钟阅读
+                            </span>
+                        </div>
+                        <h3 class="blog-title">春日里的杭州之行</h3>
+                        <p class="blog-excerpt">烟花三月下扬州，而我选择了杭州。西湖的春色美得让人心醉，断桥残雪、苏堤春晓...</p>
+                        <div class="blog-tags">
+                            <span class="tag">#旅行</span>
+                            <span class="tag">#杭州</span>
+                            <span class="tag">#摄影</span>
+                        </div>
+                        <a href="#" class="read-more-btn">
+                            阅读全文 <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- 日志卡片 3 -->
+                <article class="blog-card" data-category="study">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&h=400&fit=crop" alt="读书分享" onerror="this.src='https://placehold.co/600x400/fde68a/d97706?text=读书分享'">
+                        <span class="blog-category study">学习</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">
+                                <i class="far fa-calendar"></i> 2026-02-10
+                            </span>
+                            <span class="blog-read-time">
+                                <i class="far fa-clock"></i> 4分钟阅读
+                            </span>
+                        </div>
+                        <h3 class="blog-title">《被讨厌的勇气》读书笔记</h3>
+                        <p class="blog-excerpt">这是一本让我深受触动的书。阿德勒心理学告诉我们，真正的自由是不再寻求认可...</p>
+                        <div class="blog-tags">
+                            <span class="tag">#读书笔记</span>
+                            <span class="tag">#心理学</span>
+                        </div>
+                        <a href="#" class="read-more-btn">
+                            阅读全文 <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- 日志卡片 4 -->
+                <article class="blog-card" data-category="work">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=600&h=400&fit=crop" alt="工作感悟" onerror="this.src='https://placehold.co/600x400/a7f3d0/059669?text=工作感悟'">
+                        <span class="blog-category work">工作</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">
+                                <i class="far fa-calendar"></i> 2026-02-05
+                            </span>
+                            <span class="blog-read-time">
+                                <i class="far fa-clock"></i> 6分钟阅读
+                            </span>
+                        </div>
+                        <h3 class="blog-title">内容运营工作一年感悟</h3>
+                        <p class="blog-excerpt">从事内容运营已经一年了，从最初的懵懂到现在能够独立策划执行项目，收获颇丰...</p>
+                        <div class="blog-tags">
+                            <span class="tag">#职场</span>
+                            <span class="tag">#内容运营</span>
+                        </div>
+                        <a href="#" class="read-more-btn">
+                            阅读全文 <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- 日志卡片 5 -->
+                <article class="blog-card" data-category="life">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=400&fit=crop" alt="美食分享" onerror="this.src='https://placehold.co/600x400/bfdbfe/3b82f6?text=美食分享'">
+                        <span class="blog-category life">生活</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">
+                                <i class="far fa-calendar"></i> 2026-01-28
+                            </span>
+                            <span class="blog-read-time">
+                                <i class="far fa-clock"></i> 4分钟阅读
+                            </span>
+                        </div>
+                        <h3 class="blog-title">周末厨房：我的烘焙初体验</h3>
+                        <p class="blog-excerpt">这个周末尝试了做戚风蛋糕，虽然过程一波三折，但最终成品还不错！分享一下我的心得...</p>
+                        <div class="blog-tags">
+                            <span class="tag">#烘焙</span>
+                            <span class="tag">#美食</span>
+                        </div>
+                        <a href="#" class="read-more-btn">
+                            阅读全文 <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- 日志卡片 6 -->
+                <article class="blog-card" data-category="study">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop" alt="学习笔记" onerror="this.src='https://placehold.co/600x400/fecaca/dc2626?text=学习笔记'">
+                        <span class="blog-category study">学习</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">
+                                <i class="far fa-calendar"></i> 2026-01-20
+                            </span>
+                            <span class="blog-read-time">
+                                <i class="far fa-clock"></i> 8分钟阅读
+                            </span>
+                        </div>
+                        <h3 class="blog-title">从零开始学习前端开发</h3>
+                        <p class="blog-excerpt">决定学习前端开发了！HTML、CSS、JavaScript...虽然有很多新知识要掌握，但我很期待...</p>
+                        <div class="blog-tags">
+                            <span class="tag">#前端开发</span>
+                            <span class="tag">#学习</span>
+                        </div>
+                        <a href="#" class="read-more-btn">
+                            阅读全文 <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+
+            <!-- 加载更多 -->
+            <div class="load-more">
+                <button class="btn btn-secondary" id="loadMoreBtn">
+                    <i class="fas fa-spinner"></i> 加载更多
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-social">
+                    <a href="#" class="social-link" title="抖音">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="#" class="social-link" title="B站">
+                        <i class="fas fa-tv"></i>
+                    </a>
+                    <a href="#" class="social-link" title="微信">
+                        <i class="fab fa-weixin"></i>
+                    </a>
+                    <a href="#" class="social-link" title="微博">
+                        <i class="fab fa-weibo"></i>
+                    </a>
+                </div>
+                <p class="footer-text">
+                    <i class="fas fa-heart" style="color: #ec4899;"></i> 
+                    用心制作 © 2026 我的个人空间
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="js/main.js"></script>
+    <script src="js/blog.js"></script>
+</body>
+</html>

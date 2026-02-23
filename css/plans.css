@@ -1,0 +1,409 @@
+/* ========================================
+   计划页面专用样式
+   ======================================== */
+
+/* 复用 page-header 样式 */
+
+/* ========================================
+   目标看板
+   ======================================== */
+.goals-section {
+    padding: 80px 20px;
+}
+
+.goals-section .section-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.goals-section .section-title i {
+    color: var(--accent-rose);
+}
+
+.goals-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.goal-column {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 25px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(192, 132, 252, 0.1);
+}
+
+.column-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid;
+}
+
+.short-term .column-header {
+    border-color: #10b981;
+}
+
+.medium-term .column-header {
+    border-color: #f59e0b;
+}
+
+.long-term .column-header {
+    border-color: #8b5cf6;
+}
+
+.column-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: white;
+}
+
+.short-term .column-icon {
+    background: linear-gradient(135deg, #10b981, #34d399);
+}
+
+.medium-term .column-icon {
+    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+}
+
+.long-term .column-icon {
+    background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+}
+
+.column-header h3 {
+    flex: 1;
+    font-size: 1.3rem;
+    color: var(--text-primary);
+}
+
+.column-tag {
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: white;
+}
+
+.short-term .column-tag {
+    background: #10b981;
+}
+
+.medium-term .column-tag {
+    background: #f59e0b;
+}
+
+.long-term .column-tag {
+    background: #8b5cf6;
+}
+
+/* 目标卡片 */
+.goal-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.goal-card {
+    display: flex;
+    gap: 15px;
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(192, 132, 252, 0.1);
+    transition: var(--transition-normal);
+}
+
+.goal-card:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow-sm);
+}
+
+.goal-card.completed {
+    opacity: 0.8;
+}
+
+.goal-card.completed .goal-content h4 {
+    text-decoration: line-through;
+    color: var(--text-light);
+}
+
+.goal-checkbox {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid var(--primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    margin-top: 3px;
+}
+
+.goal-checkbox i {
+    font-size: 0.75rem;
+    color: white;
+    opacity: 0;
+    transition: var(--transition-normal);
+}
+
+.goal-checkbox.checked {
+    background: linear-gradient(135deg, var(--primary), var(--accent-rose));
+    border-color: transparent;
+}
+
+.goal-checkbox.checked i {
+    opacity: 1;
+}
+
+.goal-content {
+    flex: 1;
+}
+
+.goal-content h4 {
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.goal-content p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.goal-progress {
+    width: 100%;
+    height: 6px;
+    background: var(--primary-light);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 1s ease;
+}
+
+.short-term .progress-fill {
+    background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+.medium-term .progress-fill {
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.long-term .progress-fill {
+    background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+}
+
+/* ========================================
+   进度统计
+   ======================================== */
+.stats-section {
+    padding: 60px 20px;
+    background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+}
+
+.stats-section .section-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.stats-section .section-title i {
+    color: var(--primary);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.stat-card {
+    background: var(--bg-card);
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(192, 132, 252, 0.1);
+    transition: var(--transition-normal);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.stat-card.highlight {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+}
+
+.stat-card.highlight .stat-label {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.stat-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: var(--radius-full);
+    background: var(--primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--primary-dark);
+    flex-shrink: 0;
+}
+
+.stat-card.highlight .stat-icon {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.stat-card.highlight .stat-value {
+    color: white;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 5px;
+}
+
+/* ========================================
+   励志语录
+   ======================================== */
+.quote-section {
+    padding: 80px 20px;
+}
+
+.quote-card {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 50px 40px;
+    background: linear-gradient(135deg, var(--primary-light), var(--accent-pink));
+    border-radius: var(--radius-lg);
+    text-align: center;
+    box-shadow: var(--shadow-md);
+}
+
+.quote-icon {
+    position: absolute;
+    font-size: 2rem;
+    color: var(--primary);
+    opacity: 0.3;
+}
+
+.quote-icon.fa-quote-left {
+    top: 20px;
+    left: 25px;
+}
+
+.quote-icon.fa-quote-right {
+    bottom: 20px;
+    right: 25px;
+}
+
+.quote-card blockquote {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.quote-card cite {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-style: normal;
+}
+
+/* ========================================
+   响应式设计
+   ======================================== */
+@media (max-width: 768px) {
+    .goals-board {
+        grid-template-columns: 1fr;
+    }
+    
+    .goal-column {
+        padding: 20px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .stat-card {
+        padding: 20px;
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .quote-card {
+        padding: 40px 25px;
+    }
+    
+    .quote-card blockquote {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .column-header {
+        flex-wrap: wrap;
+    }
+    
+    .column-header h3 {
+        font-size: 1.1rem;
+    }
+    
+    .goal-card {
+        padding: 15px;
+    }
+    
+    .goal-content h4 {
+        font-size: 0.95rem;
+    }
+}

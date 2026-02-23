@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系我 - 我的个人空间</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <i class="fas fa-heart"></i>
+                <span>我的空间</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">首页</a></li>
+                <li><a href="about.html" class="nav-link">关于我</a></li>
+                <li><a href="skills.html" class="nav-link">技能与兴趣</a></li>
+                <li><a href="blog.html" class="nav-link">日志</a></li>
+                <li><a href="plans.html" class="nav-link">计划</a></li>
+                <li><a href="contact.html" class="nav-link active">联系我</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题区域 -->
+    <section class="page-header">
+        <div class="page-header-content">
+            <h1>联系我</h1>
+            <p>期待与你交流，欢迎随时联系</p>
+        </div>
+        <div class="floating-decorations">
+            <div class="float-shape shape-1">💌</div>
+            <div class="float-shape shape-2">📱</div>
+            <div class="float-shape shape-3">💬</div>
+        </div>
+    </section>
+
+    <!-- 联系方式区域 -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- 联系信息 -->
+                <div class="contact-info">
+                    <h2>联系方式</h2>
+                    <p class="contact-desc">有任何问题或想法，欢迎随时与我联系。我会尽快回复你的消息！</p>
+                    
+                    <div class="info-list">
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="info-content">
+                                <h4>电子邮箱</h4>
+                                <p>xiaoya@example.com</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="info-content">
+                                <h4>所在城市</h4>
+                                <p>中国 · 杭州</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="info-content">
+                                <h4>工作时间</h4>
+                                <p>周一至周五 9:00-18:00</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 社交媒体 -->
+                    <div class="social-section">
+                        <h3>关注我</h3>
+                        <div class="social-grid">
+                            <a href="#" class="social-card" target="_blank">
+                                <div class="social-icon douyin">
+                                    <i class="fab fa-tiktok"></i>
+                                </div>
+                                <div class="social-info">
+                                    <h4>抖音</h4>
+                                    <p>@小雅的生活</p>
+                                    <span class="follower-count">1.2万 粉丝</span>
+                                </div>
+                            </a>
+                            <a href="#" class="social-card" target="_blank">
+                                <div class="social-icon bilibili">
+                                    <i class="fas fa-tv"></i>
+                                </div>
+                                <div class="social-info">
+                                    <h4>Bilibili</h4>
+                                    <p>@小雅分享</p>
+                                    <span class="follower-count">8千 粉丝</span>
+                                </div>
+                            </a>
+                            <a href="#" class="social-card" target="_blank">
+                                <div class="social-icon weibo">
+                                    <i class="fab fa-weibo"></i>
+                                </div>
+                                <div class="social-info">
+                                    <h4>微博</h4>
+                                    <p>@小雅日常</p>
+                                    <span class="follower-count">5千 粉丝</span>
+                                </div>
+                            </a>
+                            <a href="#" class="social-card" target="_blank">
+                                <div class="social-icon wechat">
+                                    <i class="fab fa-weixin"></i>
+                                </div>
+                                <div class="social-info">
+                                    <h4>微信公众号</h4>
+                                    <p>小雅的成长笔记</p>
+                                    <span class="follower-count">3千 关注</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 联系表单 -->
+                <div class="contact-form-wrapper">
+                    <div class="form-card">
+                        <h3>发送消息</h3>
+                        <form class="contact-form" id="contactForm">
+                            <div class="form-group">
+                                <label for="name">
+                                    <i class="fas fa-user"></i> 你的名字
+                                </label>
+                                <input type="text" id="name" name="name" placeholder="请输入你的名字" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">
+                                    <i class="fas fa-envelope"></i> 电子邮箱
+                                </label>
+                                <input type="email" id="email" name="email" placeholder="请输入你的邮箱" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">
+                                    <i class="fas fa-tag"></i> 主题
+                                </label>
+                                <select id="subject" name="subject" required>
+                                    <option value="">请选择主题</option>
+                                    <option value="cooperation">商务合作</option>
+                                    <option value="consult">咨询交流</option>
+                                    <option value="friend">交个朋友</option>
+                                    <option value="other">其他</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">
+                                    <i class="fas fa-comment"></i> 留言内容
+                                </label>
+                                <textarea id="message" name="message" rows="5" placeholder="写下你想说的话..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary submit-btn">
+                                <i class="fas fa-paper-plane"></i> 发送消息
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-social">
+                    <a href="#" class="social-link" title="抖音">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="#" class="social-link" title="B站">
+                        <i class="fas fa-tv"></i>
+                    </a>
+                    <a href="#" class="social-link" title="微信">
+                        <i class="fab fa-weixin"></i>
+                    </a>
+                    <a href="#" class="social-link" title="微博">
+                        <i class="fab fa-weibo"></i>
+                    </a>
+                </div>
+                <p class="footer-text">
+                    <i class="fas fa-heart" style="color: #ec4899;"></i> 
+                    用心制作 © 2026 我的个人空间
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- 提示弹窗 -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span>消息已发送成功！</span>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/contact.js"></script>
+</body>
+</html>
