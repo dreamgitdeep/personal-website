@@ -98,7 +98,9 @@
         <h3><i class="fas fa-comments"></i> 留言板</h3>
         <p class="guestbook-desc">欢迎留下你的足迹，分享你的想法！</p>
         <!-- Giscus 评论系统将在这里加载 -->
-        <div id="giscus-comments"></div>
+        <div id="giscus-comments">
+            <p>正在加载留言板...</p>
+        </div>
     </div>
 </div>
             </div>
@@ -163,6 +165,27 @@
     <script src="js/contact.js"></script>
     
     <!-- Giscus 评论系统 -->
+    <script>
+        // 调试Giscus加载状态
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('页面加载完成，检查Giscus容器');
+            const giscusContainer = document.getElementById('giscus-comments');
+            if (giscusContainer) {
+                console.log('找到Giscus容器');
+                // 3秒后检查Giscus是否已加载
+                setTimeout(() => {
+                    if (giscusContainer.children.length === 0) {
+                        console.log('Giscus可能未加载，尝试重新初始化');
+                        // 这里可以添加重新初始化的代码
+                    } else {
+                        console.log('Giscus已加载');
+                    }
+                }, 3000);
+            } else {
+                console.log('未找到Giscus容器');
+            }
+        });
+    </script>
     <script src="https://giscus.app/client.js"
             data-repo="dreamgitdeep/personal-website"
             data-repo-id="R_kgDORZWFLQ"
