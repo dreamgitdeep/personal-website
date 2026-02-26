@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2026-02-23",
+  "album": {
+    "name": "徒步相册",
+    "slug": "hiking",
+    "description": "用脚步丈量大地，在山野间寻找内心的宁静",
+    "coverImage": "images/hiking/cover.jpg"
+  },
+  "photos": [
+  ]
+}

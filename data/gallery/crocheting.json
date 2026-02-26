@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2026-02-23",
+  "album": {
+    "name": "编织作品",
+    "slug": "crocheting",
+    "description": "用毛线编织生活，一针一线皆是温柔",
+    "coverImage": "images/crocheting/cover.jpg"
+  },
+  "photos": [
+  ]
+}

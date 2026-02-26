@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2026-02-23",
+  "album": {
+    "name": "骑行相册",
+    "slug": "cycling",
+    "description": "骑车穿梭于城市与乡野，感受风的速度",
+    "coverImage": "images/cycling/cover.jpg"
+  },
+  "photos": [
+  ]
+}

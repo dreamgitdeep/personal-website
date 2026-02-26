@@ -20,7 +20,6 @@
             <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link">首页</a></li>
                 <li><a href="about.html" class="nav-link active">关于我</a></li>
-                <li><a href="skills.html" class="nav-link">技能与兴趣</a></li>
                 <li><a href="blog.html" class="nav-link">日志</a></li>
                 <li><a href="plans.html" class="nav-link">计划</a></li>
                 <li><a href="contact.html" class="nav-link">联系我</a></li>
@@ -35,14 +34,14 @@
 
     <!-- 页面标题区域 -->
     <section class="page-header">
+        <div class="page-header-bg">
+            <div class="page-header-shape"></div>
+            <div class="page-header-shape"></div>
+            <div class="page-header-shape"></div>
+        </div>
         <div class="page-header-content">
             <h1>关于我</h1>
             <p>了解我的故事与成长历程</p>
-        </div>
-        <div class="floating-decorations">
-            <div class="float-shape shape-1">🌸</div>
-            <div class="float-shape shape-2">✨</div>
-            <div class="float-shape shape-3">💜</div>
         </div>
     </section>
 
@@ -51,29 +50,106 @@
         <div class="container">
             <div class="intro-card">
                 <div class="intro-image">
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop" alt="个人照片" onerror="this.src='https://placehold.co/400x500/e0c3fc/8b5cf6?text=我的照片'">
+                    <img src="images/profile/avatar.jpg" alt="个人照片" onerror="this.src='https://placehold.co/400x500/e0c3fc/8b5cf6?text=秋千'">
                 </div>
                 <div class="intro-content">
-                    <h2>你好，我是小雅</h2>
-                    <p class="intro-tagline">热爱生活，喜欢探索，永远保持好奇心 💜</p>
+                    <h2>你好，我是秋千</h2>
+                    <p class="intro-tagline">记录成长 · 分享想法 · 规划未来 💜</p>
                     <div class="intro-text">
-                        <p>我是一个热爱生活、积极向上的女孩。喜欢阅读、旅行、摄影，也热衷于学习新知识和技能。</p>
-                        <p>我相信生活中处处有美好，只要我们用心去发现。希望通过这个网站，能和你分享我的故事、我的成长，以及生活中的点点滴滴。</p>
-                        <p>欢迎了解我，也期待能和你成为朋友！</p>
+                        <p>欢迎来到我的数字小天地！这里是我记录学习历程、生活点滴和未来计划的地方，也是分享兴趣爱好与成长故事的小角落。感谢你的到访，期待与你交流合作 💜</p>
                     </div>
                     <div class="intro-stats">
                         <div class="stat-item">
-                            <span class="stat-number">5+</span>
-                            <span class="stat-label">年工作经验</span>
+                            <span class="stat-number">💜</span>
+                            <span class="stat-label">热爱生活</span>
                         </div>
                         <div class="stat-item">
-                            <span class="stat-number">10+</span>
-                            <span class="stat-label">获奖证书</span>
+                            <span class="stat-number">🌟</span>
+                            <span class="stat-label">积极向上</span>
                         </div>
                         <div class="stat-item">
-                            <span class="stat-number">50+</span>
-                            <span class="stat-label">日志文章</span>
+                            <span class="stat-number">✨</span>
+                            <span class="stat-label">永远学习</span>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 兴趣爱好 -->
+    <section class="hobbies-section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-heart"></i>
+                兴趣爱好
+            </h2>
+            <p class="section-subtitle">工作学习之外，生活还有诗和远方</p>
+            
+            <div class="hobbies-grid">
+                <div class="hobby-card" onclick="window.location.href='hiking-gallery.html'">
+                    <div class="hobby-image">
+                        <img src="images/hobbies/hiking/微信图片_20260223195753_377_229.jpg" alt="徒步" onerror="this.style.display='none'">
+                        <div class="hobby-photos-count">📸 16张照片</div>
+                    </div>
+                    <div class="hobby-content">
+                        <div class="hobby-icon">
+                            <i class="fas fa-hiking"></i>
+                        </div>
+                        <h3>徒步</h3>
+                        <p>用脚步丈量大地，在山野间寻找内心的宁静</p>
+                    </div>
+                </div>
+                <div class="hobby-card" onclick="window.location.href='travel-gallery.html'">
+                    <div class="hobby-image">
+                        <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400&h=300&fit=crop" alt="旅游" onerror="this.src='https://placehold.co/400x300/fbcfe8/db2777?text=旅游'">
+                        <div class="hobby-photos-count">📸 26张照片</div>
+                    </div>
+                    <div class="hobby-content">
+                        <div class="hobby-icon">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                        <h3>旅游</h3>
+                        <p>探索不同的城市与风景，收藏路上的故事</p>
+                    </div>
+                </div>
+                <div class="hobby-card" onclick="window.location.href='crocheting-gallery.html'">
+                    <div class="hobby-image">
+                        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&h=300&fit=crop" alt="钩织" onerror="this.src='https://placehold.co/400x300/fde68a/d97706?text=钩织'">
+                        <div class="hobby-photos-count">📸 点击查看</div>
+                    </div>
+                    <div class="hobby-content">
+                        <div class="hobby-icon">
+                            <i class="fas fa-cut"></i>
+                        </div>
+                        <h3>钩织</h3>
+                        <p>一针一线，编织生活中的小确幸</p>
+                    </div>
+                </div>
+                <div class="hobby-card" onclick="window.location.href='painting-gallery.html'">
+                    <div class="hobby-image">
+                        <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&h=300&fit=crop" alt="绘画" onerror="this.src='https://placehold.co/400x300/a7f3d0/059669?text=绘画'">
+                        <div class="hobby-photos-count">📸 点击查看</div>
+                    </div>
+                    <div class="hobby-content">
+                        <div class="hobby-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3>绘画</h3>
+                        <p>用色彩描绘心中的美好，定格瞬间的感动</p>
+                    </div>
+                </div>
+                <div class="hobby-card" onclick="window.location.href='cycling-gallery.html'">
+                    <div class="hobby-image">
+                        <img src="https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=400&h=300&fit=crop" alt="骑行" onerror="this.src='https://placehold.co/400x300/bfdbfe/3b82f6?text=骑行'">
+                        <div class="hobby-photos-count">📸 5张照片</div>
+                    </div>
+                    <div class="hobby-content">
+                        <div class="hobby-icon">
+                            <i class="fas fa-bicycle"></i>
+                        </div>
+                        <h3>骑行</h3>
+                        <p>感受风的速度，享受自由的旅程</p>
                     </div>
                 </div>
             </div>
@@ -90,28 +166,26 @@
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-marker">
-                        <i class="fas fa-university"></i>
+                        <i class="fas fa-graduation-cap"></i>
                     </div>
                     <div class="timeline-content">
                         <div class="timeline-date">
-                            <span class="date-badge">2019 - 2023</span>
+                            <span class="date-badge">2023.09 - 2026.06</span>
                         </div>
-                        <h3>本科 - XX大学</h3>
-                        <p class="timeline-major">专业：汉语言文学</p>
-                        <p class="timeline-desc">在校期间获得校级奖学金，担任文学社社长，组织多场文学活动。热爱写作，曾在校刊发表多篇文章。</p>
+                        <h3>硕士研究生 - 石河子大学</h3>
+                        <p class="timeline-major">专业：教育学（推免）| 211、双一流</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-marker">
-                        <i class="fas fa-school"></i>
+                        <i class="fas fa-university"></i>
                     </div>
                     <div class="timeline-content">
                         <div class="timeline-date">
-                            <span class="date-badge">2016 - 2019</span>
+                            <span class="date-badge">2019.09 - 2023.06</span>
                         </div>
-                        <h3>高中 - XX中学</h3>
-                        <p class="timeline-major">文科实验班</p>
-                        <p class="timeline-desc">担任班级文艺委员，组织多次班级活动。热爱文学和历史，作文多次获得市级奖项。</p>
+                        <h3>本科 - 石河子大学</h3>
+                        <p class="timeline-major">专业：科学教育 | 211、双一流</p>
                     </div>
                 </div>
             </div>
@@ -128,89 +202,144 @@
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-marker">
-                        <i class="fas fa-building"></i>
+                        <i class="fas fa-chalkboard-teacher"></i>
                     </div>
                     <div class="timeline-content">
                         <div class="timeline-date">
-                            <span class="date-badge">2023 - 至今</span>
+                            <span class="date-badge">2026.11</span>
                         </div>
-                        <h3>XX文化传媒公司</h3>
-                        <p class="timeline-major">职位：内容编辑</p>
-                        <p class="timeline-desc">负责公众号内容策划与撰写，粉丝增长50%。策划并执行多次线上活动，获得优秀员工称号。</p>
+                        <h3>好未来培训学校（上海）有限公司</h3>
+                        <p class="timeline-major">职位：实习教师</p>
+                        <p class="timeline-desc">通过好未来教师培训并获得结业证书，锻炼了教师教学、教姿教态等技能。</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-marker">
-                        <i class="fas fa-pen-nib"></i>
+                        <i class="fas fa-palette"></i>
                     </div>
                     <div class="timeline-content">
                         <div class="timeline-date">
-                            <span class="date-badge">2022 - 2023</span>
+                            <span class="date-badge">2025.03 - 2025.06</span>
                         </div>
-                        <h3>XX出版社</h3>
-                        <p class="timeline-major">职位：实习编辑</p>
-                        <p class="timeline-desc">参与多本图书的编辑校对工作，学习出版流程。协助策划新书发布会，获得领导好评。</p>
+                        <h3>石河子市蓝月亮美术培训学校</h3>
+                        <p class="timeline-major">职位：实习教师</p>
+                        <p class="timeline-desc">担任小学作业辅导教师，负责与家长沟通学生的学习进度以及学习困境，并解答家长的疑问。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <i class="fas fa-school"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">
+                            <span class="date-badge">2025.01 - 2025.03</span>
+                        </div>
+                        <h3>河北省廊坊市小私塾教育咨询中心</h3>
+                        <p class="timeline-major">职位：实习教师</p>
+                        <p class="timeline-desc">担任小学作业辅导教师，负责学生学习辅导与答疑。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">
+                            <span class="date-badge">2022.09 - 2023.01</span>
+                        </div>
+                        <h3>石河子市第三中学</h3>
+                        <p class="timeline-major">职位：实习教师</p>
+                        <p class="timeline-desc">深度参与初中班级管理，协助班主任开展班级秩序维护、学风建设等工作。</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 获奖证书画廊 -->
-    <section class="certificates-section" id="certificates">
+    <!-- 项目经历 -->
+    <section class="timeline-section project-section">
         <div class="container">
             <h2 class="section-title">
-                <i class="fas fa-trophy"></i>
-                获奖证书
+                <i class="fas fa-project-diagram"></i>
+                项目经历
             </h2>
-            <p class="section-subtitle">荣誉见证成长，努力成就未来</p>
-            <div class="certificates-grid">
-                <div class="certificate-card">
-                    <div class="certificate-image">
-                        <img src="https://placehold.co/400x300/e0c3fc/8b5cf6?text=优秀员工奖" alt="优秀员工奖" onerror="this.src='https://placehold.co/400x300/e0c3fc/8b5cf6?text=优秀员工奖'">
-                        <div class="certificate-overlay">
-                            <i class="fas fa-search-plus"></i>
-                        </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <i class="fas fa-university"></i>
                     </div>
-                    <div class="certificate-info">
-                        <h3>优秀员工奖</h3>
-                        <p>2024年度</p>
+                    <div class="timeline-content">
+                        <div class="timeline-date">
+                            <span class="date-badge">2024.05 - 至今</span>
+                        </div>
+                        <h3>石河子大学新型智库建设项目</h3>
+                        <p class="timeline-major">学生参与人</p>
+                        <p class="timeline-desc">独立完成项目流程图的设计，评价指标体系的建立，数据的收集与处理。</p>
                     </div>
                 </div>
-                <div class="certificate-card">
-                    <div class="certificate-image">
-                        <img src="https://placehold.co/400x300/fbcfe8/db2777?text=写作比赛一等奖" alt="写作比赛一等奖" onerror="this.src='https://placehold.co/400x300/fbcfe8/db2777?text=写作比赛一等奖'">
-                        <div class="certificate-overlay">
-                            <i class="fas fa-search-plus"></i>
-                        </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <i class="fas fa-flask"></i>
                     </div>
-                    <div class="certificate-info">
-                        <h3>市级写作比赛一等奖</h3>
-                        <p>2023年</p>
+                    <div class="timeline-content">
+                        <div class="timeline-date">
+                            <span class="date-badge">2024.06 - 2025.06</span>
+                        </div>
+                        <h3>兵团教育科研项目</h3>
+                        <p class="timeline-major">学生参与人</p>
+                        <p class="timeline-desc">跟随教师团队调研、收集资料、分析问题、撰写研究论文。</p>
                     </div>
                 </div>
-                <div class="certificate-card">
-                    <div class="certificate-image">
-                        <img src="https://placehold.co/400x300/fde68a/d97706?text=奖学金证书" alt="奖学金证书" onerror="this.src='https://placehold.co/400x300/fde68a/d97706?text=奖学金证书'">
-                        <div class="certificate-overlay">
-                            <i class="fas fa-search-plus"></i>
-                        </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <i class="fas fa-trophy"></i>
                     </div>
-                    <div class="certificate-info">
-                        <h3>校级二等奖学金</h3>
-                        <p>2021-2022学年</p>
+                    <div class="timeline-content">
+                        <div class="timeline-date">
+                            <span class="date-badge">2023.03 - 2023.06</span>
+                        </div>
+                        <h3>"挑战杯"大学生课外学术科技作品项目</h3>
+                        <p class="timeline-major">第二负责人 | 校级三等奖</p>
+                        <p class="timeline-desc">负责项目主题的构思、团队任务的分配、数据的调研与分析，报告的撰写，答辩PPT的制作。</p>
                     </div>
                 </div>
-                <div class="certificate-card">
-                    <div class="certificate-image">
-                        <img src="https://placehold.co/400x300/a7f3d0/059669?text=优秀毕业生" alt="优秀毕业生" onerror="this.src='https://placehold.co/400x300/a7f3d0/059669?text=优秀毕业生'">
-                        <div class="certificate-overlay">
-                            <i class="fas fa-search-plus"></i>
-                        </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <i class="fas fa-microscope"></i>
                     </div>
-                    <div class="certificate-info">
-                        <h3>优秀毕业生</h3>
-                        <p>2023年</p>
+                    <div class="timeline-content">
+                        <div class="timeline-date">
+                            <span class="date-badge">2021.11 - 2023.06</span>
+                        </div>
+                        <h3>大学生研究计划项目（SRP项目）</h3>
+                        <p class="timeline-major">第二负责人 | 参与两项</p>
+                        <p class="timeline-desc"><strong>第一项：</strong>作为主要负责人，负责实验的设计、实施以及报告的撰写、PPT的制作，并依托项目研究成果带领团队成员参与中国大学生物理学术竞赛，获校级二等奖、省级特等奖、西北地区特等奖。<br><br><strong>第二项：</strong>作为主要参与人，负责项目申请书的撰写以及数据的收集与整理。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">
+                            <span class="date-badge">2022.05 - 2024.08</span>
+                        </div>
+                        <h3>"三下乡"社会实践项目</h3>
+                        <p class="timeline-major">主要负责人 | 参与两项</p>
+                        <p class="timeline-desc"><strong>第一项：</strong>作为第一负责人，负责项目方案与行程的策划与规划，主动对接街道办事处建立合作关系，策划组织社区服务等实践活动，协调团队成员分工，确保项目高效推进。<br><br><strong>第二项：</strong>作为主要负责人，负责项目申请书以及新闻稿的撰写、宣传视频的剪辑，团队成员的管理。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">
+                            <span class="date-badge">2021.11 - 2022.05</span>
+                        </div>
+                        <h3>"挑战杯"大学生创业计划大赛</h3>
+                        <p class="timeline-major">第一负责人 | 院级一等奖、校级铜奖</p>
+                        <p class="timeline-desc">统筹项目全流程，主导项目主题构思与团队任务分配，牵头开展市场调研、数据收集，撰写创业计划书，制作PPT并完成校级答辩。</p>
                     </div>
                 </div>
             </div>
@@ -221,24 +350,10 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-social">
-                    <a href="#" class="social-link" title="抖音">
-                        <i class="fab fa-tiktok"></i>
-                    </a>
-                    <a href="#" class="social-link" title="B站">
-                        <i class="fas fa-tv"></i>
-                    </a>
-                    <a href="#" class="social-link" title="微信">
-                        <i class="fab fa-weixin"></i>
-                    </a>
-                    <a href="#" class="social-link" title="微博">
-                        <i class="fab fa-weibo"></i>
-                    </a>
-                </div>
                 <p class="footer-text">
-                    <i class="fas fa-heart" style="color: #ec4899;"></i> 
-                    用心制作 © 2026 我的个人空间
+                    Copyright © 2026 秋千的个人空间. All Rights Reserved.
                 </p>
+                <p class="footer-disclaimer">本站内容未经授权禁止转载、复制或建立镜像</p>
             </div>
         </div>
     </footer>
@@ -248,11 +363,30 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <!-- 图片放大弹窗 -->
-    <div class="image-modal" id="imageModal">
-        <span class="modal-close">&times;</span>
-        <img class="modal-content" id="modalImage">
-        <div class="modal-caption"></div>
+    <!-- 图片画廊模态框 -->
+    <div class="gallery-modal" id="galleryModal">
+        <div class="gallery-overlay"></div>
+        <div class="gallery-content">
+            <button class="gallery-close" id="galleryClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="gallery-title" id="galleryTitle"></div>
+            <div class="gallery-main">
+                <button class="gallery-nav gallery-prev" id="galleryPrev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="gallery-image-container">
+                    <img class="gallery-image" id="galleryImage" src="" alt="">
+                </div>
+                <button class="gallery-nav gallery-next" id="galleryNext">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="gallery-thumbnails" id="galleryThumbnails"></div>
+            <div class="gallery-counter">
+                <span id="galleryCounter"></span>
+            </div>
+        </div>
     </div>
 
     <script src="js/main.js"></script>

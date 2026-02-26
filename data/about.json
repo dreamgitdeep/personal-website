@@ -1,0 +1,79 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2026-02-23",
+  "profile": {
+    "name": "秋千",
+    "title": "永远在学习",
+    "avatar": "images/profile/avatar.jpg",
+    "intro": "热爱生活，喜欢探索新事物。在这里记录我的成长、分享我的故事。",
+    "location": "中国",
+    "email": "contact@example.com"
+  },
+  "about": {
+    "greeting": "你好，欢迎来到我的小世界！",
+    "story": [
+      "我是一个热爱生活的人，喜欢探索和学习新事物。这个网站是我的个人空间，用来记录生活中的点点滴滴。",
+      "平时我喜欢徒步旅行、骑车、钩织和绘画。这些爱好让我在繁忙的生活中找到宁静和快乐。",
+      "我相信每一天都是一个新的开始，每一个小小的进步都值得记录和庆祝。"
+    ],
+    "values": [
+      "持续学习，不断成长",
+      "享受过程，珍视当下",
+      "分享快乐，传递温暖"
+    ]
+  },
+  "skills": [
+    {
+      "name": "内容运营",
+      "level": 80,
+      "description": "公众号运营、内容策划"
+    },
+    {
+      "name": "前端开发",
+      "level": 40,
+      "description": "HTML、CSS、JavaScript入门"
+    },
+    {
+      "name": "钩织",
+      "level": 70,
+      "description": "手工艺品制作"
+    },
+    {
+      "name": "绘画",
+      "level": 60,
+      "description": "水彩、素描"
+    }
+  ],
+  "hobbies": [
+    {
+      "name": "徒步旅行",
+      "icon": "fas fa-hiking",
+      "description": "用脚步丈量大地，在山野间寻找内心的宁静",
+      "link": "hiking-gallery.html"
+    },
+    {
+      "name": "骑行",
+      "icon": "fas fa-bicycle",
+      "description": "骑车穿梭于城市与乡野，感受风的速度",
+      "link": "cycling-gallery.html"
+    },
+    {
+      "name": "钩织",
+      "icon": "fas fa-cut",
+      "description": "用毛线编织生活，一针一线皆是温柔",
+      "link": "crocheting-gallery.html"
+    },
+    {
+      "name": "绘画",
+      "icon": "fas fa-palette",
+      "description": "用画笔描绘心中所想，用色彩表达情感",
+      "link": "painting-gallery.html"
+    }
+  ],
+  "social": {
+    "weixin": "",
+    "weibo": "",
+    "github": "",
+    "email": ""
+  }
+}

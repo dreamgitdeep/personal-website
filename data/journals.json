@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2026-02-26",
+  "journals": [
+    {
+      "id": "journal-20260226",
+      "title": "个人网页优化记 - 细节打磨与功能完善",
+      "category": "study",
+      "categoryName": "学习",
+      "excerpt": "这两天优化了一下个人网页的细节。发现用codebuddy制作网页时会限制频率和额度，所以使用了两个账号交替进行设计...",
+      "content": "这两天优化了一下个人网页的细节。我发现用codebuddy制作网页时会限制频率和额度，所以使用了两个账号交替进行设计。但是，两个账号之间会出现不连贯的情况，有时候会把设计好的东西搞乱了。最近就在调整这个。还没有找到一个好的解决办法。\n\n其次，我还想有一个邮箱功能，后面觉得有些多余，便修改成了留言功能，还有点赞小功能，很满意。\n\n到今天，我的小网页终于bug少了很多。使用起来越来越流畅了。太棒啦！",
+      "tags": ["网站优化", "留言功能", "点赞", "CodebuddyCN"],
+      "coverImage": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop",
+      "createdAt": "2026-02-26",
+      "readTime": 1,
+      "viewCount": 0,
+      "isTop": false,
+      "status": "published"
+    },
+    {
+      "id": "journal-20260223",
+      "title": "我的网站制作初体验",
+      "category": "study",
+      "categoryName": "学习",
+      "excerpt": "今天，我突然在抖音上刷到了一位博主她自己做了一个属于自己的网站，页面很美观，我感觉十分吸引人！所以我也想做一个属于自己的网站...",
+      "content": "今天，我突然在抖音上刷到了一位博主她自己做了一个属于自己的网站，页面很美观，我感觉十分吸引人！所以我也想做一个属于自己的网站。这位博主分享了自己的制作过程，但是我想用自己的方法制作，所以没有采纳她的方法。我前段时间下载了CodebuddyCN这个软件，虽然我不清楚它目前在AI界的地位，但对于目前我的水平而言，足够了。\n\n我新建了一个文件夹，命名为\"学习制作个人网站\"。之后，用Codebuddy打开文件夹，开始和它聊天。首先用plan模式，并且用语音输入的方式快速的说明了我的想法，它很快为我制定了计划，我让它执行。\n\n过了一会，一个网站制作出来了。我仔细看了一下，发现有很多细节之处需要调整，但是没有关系，因为它已经想的很全面了！\n\n所以我就像一个顾客一样浏览自己的主页，总结了一些问题告诉了它。它持续的进行完善修改。",
+      "tags": ["网站制作", "学习", "CodebuddyCN"],
+      "coverImage": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop",
+      "createdAt": "2026-02-23",
+      "readTime": 2,
+      "viewCount": 0,
+      "isTop": true,
+      "status": "published"
+    },
+    {
+      "id": "journal-20260225",
+      "title": "网站制作进阶 - 清理与优化",
+      "category": "study",
+      "categoryName": "学习",
+      "excerpt": "继续完善个人网站，清理了不再需要的后台管理系统文件，采用JSON数据驱动方案...",
+      "content": "继续完善个人网站，清理了不再需要的后台管理系统文件，采用JSON数据驱动方案。\n\n这个方案更加轻量实用，只需要修改JSON文件就能更新网站内容，非常适合我的需求。\n\n接下来我需要测试各个页面功能是否正常。",
+      "tags": ["网站优化", "学习", "JSON"],
+      "coverImage": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=400&fit=crop",
+      "createdAt": "2026-02-25",
+      "readTime": 1,
+      "viewCount": 0,
+      "isTop": false,
+      "status": "published"
+    }
+  ]
+}

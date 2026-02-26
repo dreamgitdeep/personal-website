@@ -1,0 +1,129 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2026-02-23",
+  "plans": {
+    "short-term": [
+      {
+        "id": "plan-short-1",
+        "title": "完成个人网站制作",
+        "description": "搭建属于自己的个人展示网站",
+        "progress": 100,
+        "status": "completed",
+        "deadline": null,
+        "priority": 5,
+        "createdAt": "2026-02-01"
+      },
+      {
+        "id": "plan-short-2",
+        "title": "读完3本书",
+        "description": "《被讨厌的勇气》等心理学书籍",
+        "progress": 100,
+        "status": "completed",
+        "deadline": null,
+        "priority": 4,
+        "createdAt": "2026-02-01"
+      },
+      {
+        "id": "plan-short-3",
+        "title": "学会基础前端开发",
+        "description": "掌握HTML、CSS、JavaScript基础",
+        "progress": 60,
+        "status": "in-progress",
+        "deadline": "2026-05-01",
+        "priority": 5,
+        "createdAt": "2026-02-01"
+      }
+    ],
+    "medium-term": [
+      {
+        "id": "plan-medium-1",
+        "title": "公众号粉丝突破1万",
+        "description": "持续输出优质内容",
+        "progress": 45,
+        "status": "in-progress",
+        "deadline": "2027-02-01",
+        "priority": 4,
+        "createdAt": "2026-02-01"
+      },
+      {
+        "id": "plan-medium-2",
+        "title": "掌握一门新技能",
+        "description": "学习视频剪辑或设计",
+        "progress": 30,
+        "status": "in-progress",
+        "deadline": "2026-08-01",
+        "priority": 3,
+        "createdAt": "2026-02-01"
+      },
+      {
+        "id": "plan-medium-3",
+        "title": "坚持健身一年",
+        "description": "每周运动3次以上",
+        "progress": 25,
+        "status": "in-progress",
+        "deadline": "2027-02-01",
+        "priority": 4,
+        "createdAt": "2026-02-01"
+      },
+      {
+        "id": "plan-medium-4",
+        "title": "去3个新城市旅行",
+        "description": "探索不同的地方和文化",
+        "progress": 33,
+        "status": "in-progress",
+        "deadline": "2027-02-01",
+        "priority": 3,
+        "createdAt": "2026-02-01"
+      }
+    ],
+    "long-term": [
+      {
+        "id": "plan-long-1",
+        "title": "成为资深内容运营",
+        "description": "在内容领域深耕，成为专家",
+        "progress": 20,
+        "status": "in-progress",
+        "deadline": "2030-02-01",
+        "priority": 5,
+        "createdAt": "2026-02-01"
+      },
+      {
+        "id": "plan-long-2",
+        "title": "出版自己的作品",
+        "description": "写一本属于自己的书",
+        "progress": 10,
+        "status": "in-progress",
+        "deadline": "2030-02-01",
+        "priority": 4,
+        "createdAt": "2026-02-01"
+      },
+      {
+        "id": "plan-long-3",
+        "title": "实现财务自由",
+        "description": "通过副业和投资增加收入",
+        "progress": 15,
+        "status": "in-progress",
+        "deadline": "2030-02-01",
+        "priority": 5,
+        "createdAt": "2026-02-01"
+      },
+      {
+        "id": "plan-long-4",
+        "title": "环游中国",
+        "description": "走遍祖国的大好河山",
+        "progress": 5,
+        "status": "in-progress",
+        "deadline": "2030-02-01",
+        "priority": 4,
+        "createdAt": "2026-02-01"
+      }
+    ]
+  },
+  "stats": {
+    "totalGoals": 12,
+    "completed": 2,
+    "inProgress": 8,
+    "pending": 2,
+    "completionRate": 48
+  }
+}

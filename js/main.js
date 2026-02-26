@@ -7,12 +7,28 @@
 // DOM 加载完成后执行
 // ========================================
 document.addEventListener('DOMContentLoaded', function() {
+    initHeroContent();
     initNavigation();
     initTypingEffect();
     initScrollAnimations();
     initBackToTop();
     initNavbarScroll();
+    initSmoothScroll();
+    initPageTransitions();
+    initPerformanceOptimization();
 });
+
+// ========================================
+// Hero 内容显示
+// ========================================
+function initHeroContent() {
+    const heroContent = document.querySelector('.hero-content');
+    if (heroContent) {
+        setTimeout(() => {
+            heroContent.classList.add('loaded');
+        }, 100);
+    }
+}
 
 // ========================================
 // 导航菜单功能
@@ -20,19 +36,21 @@ document.addEventListener('DOMContentLoaded', function() {
 function initNavigation() {
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
     
     if (hamburger && navMenu) {
         hamburger.addEventListener('click', function() {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
         });
         
         // 点击导航链接后关闭菜单
-        const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
             link.addEventListener('click', function() {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
+                document.body.style.overflow = '';
             });
         });
     }
@@ -94,7 +112,7 @@ function initTypingEffect() {
 function initScrollAnimations() {
     // 为需要动画的元素添加 reveal 类
     const animatedElements = document.querySelectorAll(
-        '.nav-card, .blog-item, .plan-item, .section-title, .section-subtitle'
+        '.nav-card, .blog-item, .plan-item, .section-title, .section-subtitle, .timeline-item, .skill-item, .certificate-item'
     );
     
     animatedElements.forEach(el => {
@@ -130,13 +148,13 @@ function initBackToTop() {
     const backToTopBtn = document.getElementById('backToTop');
     if (!backToTopBtn) return;
     
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', debounce(function() {
         if (window.pageYOffset > 300) {
             backToTopBtn.classList.add('visible');
         } else {
             backToTopBtn.classList.remove('visible');
         }
-    });
+    }, 100));
     
     backToTopBtn.addEventListener('click', function() {
         window.scrollTo({
@@ -153,13 +171,104 @@ function initNavbarScroll() {
     const navbar = document.querySelector('.navbar');
     if (!navbar) return;
     
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', debounce(function() {
         if (window.pageYOffset > 50) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
+    }, 100));
+}
+
+// ========================================
+// 平滑滚动功能
+// ========================================
+function initSmoothScroll() {
+    // 为所有锚点链接添加平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                const offset = 70; // 导航栏高度
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
     });
+}
+
+// ========================================
+// 页面过渡效果
+// ========================================
+function initPageTransitions() {
+    // 页面加载时的淡入效果
+    document.body.classList.add('page-loading');
+    
+    // 监听页面加载完成
+    window.addEventListener('load', function() {
+        document.body.classList.remove('page-loading');
+        document.body.classList.add('page-loaded');
+    });
+    
+    // 页面切换时的过渡效果
+    const links = document.querySelectorAll('a:not([href^="#"]):not([href^="javascript:"])');
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href && href !== window.location.href) {
+                e.preventDefault();
+                document.body.classList.add('page-loading');
+                
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 300);
+            }
+        });
+    });
+}
+
+// ========================================
+// 性能优化
+// ========================================
+function initPerformanceOptimization() {
+    // 图片懒加载
+    const lazyImages = document.querySelectorAll('img[data-src]');
+    
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.removeAttribute('data-src');
+                    observer.unobserve(img);
+                }
+            });
+        });
+        
+        lazyImages.forEach(img => {
+            imageObserver.observe(img);
+        });
+    } else {
+        // 回退方案：直接加载所有图片
+        lazyImages.forEach(img => {
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+        });
+    }
+    
+    // 添加性能监控
+    if ('performance' in window) {
+        window.addEventListener('load', function() {
+            console.log('页面加载时间:', performance.now(), 'ms');
+        });
+    }
 }
 
 // ========================================
@@ -219,40 +328,42 @@ function scrollToElement(target, offset = 70) {
     }
 }
 
-// ========================================
-// 页面加载动画
-// ========================================
-window.addEventListener('load', function() {
-    document.body.classList.add('loaded');
+/* 页面加载过渡效果 */
+    .page-loading {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
     
-    // Hero 区域元素动画
-    const heroElements = document.querySelectorAll('.hero-avatar, .hero-title, .hero-subtitle, .hero-description, .hero-buttons');
-    heroElements.forEach((el, index) => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'all 0.6s ease';
+    .page-loaded {
+        opacity: 1;
+    }
+`;
+document.head.appendChild(style);
+
+/**
+ * 初始化粒子效果
+ */
+function initParticles() {
+    const particlesContainer = document.querySelector('.particles');
+    if (!particlesContainer) return;
+    
+    // 创建粒子
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
         
-        setTimeout(() => {
-            el.style.opacity = '1';
-            el.style.transform = 'translateY(0)';
-        }, 300 + index * 150);
-    });
-});
-
-// ========================================
-// 鼠标跟随效果（可选）
-// ========================================
-const cursor = document.createElement('div');
-cursor.className = 'custom-cursor';
-document.body.appendChild(cursor);
-
-document.addEventListener('mousemove', throttle((e) => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-}, 16)); // 约 60fps
-
-// 为可点击元素添加悬停效果
-document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-});
+        // 随机大小
+        const size = Math.random() * 3 + 1;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        // 随机位置
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        
+        // 随机动画延迟
+        particle.style.animationDelay = `${Math.random() * 15}s`;
+        
+        particlesContainer.appendChild(particle);
+    }
+}
