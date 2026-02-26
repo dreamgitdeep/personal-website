@@ -186,20 +186,56 @@
             }
         });
     </script>
-    <script src="https://giscus.app/client.js"
-            data-repo="dreamgitdeep/personal-website"
-            data-repo-id="R_kgDORZWFLQ"
-            data-category="Announcements"
-            data-category-id="DIC_kwDORZWFLc4C3QHC"
-            data-mapping="title"
-            data-strict="0"
-            data-reactions-enabled="1"
-            data-emit-metadata="1"
-            data-input-position="bottom"
-            data-theme="light"
-            data-lang="zh-CN"
-            crossorigin="anonymous"
-            async>
-    </script>
+    <!-- Giscus 评论系统 -->
+<script>
+    // Giscus 调试和初始化
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Giscus: 开始初始化');
+        
+        const giscusContainer = document.getElementById('giscus-comments');
+        if (!giscusContainer) {
+            console.log('Giscus: 未找到容器元素');
+            return;
+        }
+        
+        console.log('Giscus: 容器已找到，开始加载脚本');
+        
+        // 创建 Giscus 脚本
+        const script = document.createElement('script');
+        script.src = 'https://giscus.app/client.js';
+        script.setAttribute('data-repo', 'dreamgitdeep/personal-website');
+        script.setAttribute('data-repo-id', 'R_kgDORZWFLQ');
+        script.setAttribute('data-category', 'Announcements');
+        script.setAttribute('data-category-id', 'DIC_kwDORZWFLc4C3QHC');
+        script.setAttribute('data-mapping', 'title');
+        script.setAttribute('data-strict', '0');
+        script.setAttribute('data-reactions-enabled', '1');
+        script.setAttribute('data-emit-metadata', '1');
+        script.setAttribute('data-input-position', 'bottom');
+        script.setAttribute('data-theme', 'light');
+        script.setAttribute('data-lang', 'zh-CN');
+        script.setAttribute('crossorigin', 'anonymous');
+        script.async = true;
+        
+        // 加载完成后检查
+        script.onload = function() {
+            console.log('Giscus: 脚本加载成功');
+            setTimeout(() => {
+                if (giscusContainer.children.length === 1 && giscusContainer.children[0].textContent.includes('正在加载')) {
+                    console.log('Giscus: 可能未正确初始化');
+                } else {
+                    console.log('Giscus: 初始化完成');
+                }
+            }, 3000);
+        };
+        
+        script.onerror = function() {
+            console.log('Giscus: 脚本加载失败');
+        };
+        
+        giscusContainer.appendChild(script);
+        console.log('Giscus: 脚本已添加到容器');
+    });
+</script>
 </body>
 </html>
