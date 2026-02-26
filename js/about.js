@@ -107,22 +107,13 @@ function createHobbyCard(hobby) {
     card.dataset.interest = hobby.name.toLowerCase();
     card.onclick = () => window.location.href = hobby.link;
     
-    // 使用占位图作为背景
-    const placeholderColors = {
-        '徒步': 'c4b5fd/7c3aed',
-        '旅游': 'fbcfe8/db2777',
-        '骑行': 'bfdbfe/3b82f6',
-        '钩织': 'fde68a/d97706',
-        '绘画': 'a7f3d0/059669'
-    };
-    
-    const color = placeholderColors[hobby.name] || 'e0c3fc/8b5cf6';
-    
+    // 使用实际图片作为背景
     card.innerHTML = `
         <div class="hobby-image">
             <img src="images/hobbies/${hobby.name.toLowerCase()}/cover.jpg" 
                  alt="${hobby.name}" 
-                 onerror="this.src='https://placehold.co/400x300/${color}?text=${encodeURIComponent(hobby.name)}'">
+                 loading="lazy"
+                 onerror="this.style.display='none'; this.parentElement.innerHTML+='<div class=\\'image-error\\'><i class=\\'fas fa-image\\'></i><p>图片加载失败</p></div>'">
             <div class="hobby-photos-count">📸 点击查看</div>
         </div>
         <div class="hobby-content">
@@ -191,8 +182,8 @@ function initHobbyCardsAnimation() {
     
     hobbyCards.forEach(card => {
         card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'all 0.5s ease';
+        card.style.transform = 'translateY(10px)';
+        card.style.transition = 'all 0.3s ease';
         observer.observe(card);
     });
 }
@@ -218,27 +209,48 @@ async function initInterestGallery() {
         }
     }
     
-    // 徒步相册特殊处理（使用本地图片）
+    // 为没有图片的相册提供默认图片
     if (!galleryData.hiking || galleryData.hiking.images.length === 0) {
         galleryData.hiking = {
             title: '徒步相册',
             images: [
-                'images/hobbies/hiking/微信图片_20260223195753_377_229.jpg',
-                'images/hobbies/hiking/微信图片_20260223195758_378_229.jpg',
-                'images/hobbies/hiking/微信图片_20260223195800_379_229.jpg',
-                'images/hobbies/hiking/微信图片_20260223195804_380_229.jpg',
-                'images/hobbies/hiking/微信图片_20260223195809_381_229.jpg',
-                'images/hobbies/hiking/微信图片_20260223195814_382_229.jpg',
-                'images/hobbies/hiking/微信图片_20260223195820_383_229.jpg',
-                'images/hobbies/hiking/微信图片_20260223195834_384_229.jpg',
-                'images/hobbies/hiking/微信图片_20260223195856_385_229.jpg',
-                'images/hobbies/hiking/微信图片_20260223200605_386_229.jpg',
-                'images/hobbies/hiking/微信图片_20260223200609_387_229.jpg',
-                'images/hobbies/hiking/微信图片_20260223200614_388_229.jpg',
-                'images/hobbies/hiking/微信图片_20260223200617_389_229.jpg',
-                'images/hobbies/hiking/微信图片_20260223200621_390_229.jpg',
-                'images/hobbies/hiking/微信图片_20260223200625_391_229.jpg',
-                'images/hobbies/hiking/微信图片_20260223200631_392_229.jpg'
+                'images/hobbies/hiking/cover.jpg'
+            ]
+        };
+    }
+    
+    if (!galleryData.travel || galleryData.travel.images.length === 0) {
+        galleryData.travel = {
+            title: '旅行相册',
+            images: [
+                'images/hobbies/travel/cover.jpg'
+            ]
+        };
+    }
+    
+    if (!galleryData.cycling || galleryData.cycling.images.length === 0) {
+        galleryData.cycling = {
+            title: '骑行相册',
+            images: [
+                'images/hobbies/cycling/cover.jpg'
+            ]
+        };
+    }
+    
+    if (!galleryData.crocheting || galleryData.crocheting.images.length === 0) {
+        galleryData.crocheting = {
+            title: '钩织相册',
+            images: [
+                'images/hobbies/crocheting/cover.jpg'
+            ]
+        };
+    }
+    
+    if (!galleryData.painting || galleryData.painting.images.length === 0) {
+        galleryData.painting = {
+            title: '绘画相册',
+            images: [
+                'images/hobbies/painting/cover.jpg'
             ]
         };
     }

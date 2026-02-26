@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#dbeafe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#bfdbfe;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="roadGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6b7280;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4b5563;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#bgGradient)"/>
+  <path d="M0,250 Q200,200 400,250" fill="url(#roadGradient)"/>
+  <circle cx="150" cy="180" r="30" fill="#1f2937" stroke="#4b5563" stroke-width="3"/>
+  <circle cx="250" cy="180" r="30" fill="#1f2937" stroke="#4b5563" stroke-width="3"/>
+  <rect x="140" y="150" width="120" height="30" fill="#1f2937" rx="5"/>
+  <polygon points="140,150 160,120 180,150" fill="#1f2937"/>
+  <rect x="160" y="130" width="80" height="20" fill="#ef4444"/>
+  <circle cx="170" cy="170" r="3" fill="white"/>
+  <circle cx="230" cy="170" r="3" fill="white"/>
+  <text x="200" y="155" text-anchor="middle" fill="#ffffff" font-family="Arial" font-size="24" font-weight="bold">骑行</text>
+  <text x="200" y="220" text-anchor="middle" fill="#4b5563" font-family="Arial" font-size="14">风的速度</text>
+</svg>

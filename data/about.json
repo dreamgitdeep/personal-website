@@ -46,10 +46,16 @@
   ],
   "hobbies": [
     {
-      "name": "徒步旅行",
+      "name": "徒步",
       "icon": "fas fa-hiking",
       "description": "用脚步丈量大地，在山野间寻找内心的宁静",
       "link": "hiking-gallery.html"
+    },
+    {
+      "name": "旅行",
+      "icon": "fas fa-plane",
+      "description": "探索不同的城市与风景，收藏路上的故事",
+      "link": "travel-gallery.html"
     },
     {
       "name": "骑行",
