@@ -38,7 +38,6 @@
 
 ### 2. 关于我 (`about.html`)
 - **个人简介卡片**：头像、姓名、标语、个人故事
-- **兴趣爱好展示**：5个兴趣卡片（徒步、旅游、骑行、钩织、绘画），点击进入对应相册
 - **教育背景时间轴**：学历信息展示
 - **工作经历时间轴**：实习/工作经历
 - **项目经历时间轴**：科研项目、竞赛项目等
@@ -59,21 +58,8 @@
 
 ### 5. 联系我 (`contact.html`)
 - **联系信息展示**：邮箱（支持一键复制）、所在城市、工作时间
-- **留言板系统**：
-  - 发表留言（昵称 + 内容）
-  - 回复留言功能
-  - 点赞/点踩互动
-  - 管理员密码删除留言
-  - 数据存储于 LocalStorage
+- **居中单列布局**：内容已调整为单列并水平居中，适配更简洁的视觉效果
 
-### 6. 兴趣相册 (Gallery Pages)
-- 5个独立相册页面：`hiking-gallery.html`、`travel-gallery.html`、`cycling-gallery.html`、`crocheting-gallery.html`、`painting-gallery.html`
-- **瀑布流布局**：自适应图片展示
-- **照片查看模态框**：
-  - 键盘导航（左右箭头、ESC关闭）
-  - 触摸滑动支持（移动端）
-  - 照片备注编辑功能（保存至 LocalStorage）
-- 数据来源：`data/[兴趣]-photos-data.js`
 
 ---
 
@@ -176,11 +162,7 @@ personal-website/
 ├── blog.html               # 日志
 ├── plans.html              # 计划
 ├── contact.html            # 联系我
-├── hiking-gallery.html     # 徒步相册
-├── travel-gallery.html     # 旅游相册
-├── cycling-gallery.html    # 骑行相册
-├── crocheting-gallery.html # 钩织相册
-├── painting-gallery.html   # 绘画相册
+<!-- 相册页面已移除 -->
 │
 ├── css/
 │   ├── style.css           # 全局样式（CSS变量、导航、页脚、响应式）
@@ -199,21 +181,15 @@ personal-website/
 │   └── *-gallery.js        # 各相册页面脚本
 │
 ├── data/
-│   ├── about.json          # 个人信息、兴趣爱好配置
+│   ├── about.json          # 个人信息配置
 │   ├── journals.json       # 日志文章数据
 │   ├── plans.json          # 计划目标数据
 │   ├── travel-photos-data.js   # 旅游照片配置
 │   ├── hiking-photos-data.js   # 徒步照片配置
-│   └── gallery/            # 各相册JSON配置
+│   └── gallery/            # 各相册JSON配置（若保留相册则存放配置）
 │
 ├── images/
 │   ├── profile/            # 个人头像
-│   └── hobbies/            # 兴趣爱好照片
-│       ├── hiking/         # 徒步照片
-│       ├── travel/         # 旅游照片
-│       ├── cycling/        # 骑行照片
-│       ├── crocheting/     # 钩织照片
-│       └── painting/       # 绘画照片
 │
 ├── scripts/
 │   └── scan-travel-photos.js   # 照片扫描脚本（Node.js）
@@ -237,14 +213,7 @@ personal-website/
     "title": "记录成长 · 分享想法 · 规划未来 💜",
     "avatar": "images/profile/avatar.jpg"
   },
-  "hobbies": [
-    {
-      "name": "徒步",
-      "icon": "fas fa-hiking",
-      "description": "用脚步丈量大地",
-      "link": "hiking-gallery.html"
-    }
-  ]
+  "hobbies": []
 }
 ```
 
@@ -382,6 +351,16 @@ npm run dev
    - Branch 选择 `main`，文件夹选择 `/ (root)`
 4. 访问地址：`https://你的用户名.github.io/personal-website`
 
+> **Tip:** 已包含 `deploy.ps1`（PowerShell）和 `deploy.sh`（bash）脚本，
+> 可快速提交并推送更改：
+> ```powershell
+> .\deploy.ps1 -Message "更新内容说明"
+> ```
+> 或
+> ```bash
+> ./deploy.sh "更新内容说明"
+> ```
+
 ### 其他部署平台
 
 | 平台 | 特点 |
@@ -401,8 +380,7 @@ npm run dev
 编辑 `data/journals.json` 文件
 
 ### 添加照片
-1. 将照片放入 `images/hobbies/[分类]/` 目录
-2. 更新对应的 `data/[分类]-photos-data.js` 文件
+（兴趣相册已移除，若要恢复请将照片存放于合适目录并更新配置）
 
 ---
 

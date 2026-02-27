@@ -10,10 +10,12 @@
 
 .contact-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    /* 单列布局，联系方式处于中央。原本有两列用于留言板，现在移除后无需额外列 */
+    grid-template-columns: 1fr;
     gap: 40px;
-    max-width: 1100px;
+    max-width: 600px; /* 限制宽度避免内容过宽 */
     margin: 0 auto;
+    justify-items: center; /* 水平居中子元素 */
 }
 
 .contact-desc {
@@ -67,6 +69,11 @@
 .info-content p {
     font-size: 0.95rem;
     color: var(--text-secondary);
+}
+
+/* 联系信息容器居中文本 */
+.contact-info {
+    text-align: center;
 }
 
 /* 邮箱显示区域 */

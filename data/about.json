@@ -13,7 +13,6 @@
     "greeting": "你好，欢迎来到我的小世界！",
     "story": [
       "我是一个热爱生活的人，喜欢探索和学习新事物。这个网站是我的个人空间，用来记录生活中的点点滴滴。",
-      "平时我喜欢徒步旅行、骑车、钩织和绘画。这些爱好让我在繁忙的生活中找到宁静和快乐。",
       "我相信每一天都是一个新的开始，每一个小小的进步都值得记录和庆祝。"
     ],
     "values": [
@@ -44,38 +43,7 @@
       "description": "水彩、素描"
     }
   ],
-  "hobbies": [
-    {
-      "name": "徒步",
-      "icon": "fas fa-hiking",
-      "description": "用脚步丈量大地，在山野间寻找内心的宁静",
-      "link": "hiking-gallery.html"
-    },
-    {
-      "name": "旅行",
-      "icon": "fas fa-plane",
-      "description": "探索不同的城市与风景，收藏路上的故事",
-      "link": "travel-gallery.html"
-    },
-    {
-      "name": "骑行",
-      "icon": "fas fa-bicycle",
-      "description": "骑车穿梭于城市与乡野，感受风的速度",
-      "link": "cycling-gallery.html"
-    },
-    {
-      "name": "钩织",
-      "icon": "fas fa-cut",
-      "description": "用毛线编织生活，一针一线皆是温柔",
-      "link": "crocheting-gallery.html"
-    },
-    {
-      "name": "绘画",
-      "icon": "fas fa-palette",
-      "description": "用画笔描绘心中所想，用色彩表达情感",
-      "link": "painting-gallery.html"
-    }
-  ],
+  "hobbies": [],
   "social": {
     "weixin": "",
     "weibo": "",

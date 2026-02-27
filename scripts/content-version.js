@@ -16,12 +16,7 @@ const path = require('path');
 // 内容目录（只跟踪这些目录的变更）
 const CONTENT_DIRS = [
     'data/',
-    'images/',
-    'hiking/',
-    'travel/',
-    'cycling/',
-    'crocheting/',
-    'painting/'
+    'images/'
 ];
 
 // 内容文件扩展名

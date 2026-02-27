@@ -106,3 +106,4 @@ function initSocialCardsAnimation() {
 
 // 页面加载完成后初始化动画
 window.addEventListener('load', initSocialCardsAnimation);
+// (guestbook 功能已切换为 Giscus 嵌入，相关 JS 在本文件不再需要)
