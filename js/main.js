@@ -328,17 +328,7 @@ function scrollToElement(target, offset = 70) {
     }
 }
 
-/* 页面加载过渡效果 */
-    .page-loading {
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-    
-    .page-loaded {
-        opacity: 1;
-    }
-`;
-document.head.appendChild(style);
+
 
 /**
  * 初始化粒子效果
