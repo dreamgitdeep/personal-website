@@ -6,29 +6,45 @@
 // ========== 计划数据（直接嵌入，可直接双击HTML打开） ==========
 const plansData = {
     "version": "1.0",
-    "lastUpdated": "2026-02-26",
+    "lastUpdated": "2026-03-08",
     "plans": {
         "short-term": [
             {
                 "id": "plan-short-1",
                 "title": "准备预答辩相关工作",
-                "description": "整理答辩材料，准备PPT演示",
-                "progress": 30,
-                "status": "in-progress",
+                "description": "整理答辩材料，准备PPT演示 ✅ 已完成",
+                "progress": 100,
+                "status": "completed",
                 "priority": 5
             },
             {
                 "id": "plan-short-2",
                 "title": "调整毕业论文相关格式",
-                "description": "按照学校要求规范论文格式",
-                "progress": 20,
+                "description": "按照学校要求规范论文格式（已完成90%）",
+                "progress": 90,
                 "status": "in-progress",
-                "priority": 4
+                "priority": 5
             },
             {
                 "id": "plan-short-3",
                 "title": "完成教资申报的工作",
-                "description": "准备申报材料并提交审核",
+                "description": "准备申报材料并提交审核 ✅ 已完成",
+                "progress": 100,
+                "status": "completed",
+                "priority": 4
+            },
+            {
+                "id": "plan-short-4",
+                "title": "完成毕业论文，定终稿",
+                "description": "根据专家意见修改完善，确定最终版本",
+                "progress": 30,
+                "status": "in-progress",
+                "priority": 5
+            },
+            {
+                "id": "plan-short-5",
+                "title": "学习事业编制",
+                "description": "了解事业编考试内容，准备备考",
                 "progress": 10,
                 "status": "in-progress",
                 "priority": 4
@@ -37,25 +53,33 @@ const plansData = {
         "medium-term": [
             {
                 "id": "plan-medium-1",
-                "title": "持续学习人工智能技术",
-                "description": "做出一到两个成果",
-                "progress": 20,
-                "status": "in-progress",
-                "priority": 5
-            },
-            {
-                "id": "plan-medium-2",
-                "title": "持续维护与更新个人网页",
-                "description": "并推广分享经验",
-                "progress": 30,
+                "title": "公众号粉丝突破1万",
+                "description": "持续输出优质内容",
+                "progress": 45,
                 "status": "in-progress",
                 "priority": 4
             },
             {
+                "id": "plan-medium-2",
+                "title": "掌握一门新技能",
+                "description": "学习视频剪辑或设计",
+                "progress": 30,
+                "status": "in-progress",
+                "priority": 3
+            },
+            {
                 "id": "plan-medium-3",
-                "title": "阅读1本书",
-                "description": "拓展知识面，提升自我",
-                "progress": 0,
+                "title": "坚持健身一年",
+                "description": "每周运动3次以上",
+                "progress": 25,
+                "status": "in-progress",
+                "priority": 4
+            },
+            {
+                "id": "plan-medium-4",
+                "title": "去3个新城市旅行",
+                "description": "探索不同的地方和文化",
+                "progress": 33,
                 "status": "in-progress",
                 "priority": 3
             }
@@ -63,36 +87,44 @@ const plansData = {
         "long-term": [
             {
                 "id": "plan-long-1",
-                "title": "坚持锻炼",
-                "description": "增肌塑形，保持健康体魄",
-                "progress": 10,
+                "title": "成为资深内容运营",
+                "description": "在内容领域深耕，成为专家",
+                "progress": 20,
                 "status": "in-progress",
                 "priority": 5
             },
             {
                 "id": "plan-long-2",
-                "title": "关注时事",
-                "description": "保持对社会动态的敏感度",
-                "progress": 20,
+                "title": "出版自己的作品",
+                "description": "写一本属于自己的书",
+                "progress": 10,
                 "status": "in-progress",
                 "priority": 4
             },
             {
                 "id": "plan-long-3",
-                "title": "勤思考勤记录",
-                "description": "养成记录生活与思考的习惯",
+                "title": "实现财务自由",
+                "description": "通过副业和投资增加收入",
                 "progress": 15,
                 "status": "in-progress",
                 "priority": 5
+            },
+            {
+                "id": "plan-long-4",
+                "title": "环游中国",
+                "description": "走遍祖国的大好河山",
+                "progress": 5,
+                "status": "in-progress",
+                "priority": 4
             }
         ]
     },
     "stats": {
-        "totalGoals": 9,
-        "completed": 0,
-        "inProgress": 9,
+        "totalGoals": 13,
+        "completed": 2,
+        "inProgress": 11,
         "pending": 0,
-        "completionRate": 14
+        "completionRate": 15
     }
 };
 
