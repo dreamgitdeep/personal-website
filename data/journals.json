@@ -1,7 +1,22 @@
 {
   "version": "1.0",
-  "lastUpdated": "2026-02-26",
+  "lastUpdated": "2026-03-08",
   "journals": [
+    {
+      "id": "journal-20260308",
+      "title": "毕业季的忙碌与焦虑",
+      "category": "work",
+      "categoryName": "工作",
+      "excerpt": "最近正在撰写毕业论文还有准备预答辩的相关事项，因此一直没有更新个人网站。这一两周下来，感觉要碎了。毕业真的好忙！...",
+      "content": "最近正在撰写毕业论文还有准备预答辩的相关事项，因此一直没有更新个人网站。这一两周下来，感觉要碎了。毕业真的好忙！\n\n预答辩之后专家又提出了新的修改建议，因此，在休息了一天多之后，今天又重新开始投入进去。但是总会有不想写的时刻，于是我在抖音平台上发布了我的网站视频，分享一下。现在正在更新日志。\n\n之后，我还想着在个人网站里加上歌单，这样就更好啦！\n\n哦，对了，今天还特别着急，担心找不到工作。所以也一直在看招聘信息，很担心找不到工作。",
+      "tags": ["毕业论文", "预答辩", "找工作", "个人网站"],
+      "coverImage": "https://images.unsplash.com/photo-1456324504439-367cee3b3c32?w=600&h=400&fit=crop",
+      "createdAt": "2026-03-08",
+      "readTime": 2,
+      "viewCount": 0,
+      "isTop": true,
+      "status": "published"
+    },
     {
       "id": "journal-20260226",
       "title": "个人网页优化记 - 细节打磨与功能完善",
@@ -29,7 +44,7 @@
       "createdAt": "2026-02-23",
       "readTime": 2,
       "viewCount": 0,
-      "isTop": true,
+      "isTop": false,
       "status": "published"
     },
     {
