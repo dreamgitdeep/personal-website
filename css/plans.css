@@ -156,29 +156,30 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
-    max-height: 350px;
-    overflow-y: auto;
-    padding-right: 8px;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(192, 132, 252, 0.3) rgba(192, 132, 252, 0.1);
+    max-height: 320px;
+    overflow-y: scroll;
+    padding-right: 10px;
+    scrollbar-width: auto;
+    scrollbar-color: #a855f7 #e9d5ff;
 }
 
 .goal-list::-webkit-scrollbar {
-    width: 8px;
+    width: 12px;
 }
 
 .goal-list::-webkit-scrollbar-track {
-    background: rgba(192, 132, 252, 0.1);
+    background: #e9d5ff;
     border-radius: 10px;
 }
 
 .goal-list::-webkit-scrollbar-thumb {
-    background: rgba(192, 132, 252, 0.4);
+    background: linear-gradient(180deg, #a855f7, #7c3aed);
     border-radius: 10px;
+    border: 2px solid #e9d5ff;
 }
 
 .goal-list::-webkit-scrollbar-thumb:hover {
-    background: rgba(192, 132, 252, 0.6);
+    background: linear-gradient(180deg, #9333ea, #6b21a8);
 }
 
 .goal-card {
