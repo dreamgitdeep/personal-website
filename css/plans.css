@@ -156,13 +156,15 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
-    max-height: 500px;
+    max-height: 350px;
     overflow-y: auto;
-    padding-right: 5px;
+    padding-right: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(192, 132, 252, 0.3) rgba(192, 132, 252, 0.1);
 }
 
 .goal-list::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
 }
 
 .goal-list::-webkit-scrollbar-track {
@@ -171,12 +173,12 @@
 }
 
 .goal-list::-webkit-scrollbar-thumb {
-    background: rgba(192, 132, 252, 0.3);
+    background: rgba(192, 132, 252, 0.4);
     border-radius: 10px;
 }
 
 .goal-list::-webkit-scrollbar-thumb:hover {
-    background: rgba(192, 132, 252, 0.5);
+    background: rgba(192, 132, 252, 0.6);
 }
 
 .goal-card {
