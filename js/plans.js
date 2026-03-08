@@ -53,33 +53,25 @@ const plansData = {
         "medium-term": [
             {
                 "id": "plan-medium-1",
-                "title": "公众号粉丝突破1万",
-                "description": "持续输出优质内容",
-                "progress": 45,
+                "title": "持续学习人工智能技术",
+                "description": "做出一到两个成果",
+                "progress": 20,
                 "status": "in-progress",
-                "priority": 4
+                "priority": 5
             },
             {
                 "id": "plan-medium-2",
-                "title": "掌握一门新技能",
-                "description": "学习视频剪辑或设计",
+                "title": "持续维护与更新个人网页",
+                "description": "并推广分享经验",
                 "progress": 30,
-                "status": "in-progress",
-                "priority": 3
-            },
-            {
-                "id": "plan-medium-3",
-                "title": "坚持健身一年",
-                "description": "每周运动3次以上",
-                "progress": 25,
                 "status": "in-progress",
                 "priority": 4
             },
             {
-                "id": "plan-medium-4",
-                "title": "去3个新城市旅行",
-                "description": "探索不同的地方和文化",
-                "progress": 33,
+                "id": "plan-medium-3",
+                "title": "阅读1本书",
+                "description": "拓展知识面，提升自我",
+                "progress": 0,
                 "status": "in-progress",
                 "priority": 3
             }
@@ -87,44 +79,36 @@ const plansData = {
         "long-term": [
             {
                 "id": "plan-long-1",
-                "title": "成为资深内容运营",
-                "description": "在内容领域深耕，成为专家",
-                "progress": 20,
+                "title": "坚持锻炼",
+                "description": "增肌塑形，保持健康体魄",
+                "progress": 10,
                 "status": "in-progress",
                 "priority": 5
             },
             {
                 "id": "plan-long-2",
-                "title": "出版自己的作品",
-                "description": "写一本属于自己的书",
-                "progress": 10,
+                "title": "关注时事",
+                "description": "保持对社会动态的敏感度",
+                "progress": 20,
                 "status": "in-progress",
                 "priority": 4
             },
             {
                 "id": "plan-long-3",
-                "title": "实现财务自由",
-                "description": "通过副业和投资增加收入",
+                "title": "勤思考勤记录",
+                "description": "养成记录生活与思考的习惯",
                 "progress": 15,
                 "status": "in-progress",
                 "priority": 5
-            },
-            {
-                "id": "plan-long-4",
-                "title": "环游中国",
-                "description": "走遍祖国的大好河山",
-                "progress": 5,
-                "status": "in-progress",
-                "priority": 4
             }
         ]
     },
     "stats": {
-        "totalGoals": 13,
+        "totalGoals": 11,
         "completed": 2,
-        "inProgress": 11,
+        "inProgress": 9,
         "pending": 0,
-        "completionRate": 15
+        "completionRate": 20
     }
 };
 
