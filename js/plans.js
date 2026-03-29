@@ -6,7 +6,7 @@
 // ========== 计划数据（直接嵌入，可直接双击HTML打开） ==========
 const plansData = {
     "version": "1.0",
-    "lastUpdated": "2026-03-08",
+    "lastUpdated": "2026-03-29",
     "plans": {
         "short-term": [
             {
@@ -20,9 +20,9 @@ const plansData = {
             {
                 "id": "plan-short-2",
                 "title": "调整毕业论文相关格式",
-                "description": "按照学校要求规范论文格式（已完成90%）",
-                "progress": 90,
-                "status": "in-progress",
+                "description": "按照学校要求规范论文格式 ✅ 已完成",
+                "progress": 100,
+                "status": "completed",
                 "priority": 5
             },
             {
@@ -36,26 +36,36 @@ const plansData = {
             {
                 "id": "plan-short-4",
                 "title": "完成毕业论文，定终稿",
-                "description": "根据专家意见修改完善，确定最终版本",
-                "progress": 30,
-                "status": "in-progress",
+                "description": "根据专家意见修改完善，确定最终版本 ✅ 已完成",
+                "progress": 100,
+                "status": "completed",
                 "priority": 5
             },
             {
                 "id": "plan-short-5",
-                "title": "学习事业编制",
-                "description": "了解事业编考试内容，准备备考",
-                "progress": 10,
+                "title": "完成智析学记小程序",
+                "description": "完善已有功能，达到可正式使用状态",
+                "progress": 30,
                 "status": "in-progress",
-                "priority": 4
+                "deadline": "2026-05-01",
+                "priority": 5
+            },
+            {
+                "id": "plan-short-6",
+                "title": "找到一份合适的工作",
+                "description": "持续投递简历，面试准备，拿到offer",
+                "progress": 20,
+                "status": "in-progress",
+                "deadline": "2026-05-31",
+                "priority": 5
             }
         ],
         "medium-term": [
             {
                 "id": "plan-medium-1",
                 "title": "持续学习人工智能技术",
-                "description": "做出一到两个成果",
-                "progress": 20,
+                "description": "做出一到两个成果 ✅ 进展到50%",
+                "progress": 50,
                 "status": "in-progress",
                 "priority": 5
             },
@@ -104,11 +114,11 @@ const plansData = {
         ]
     },
     "stats": {
-        "totalGoals": 11,
-        "completed": 2,
-        "inProgress": 9,
+        "totalGoals": 12,
+        "completed": 4,
+        "inProgress": 8,
         "pending": 0,
-        "completionRate": 20
+        "completionRate": 33
     }
 };
 
