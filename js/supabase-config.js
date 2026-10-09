@@ -22,6 +22,5 @@ window.SUPABASE_CONFIG = {
     url: 'https://dqfzlmjdicticwzfxjoq.supabase.co',
 
     // 例：'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.xxxxx'
-    // ⚠️ 还差这一步：到 Supabase → Settings → API → 复制 anon public 填进来
-    anonKey: '',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRxZnpsbWpkaWN0aWN3emZ4am9xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE1Mjc5NzQsImV4cCI6MjEwNzEwMzk3NH0.g3mYhxURKFAWESAUT88aeHkN17xEoP-wGg8imMKmLaU',
 };

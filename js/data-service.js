@@ -77,7 +77,10 @@
                 if (res.error) throw res.error;
                 var rows = res.data || [];
                 if (!rows.length) return fallback();   // 云端空表 → 用本地数据
-                return transform ? transform(rows) : rows;
+                var out = transform ? transform(rows) : rows;
+                // 云端数据存在但不完整（缺关键字段）→ 同样回退本地，避免页面半空
+                if (!out || (Array.isArray(out) && !out.length)) return fallback();
+                return out;
             }).catch(function (e) {
                 console.warn('⚠️ ' + table + ' 云端读取失败，回退本地', e);
                 return fallback();
@@ -126,10 +129,14 @@
             });
         },
 
-        /** 简历（整份 JSON 存在一行里） */
+        /** 简历（整份 JSON 存在一行里）
+         *  注意：云端那行如果缺主体字段，视为无效并回退本地 JSON，
+         *  否则简历页会只剩姓名和联系方式。 */
         getResume: function () {
             return query('resume', { order: 'updated_at' }, 'data/resume.json', function (rows) {
-                return (rows[0] && rows[0].data) || null;
+                var d = (rows[0] && rows[0].data) || null;
+                if (!d || !d.kpis || !d.experience || !d.capabilities) return null;
+                return d;
             });
         },
 
