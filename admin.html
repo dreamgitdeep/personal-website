@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>内容管理 - 我的个人空间</title>
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 :root{
   --primary:#c084fc; --primary-dark:#a855f7; --primary-deep:#9333ea;
@@ -15,6 +18,7 @@
 body{
   font-family:"Microsoft YaHei","PingFang SC","Helvetica Neue",Arial,sans-serif;
   font-size:14px;line-height:1.7;color:var(--text);background:var(--bg);
+  padding-top:65px;                     /* 给固定导航栏让位 */
 }
 .wrap{max-width:1000px;margin:0 auto;padding:24px 20px 60px}
 h1{font-size:22px;color:var(--primary-deep);margin-bottom:4px}
@@ -108,10 +112,36 @@ button:disabled{opacity:.5;cursor:not-allowed}
 
 code{background:var(--bg);padding:1px 6px;border-radius:4px;font-size:12.5px;color:var(--primary-deep)}
 a{color:var(--primary-deep)}
-@media(max-width:640px){.row,.row3{grid-template-columns:1fr}}
+@media(max-width:640px){
+  .row,.row3{grid-template-columns:1fr}
+  body{padding-top:60px}
+}
 </style>
 </head>
 <body>
+
+<!-- 导航栏（与站内其他页面一致） -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <i class="fas fa-heart"></i>
+            <span>我的空间</span>
+        </a>
+        <ul class="nav-menu">
+            <li><a href="index.html" class="nav-link">首页</a></li>
+            <li><a href="blog.html" class="nav-link">日志</a></li>
+            <li><a href="plans.html" class="nav-link">计划</a></li>
+            <li><a href="resume.html" class="nav-link">关于我</a></li>
+            <li><a href="contact.html" class="nav-link">联系我</a></li>
+            <li><a href="admin.html" class="nav-link active">管理</a></li>
+        </ul>
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </div>
+</nav>
 
 <div class="wrap">
 
@@ -286,6 +316,18 @@ a{color:var(--primary-deep)}
 
 </div>
 </div>
+
+<!-- 页脚（与站内其他页面一致） -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <p class="footer-text">
+                Copyright © 2026 秋千的个人空间. All Rights Reserved.
+            </p>
+            <p class="footer-disclaimer">本站内容未经授权禁止转载、复制或建立镜像</p>
+        </div>
+    </div>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
 <script src="js/supabase-config.js"></script>
@@ -679,5 +721,6 @@ $('saveProfile').addEventListener('click', function () {
     });
 });
 </script>
+<script src="js/main.js"></script>
 </body>
 </html>

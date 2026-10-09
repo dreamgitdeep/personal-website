@@ -1396,6 +1396,20 @@ img {
     opacity: 0.8;
 }
 
+/* 页脚里的管理端入口（低调，不抢视线） */
+.footer-admin {
+    margin-top: 10px;
+    font-size: 0.75rem;
+    opacity: 0.45;
+    transition: opacity var(--transition-normal);
+}
+.footer-admin a {
+    color: var(--text-light);
+    text-decoration: none;
+}
+.footer-admin:hover { opacity: 0.9; }
+.footer-admin:hover a { text-decoration: underline; }
+
 /* ========================================
    返回顶部按钮
    ======================================== */
