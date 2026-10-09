@@ -162,16 +162,21 @@ a{color:var(--primary-deep)}
     <div class="card info" style="margin-top:20px;margin-bottom:0">
       <b>第一次使用？</b><br>
       直接想一个密码输进去就行，系统会自动建好账号并登录；以后用<b>同一个密码</b>进入。<br><br>
-      <b>⚠️ 如果卡在「账号已创建过」进不去（多半是这个原因）：</b><br>
-      你的项目默认开了<b>邮箱验证</b>，而免费版确认邮件经常发不出来，
-      所以账号建好了但一直没激活。按下面做一次，以后就顺了：<br><br>
-      <b>① </b> <code>Authentication</code> → <code>Sign In / Providers</code> →
-      <code>Email</code> → 关掉 <code>Confirm email</code> → <b>Save</b><br>
-      <b>② </b> <code>Authentication</code> → <code>Users</code> → 找到你的账号 →
-      右侧 <code>⋯</code> → <b>Reset password</b>（或直接 <b>Delete user</b> 后回本页重设）<br>
-      <b>③ </b> 回本页输新密码即可进入<br><br>
-      <span style="color:var(--muted)">关掉邮箱验证不影响安全：管理端没有公开注册入口，
-      且数据库写入仍然需要登录身份。</span>
+      <b>⚠️ 如果提示「账号已经创建过了」进不去：</b><br>
+      说明账号早就建好了，只是你记的密码不对。最省事的重置办法（任选一个）：<br><br>
+      <b>方法一（推荐，最快）</b><br>
+      到 Supabase 的 <code>SQL Editor</code> 新建查询，把下面这行邮箱换成你的，然后 Run：<br>
+      <code style="display:block;margin:6px 0;white-space:pre-wrap">update auth.users set encrypted_password = crypt('新密码', gen_salt('bf'))
+where email = '1208376659@qq.com';</code>
+      改完回本页输入这个新密码即可。<br><br>
+      <b>方法二（在界面上点）</b><br>
+      <code>Authentication</code> → <code>Users</code> → 点开你的账号 →
+      页面里的 <b>Reset password</b>（或右侧 <code>⋯</code> 菜单）→ 设新密码。<br><br>
+      <b>方法三（彻底重置）</b><br>
+      <code>Authentication</code> → <code>Users</code> → 删掉这个账号（Delete user）→
+      回本页重新输一个密码，系统会重新建号并直接登录。<br><br>
+      <span style="color:var(--muted)">不需要去关邮箱验证。你的账号已经是「已验证」状态，
+      卡住纯粹是密码对不上。</span>
     </div>
   </div>
 </div>
@@ -380,7 +385,7 @@ function doSignIn(pwd, allowSignup) {
         btnBack();
         var m = r.error ? (r.error.message || '') : '';
         if (/invalid/i.test(m)) {
-            msg('密码不对。如果不记得了，点下面的「忘记密码」发重置邮件。', false);
+            msg('密码不对。按下面「方法一」用一行 SQL 改密码最快，或用「忘记密码」发重置邮件。', false);
         } else if (/not confirmed|confirm/i.test(m)) {
             msg('账号还没通过邮箱验证：去 Supabase → Authentication → Sign In / Providers → Email，关掉 Confirm email，再回来重试。', false);
         } else {
@@ -403,8 +408,8 @@ function doSignUp(pwd) {
 
         btnBack();
         var m = s.error.message || '';
-        if (/already|registered|exists/i.test(m)) {
-            msg('这个账号已经创建过了。如果你不记得当时设的密码，点下面的「忘记密码」发重置邮件。', false);
+        if (/already|registered|exists|user.*exist/i.test(m)) {
+            msg('这个账号已经建好了，只是密码对不上。看下面「方法一」，用一行 SQL 直接改密码最快。', false);
         } else if (/rate limit|over_email/i.test(m)) {
             msg('邮件发送过于频繁被限流（免费版限制）。稍等一会儿，或直接去 Supabase 后台按下面说明操作。', false);
         } else if (/not allowed|signup.*disabled/i.test(m)) {
