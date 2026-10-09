@@ -74,9 +74,55 @@ window.SUPABASE_CONFIG = {
 
 > ⚠️ 只填 **anon public** 这个，**千万不要**填 `service_role` 那个（它是最高权限密钥，泄露等于把数据库交给别人）。
 
+### 第 4 步：建相册存储空间
+
+1. 左侧点 **SQL Editor** → **New query**
+2. 把仓库里的 `init-storage.sql` 全部内容粘贴进去 → **Run**
+
+这一步会建好 `photos` 公开存储桶，并配好权限（所有人能看图，只有登录后能传图）。
+
+> 也可以手动建：Storage → New bucket → 名字 `photos` → 勾 Public。
+> 但**手动建完仍要执行 `init-storage.sql`**，否则上传会被安全策略拦下。
+
+### 第 5 步：创建管理端登录账号
+
+1. 左侧点 **Authentication** → **Users**
+2. 点 **Add user** → **Create new user**
+3. 填你的邮箱和密码
+4. **务必勾选 `Auto Confirm User`**（不勾会登录失败）
+5. 点 **Create user**
+
+管理端不开放公开注册，只有你在这里建过的账号能登录。
+
 ---
 
-## 三、日常怎么用
+## 三、日常怎么用（推荐：网页管理端）
+
+管理端地址（建议存书签）：
+
+```
+https://dreamgitdeep.github.io/personal-website/admin.html
+```
+
+用第 5 步建的邮箱密码登录，登录后有四个页签：
+
+| 页签 | 能做什么 |
+|---|---|
+| 简历 / 关于我 | 改姓名、意向、电话、邮箱、城市、状态、个人概述、6 项数据看板；下方还有完整的 JSON 可改经历、教育、科研、技能 |
+| 日志 | 新建 / 编辑 / 删除日志，填标题、分类、日期、摘要、正文、标签即可 |
+| 相册 | 一次选多张照片批量上传，自动进对应相册；也能删 |
+| 个人信息 | 直接编辑 JSON |
+
+保存后**刷新网站页面**就能看到最新内容，不用改代码、不用 git push。
+
+> 简历页表单只覆盖常用字段；工作经历、教育背景、科研成果、技能这些在「完整数据（高级）」的 JSON 里改，
+> 改之前可以先点「格式化」确认 JSON 没写错。不确定就别动这块，只改上面表单也够用。
+
+---
+
+## 四、备用方案：直接改数据库
+
+不想用管理端时，可以直接在 Supabase 后台改表。
 
 ### 写日志 / 改日志
 
@@ -142,7 +188,7 @@ window.SUPABASE_CONFIG = {
 
 ---
 
-## 四、常见问题
+## 五、常见问题
 
 **Q：配置了但网页没变化？**
 A：按顺序排查——
@@ -165,12 +211,22 @@ A：可以，但体验会差很多。替代方案是 Decap CMS（在仓库上加
 
 ---
 
-## 五、文件说明
+## 六、文件说明
 
 | 文件 | 作用 |
 |---|---|
-| `js/supabase-config.js` | **你只需要改这一个文件**：填 URL 和密钥 |
+| `admin.html` | **网页管理端**，登录后改内容 |
+| `js/supabase-config.js` | 填 URL 和密钥（已填好，一般不用再动） |
 | `js/data-service.js` | 统一数据层，自动判断用云端还是本地数据 |
-| `supabase-schema.sql` | 建表脚本，只需在 Supabase 执行一次 |
-| `data/resume.json` | 简历内容（未启用 Supabase 时的来源） |
-| `resume.html` | 简历页面 |
+| `supabase-schema.sql` | 建表脚本，只需执行一次 |
+| `init-storage.sql` | 建相册存储桶 + 权限，只需执行一次 |
+| `init-resume-data.sql` | 把简历初始内容写入云端，只需执行一次 |
+| `data/resume.json` | 简历内容（云端没数据时的兜底来源） |
+| `resume.html` | 关于我 / 简历页面 |
+
+**Q：管理端登录失败？**
+A：多半是建用户时没勾 `Auto Confirm User`；或者邮箱密码输错。
+去 Supabase → Authentication → Users 看一下该用户 `Confirmed` 列有没有时间戳，没有就删掉重建并勾选。
+
+**Q：管理端保存时提示权限错误（row-level security）？**
+A：说明没登录成功，或 `supabase-schema.sql` 的写入策略没执行到。重新执行一次该脚本即可（它可重复执行）。
