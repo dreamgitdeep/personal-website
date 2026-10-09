@@ -4,7 +4,7 @@
  */
 
 // ========== 计划数据（直接嵌入，可直接双击HTML打开） ==========
-const plansData = {
+let plansData = {
     "version": "1.0",
     "lastUpdated": "2026-03-29",
     "plans": {
@@ -122,7 +122,18 @@ const plansData = {
     }
 };
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
+    // 优先读取云端数据（未配置 Supabase 时自动使用内嵌数据）
+    try {
+        const remote = window.DataService ? await window.DataService.getPlans() : null;
+        if (remote && remote.plans) {
+            plansData = remote;
+            console.log('☁️ 计划数据来自 Supabase');
+        }
+    } catch (e) {
+        console.warn('云端计划读取失败，使用内嵌数据', e);
+    }
+
     // 渲染各类型计划
     renderPlans('short-term', plansData.plans['short-term']);
     renderPlans('medium-term', plansData.plans['medium-term']);

@@ -1,0 +1,176 @@
+# 内容管理指南（Supabase 版）
+
+> 目标：**以后改日志、传照片、改简历，都不用再改代码，也不用 git push。**
+> 全程在浏览器里点几下，保存后刷新网页就能看到。
+
+---
+
+## 一、先搞清楚一件事
+
+你的网站是**纯静态网站**（HTML + CSS + JS，托管在 GitHub Pages），本身没有服务器，所以没法像 WordPress 那样自带后台。
+
+解决办法是把「内容」搬到一个**云端数据库**里：网站每次打开时去云端取最新内容。你只需要在 Supabase 的网页后台里改内容，网站就自动变了。
+
+```
+你（浏览器改内容）→ Supabase 云端数据库 → 网站自动显示
+```
+
+**好消息**：在你配置好之前，网站会继续使用原来的本地数据，**不会白屏、不会报错**。可以随时中断、随时继续。
+
+---
+
+## 二、配置步骤（只需做一次，约 15 分钟）
+
+### 第 1 步：创建 Supabase 项目
+
+1. 打开 https://supabase.com ，用 GitHub 账号登录
+2. 点 **New project**
+3. 填：
+   - Name：随便起，比如 `my-website`
+   - Database Password：**设置一个密码并记下来**（后面基本用不到，但丢了很麻烦）
+   - Region：选 **Singapore（新加坡）**，国内访问相对最快
+4. 点 **Create new project**，等约 2 分钟
+
+### 第 2 步：建表
+
+1. 左侧菜单点 **SQL Editor**
+2. 点 **New query**
+3. 把仓库里的 `supabase-schema.sql` **全部内容**复制进去
+4. 点右下角 **Run**（或按 Ctrl + Enter）
+
+看到 `Success. No rows returned` 就成功了。
+
+这一步创建了 5 张表：
+
+| 表名 | 存什么 |
+|---|---|
+| `journals` | 日志 / 文章 |
+| `plans` | 计划目标 |
+| `photos` | 相册照片 |
+| `profile` | 个人信息 |
+| `resume` | 简历（整份存一行） |
+
+同时开启了 RLS 安全策略：**所有人只能读，只有你自己登录后台才能改**。所以前端暴露密钥也不会被人篡改内容。
+
+### 第 3 步：拿到密钥并填进配置
+
+1. 左侧菜单点 **Settings**（齿轮图标）→ **API**
+2. 找到两个值：
+   - **Project URL**：形如 `https://abcdefgh.supabase.co`
+   - **anon public**：一长串 `eyJhbGciOi...`
+3. 打开仓库里的 `js/supabase-config.js`，填进去：
+
+```js
+window.SUPABASE_CONFIG = {
+    url: 'https://abcdefgh.supabase.co',
+    anonKey: 'eyJhbGciOi...粘贴你的那一长串...',
+};
+```
+
+4. 保存、提交、推送到 GitHub
+5. 等 1–2 分钟，刷新网页
+
+打开网页按 F12 看控制台，看到 `✅ DataService：已连接 Supabase` 就成功了。
+
+> ⚠️ 只填 **anon public** 这个，**千万不要**填 `service_role` 那个（它是最高权限密钥，泄露等于把数据库交给别人）。
+
+---
+
+## 三、日常怎么用
+
+### 写日志 / 改日志
+
+1. Supabase 左侧点 **Table Editor** → 选 `journals` 表
+2. 点 **Insert row** → **Insert a new row**
+3. 只需要填两个字段：
+   - `data`：一条日志的完整 JSON（见下面模板）
+   - `status`：`published`（想 temporarily 隐藏就填 `draft`）
+   - `id` 和 `created_at` 不用管，会自动生成
+4. 点 **Save**
+
+日志 JSON 模板（复制改内容即可）：
+
+```json
+{
+  "id": "journal-20261009",
+  "title": "我的新日志标题",
+  "category": "study",
+  "categoryName": "学习",
+  "excerpt": "摘要，150 字以内",
+  "content": "正文第一段。\n\n正文第二段。",
+  "tags": ["标签1", "标签2"],
+  "coverImage": "images/blog/my-cover.jpg",
+  "createdAt": "2026-10-09",
+  "readTime": 3,
+  "isTop": false
+}
+```
+
+改已有日志：直接点那一行，双击 `data` 单元格编辑，改完点 Save。
+
+### 上传照片（重点，这是你最想要的）
+
+1. 左侧点 **Storage** → **New bucket**
+   - Name 填 `photos`
+   - **勾上 Public bucket**（必须勾，否则网站读不到图）
+2. 进入 `photos` bucket → **Upload files** → 选中你的照片上传
+3. 上传完点照片名 → 点 **Get URL** → 复制那个链接
+4. 回到 **Table Editor** → `photos` 表 → Insert row：
+   - `album`：填 `hiking` / `travel` / `cycling` / `crocheting` / `painting`
+   - `data`：填 JSON，把刚才复制的 URL 粘进去
+
+```json
+{
+  "url": "https://xxxx.supabase.co/storage/v1/object/public/photos/xxx.jpg",
+  "caption": "照片描述",
+  "location": "拍摄地点",
+  "takenAt": "2026-10-09"
+}
+```
+
+**为什么这样更好**：照片不再进 GitHub 仓库，仓库不会越来越大；手机上也能直接上传。
+
+### 改简历
+
+`resume` 表里只有一行，`data` 字段是整份简历的 JSON。
+
+最简单的做法：把仓库里 `data/resume.json` 的内容整段复制，粘到 `data` 字段里，以后想改就在 Supabase 里改这一行。
+
+### 改个人信息 / 计划
+
+同理，改 `profile` 表和 `plans` 表。
+
+---
+
+## 四、常见问题
+
+**Q：配置了但网页没变化？**
+A：按顺序排查——
+1. F12 控制台有没有报错
+2. Supabase 表里是不是真的有数据（**空表会自动回退到本地数据**，这是设计好的）
+3. GitHub Pages 有 1–2 分钟缓存，等一会儿再刷新
+4. 浏览器硬刷新：Ctrl + F5
+
+**Q：想临时停用云端，回退到本地数据？**
+A：把 `js/supabase-config.js` 里两个值清空即可，网站立刻恢复原来的样子。
+
+**Q：数据会不会丢？**
+A：Supabase 免费版足够个人使用，但建议偶尔导出一次：Table Editor → 右上角 **Export** → 下载 CSV/JSON 备份。
+
+**Q：免费版有什么限制？**
+A：数据库 500MB、存储 1GB、每月 5GB 流量，个人网站远远用不完。唯一要注意：连续 7 天没人访问项目会被暂停，去控制台点一下就能恢复。
+
+**Q：能不能不用数据库？**
+A：可以，但体验会差很多。替代方案是 Decap CMS（在仓库上加一个 /admin 页面，改完自动 git commit），它不用数据库，但图片仍然存仓库，长期会让仓库变大，且需要配 GitHub 授权登录。
+
+---
+
+## 五、文件说明
+
+| 文件 | 作用 |
+|---|---|
+| `js/supabase-config.js` | **你只需要改这一个文件**：填 URL 和密钥 |
+| `js/data-service.js` | 统一数据层，自动判断用云端还是本地数据 |
+| `supabase-schema.sql` | 建表脚本，只需在 Supabase 执行一次 |
+| `data/resume.json` | 简历内容（未启用 Supabase 时的来源） |
+| `resume.html` | 简历页面 |

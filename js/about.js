@@ -12,8 +12,17 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 async function loadAboutData() {
     try {
-        const response = await fetch('data/about.json');
-        aboutData = await response.json();
+        let loaded = null;
+        // 优先读取云端数据
+        if (window.DataService) {
+            try { loaded = await window.DataService.getAbout(); } catch (e) { loaded = null; }
+        }
+        // 云端没有则读本地 JSON
+        if (!loaded) {
+            const response = await fetch('data/about.json');
+            loaded = await response.json();
+        }
+        aboutData = loaded;
         updateProfile();
         console.log('✅ 关于我数据加载成功');
     } catch (error) {

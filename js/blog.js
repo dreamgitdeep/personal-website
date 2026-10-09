@@ -4,7 +4,7 @@
  */
 
 // ========== 日志数据（直接嵌入，可直接双击HTML打开） ==========
-const journalsData = [
+let journalsData = [
     {
         "id": "journal-20260329",
         "title": "论文落幕，人在旅途",
@@ -76,7 +76,18 @@ const journalsData = [
 let currentFilter = 'study';
 let currentSearch = '';
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
+    // 优先读取云端数据（未配置 Supabase 时自动使用内嵌数据）
+    try {
+        const remote = window.DataService ? await window.DataService.getJournals() : null;
+        if (remote && remote.length) {
+            journalsData = remote;
+            console.log('☁️ 日志数据来自 Supabase:', remote.length);
+        }
+    } catch (e) {
+        console.warn('云端日志读取失败，使用内嵌数据', e);
+    }
+
     // 渲染日志列表
     renderJournals(journalsData);
     
