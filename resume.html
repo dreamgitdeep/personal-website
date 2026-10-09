@@ -11,24 +11,7 @@
 </head>
 <body>
     <!-- 导航栏 -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="nav-logo">
-                <i class="fas fa-heart"></i>
-                <span>我的空间</span>
-            </a>
-            <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link">首页</a></li>
-                <li><a href="blog.html" class="nav-link">日志</a></li>
-                <li><a href="resume.html" class="nav-link active">关于我</a></li>
-            </ul>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div>
-    </nav>
+    <nav class="navbar" data-layout="nav"></nav>
 
     <!-- 页面标题区域 -->
     <section class="page-header">
@@ -133,26 +116,17 @@
     </main>
 
     <!-- 页脚 -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <p class="footer-text">
-                    Copyright © 2026 秋千的个人空间. All Rights Reserved.
-                </p>
-                <p class="footer-disclaimer">本站内容未经授权禁止转载、复制或建立镜像</p>
-                <p class="footer-admin"><a href="admin.html">内容管理</a></p>
-            </div>
-        </div>
-    </footer>
+    <footer class="footer" data-layout="footer"></footer>
 
     <!-- 返回顶部按钮 -->
     <button class="back-to-top" id="backToTop">
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <script src="js/main.js"></script>
         <script src="js/supabase-config.js"></script>
     <script src="js/data-service.js"></script>
 <script src="js/resume.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>

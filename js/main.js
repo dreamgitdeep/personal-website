@@ -34,17 +34,23 @@ function initHeroContent() {
 // 导航菜单功能
 // ========================================
 function initNavigation() {
+    // 导航栏由 js/layout.js 统一注入。若此刻还没渲染（脚本顺序异常），
+    // 先补渲染一次，再重新取节点——querySelector 取的是快照，不能复用。
+    if (!document.querySelector('.hamburger') && window.SiteLayout) {
+        window.SiteLayout.render();
+    }
+
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
-    
+
     if (hamburger && navMenu) {
         hamburger.addEventListener('click', function() {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
             document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
         });
-        
+
         // 点击导航链接后关闭菜单
         navLinks.forEach(link => {
             link.addEventListener('click', function() {
