@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>内容管理 - 我的个人空间</title>
+<style>
+:root{
+  --primary:#c084fc; --primary-dark:#a855f7; --primary-deep:#9333ea;
+  --primary-light:#e8d5ff; --bg:#fdf2f8; --bg2:#fce7f3;
+  --text:#252b36; --muted:#6b7280; --line:#e8e2ec;
+  --ok:#16a34a; --err:#dc2626; --warn:#d97706;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:"Microsoft YaHei","PingFang SC","Helvetica Neue",Arial,sans-serif;
+  font-size:14px;line-height:1.7;color:var(--text);background:var(--bg);
+}
+.wrap{max-width:1000px;margin:0 auto;padding:24px 20px 60px}
+h1{font-size:22px;color:var(--primary-deep);margin-bottom:4px}
+h2{font-size:16px;color:var(--primary-deep);margin:22px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+h3{font-size:14px;color:var(--text);margin:16px 0 8px}
+.sub{font-size:13px;color:var(--muted);margin-bottom:20px}
+
+/* ---------- 卡片 ---------- */
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:16px}
+.card.warn{background:#fffbeb;border-color:#fde68a}
+.card.info{background:#f5f3ff;border-color:var(--primary-light)}
+
+/* ---------- 表单 ---------- */
+label{display:block;font-size:13px;color:var(--muted);margin:12px 0 5px}
+input[type=text],input[type=email],input[type=password],input[type=number],input[type=date],select,textarea{
+  width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:8px;
+  font-size:14px;font-family:inherit;background:#fff;color:var(--text);
+}
+textarea{min-height:96px;resize:vertical;line-height:1.7}
+textarea.json{min-height:300px;font-family:Consolas,Monaco,monospace;font-size:12.5px;line-height:1.6}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(192,132,252,.14)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+
+/* ---------- 按钮 ---------- */
+button,.btn{
+  display:inline-flex;align-items:center;gap:6px;justify-content:center;
+  padding:9px 18px;border:none;border-radius:8px;font-size:14px;font-family:inherit;
+  cursor:pointer;background:var(--primary-deep);color:#fff;transition:.2s;
+}
+button:hover,.btn:hover{background:var(--primary-dark)}
+button.sec{background:#fff;color:var(--text);border:1px solid var(--line)}
+button.sec:hover{background:var(--bg);border-color:var(--primary)}
+button.danger{background:var(--err)}
+button.danger:hover{background:#b91c1c}
+button:disabled{opacity:.5;cursor:not-allowed}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+
+/* ---------- 登录 ---------- */
+#loginView{max-width:420px;margin:8vh auto}
+#loginView .card{padding:28px}
+#loginView h1{text-align:center;margin-bottom:6px}
+#loginView .sub{text-align:center;margin-bottom:22px}
+
+/* ---------- 顶栏 ---------- */
+.topbar{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  background:#fff;border:1px solid var(--line);border-radius:12px;
+  padding:14px 20px;margin-bottom:18px;
+}
+.topbar .who{font-size:13px;color:var(--muted)}
+.topbar .who b{color:var(--text)}
+.topbar .sp{flex:1}
+
+/* ---------- Tab ---------- */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.tabs button{
+  background:#fff;color:var(--muted);border:1px solid var(--line);
+  padding:8px 18px;border-radius:8px;font-size:13.5px;
+}
+.tabs button.on{background:var(--primary-deep);color:#fff;border-color:var(--primary-deep)}
+.tabpane{display:none}
+.tabpane.on{display:block}
+
+/* ---------- 列表 ---------- */
+.item{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 14px;border:1px solid var(--line);border-radius:10px;
+  margin-bottom:9px;background:#fff;
+}
+.item .t{flex:1;min-width:0}
+.item .t b{display:block;font-size:14px;color:var(--text)}
+.item .t small{color:var(--muted);font-size:12px}
+.item .ops{display:flex;gap:6px;flex:0 0 auto}
+.item .ops button{padding:5px 12px;font-size:12.5px}
+
+/* ---------- 提示 ---------- */
+.msg{padding:11px 15px;border-radius:8px;font-size:13.5px;margin-bottom:14px;display:none}
+.msg.ok{display:block;background:#f0fdf4;color:var(--ok);border:1px solid #bbf7d0}
+.msg.err{display:block;background:#fef2f2;color:var(--err);border:1px solid #fecaca}
+.status{font-size:13px;color:var(--muted);margin-top:10px}
+.badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11.5px;background:var(--bg2);color:var(--primary-deep)}
+.badge.draft{background:#fef3c7;color:var(--warn)}
+
+/* ---------- 相册 ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:14px}
+.grid figure{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.grid img{width:100%;height:110px;object-fit:cover;display:block}
+.grid figcaption{padding:7px 9px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:6px;align-items:center}
+.grid figcaption button{padding:3px 9px;font-size:11.5px}
+
+code{background:var(--bg);padding:1px 6px;border-radius:4px;font-size:12.5px;color:var(--primary-deep)}
+a{color:var(--primary-deep)}
+@media(max-width:640px){.row,.row3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<!-- ============ 登录 ============ -->
+<div id="loginView">
+  <div class="card">
+    <h1>内容管理</h1>
+    <p class="sub">登录后即可修改网站内容</p>
+    <div id="loginMsg" class="msg"></div>
+    <form id="loginForm">
+      <label>邮箱</label>
+      <input type="email" id="lgEmail" required placeholder="you@example.com" autocomplete="username">
+      <label>密码</label>
+      <input type="password" id="lgPwd" required placeholder="登录密码" autocomplete="current-password">
+      <div class="acts">
+        <button type="submit" id="lgBtn">登 录</button>
+      </div>
+    </form>
+    <div class="card info" style="margin-top:20px;margin-bottom:0">
+      <b>还没有账号？</b><br>
+      管理端不开放注册，需要你先在 Supabase 后台创建一个专属账号：<br>
+      <code>Authentication</code> → <code>Users</code> → <code>Add user</code>
+      → 填邮箱和密码，<b>勾选 Auto Confirm User</b> → 保存。<br>
+      然后用这个邮箱密码在这里登录。
+    </div>
+  </div>
+</div>
+
+<!-- ============ 管理界面 ============ -->
+<div id="adminView" hidden>
+
+  <div class="topbar">
+    <div>
+      <h1 style="font-size:18px;margin:0">内容管理</h1>
+      <div class="who">已登录：<b id="whoAmI">—</b></div>
+    </div>
+    <div class="sp"></div>
+    <a href="index.html" class="btn sec" style="text-decoration:none">查看网站</a>
+    <button class="sec" id="logoutBtn">退出</button>
+  </div>
+
+  <div class="tabs">
+    <button data-tab="resume" class="on">简历 / 关于我</button>
+    <button data-tab="journals">日志</button>
+    <button data-tab="photos">相册</button>
+    <button data-tab="profile">个人信息</button>
+  </div>
+
+  <div id="msg" class="msg"></div>
+
+  <!-- ---------- 简历 ---------- -->
+  <div class="tabpane on" id="pane-resume">
+    <div class="card">
+      <h2>基本信息</h2>
+      <div class="row">
+        <div><label>姓名</label><input type="text" id="r_name"></div>
+        <div><label>求职意向</label><input type="text" id="r_intent"></div>
+      </div>
+      <div class="row3">
+        <div><label>电话</label><input type="text" id="r_phone"></div>
+        <div><label>邮箱</label><input type="email" id="r_email"></div>
+        <div><label>城市</label><input type="text" id="r_location"></div>
+      </div>
+      <div><label>状态标签</label><input type="text" id="r_status" placeholder="如：已毕业 · 可快速到岗"></div>
+      <div><label>个人概述（支持 &lt;b&gt; 加粗标签）</label><textarea id="r_summary"></textarea></div>
+    </div>
+
+    <div class="card">
+      <h2>数据看板（6 项）</h2>
+      <div id="kpiBox"></div>
+      <div class="acts"><button class="sec" id="addKpi">+ 添加一项</button></div>
+    </div>
+
+    <div class="card">
+      <h2>完整数据（高级）</h2>
+      <p class="sub" style="margin-bottom:10px">
+        上面的表单只覆盖常用字段。工作经历、教育背景、科研成果、专业技能等在这里编辑，格式是 JSON。
+        改完点保存即可，不确定就先别动这一块。
+      </p>
+      <textarea class="json" id="r_json"></textarea>
+      <div class="acts">
+        <button class="sec" id="fmtJson">格式化</button>
+        <button id="saveResume">保存简历</button>
+      </div>
+      <div class="status" id="resumeStatus"></div>
+    </div>
+  </div>
+
+  <!-- ---------- 日志 ---------- -->
+  <div class="tabpane" id="pane-journals">
+    <div class="card">
+      <h2>新建日志</h2>
+      <label>标题</label><input type="text" id="j_title">
+      <div class="row3">
+        <div><label>分类</label>
+          <select id="j_cat">
+            <option value="study">学习</option>
+            <option value="life">生活</option>
+            <option value="work">工作</option>
+          </select>
+        </div>
+        <div><label>日期</label><input type="date" id="j_date"></div>
+        <div><label>阅读时长（分钟）</label><input type="number" id="j_read" value="3"></div>
+      </div>
+      <label>摘要</label><textarea id="j_excerpt" style="min-height:60px"></textarea>
+      <label>正文（两个回车分段）</label><textarea id="j_content" style="min-height:150px"></textarea>
+      <label>标签（逗号分隔）</label><input type="text" id="j_tags" placeholder="学习,复盘">
+      <label>封面图地址（可留空）</label><input type="text" id="j_cover" placeholder="images/blog/xxx.jpg">
+      <div class="acts">
+        <button id="saveJournal">保存日志</button>
+        <button class="sec" id="resetJournal" type="button">清空表单</button>
+      </div>
+      <div class="status" id="journalStatus"></div>
+    </div>
+
+    <div class="card">
+      <h2>已有日志</h2>
+      <div id="journalList"><div class="status">加载中…</div></div>
+    </div>
+  </div>
+
+  <!-- ---------- 相册 ---------- -->
+  <div class="tabpane" id="pane-photos">
+    <div class="card warn">
+      <b>首次使用请先建一个存储空间</b><br>
+      Supabase 控制台 → <code>Storage</code> → <code>New bucket</code> →
+      名称填 <code>photos</code>，<b>勾选 Public bucket</b> → 保存。<br>
+      只需要做一次。
+    </div>
+    <div class="card">
+      <h2>上传照片</h2>
+      <div class="row">
+        <div><label>相册</label>
+          <select id="p_album">
+            <option value="hiking">徒步</option>
+            <option value="travel">旅游</option>
+            <option value="cycling">骑行</option>
+            <option value="crocheting">编织</option>
+            <option value="painting">绘画</option>
+          </select>
+        </div>
+        <div><label>拍摄地点（可留空）</label><input type="text" id="p_location"></div>
+      </div>
+      <label>选择照片（可多选）</label>
+      <input type="file" id="p_files" accept="image/*" multiple>
+      <div class="acts"><button id="uploadBtn">上传</button></div>
+      <div class="status" id="photoStatus"></div>
+    </div>
+
+    <div class="card">
+      <h2>相册内容</h2>
+      <select id="p_view" style="max-width:220px">
+        <option value="hiking">徒步</option>
+        <option value="travel">旅游</option>
+        <option value="cycling">骑行</option>
+        <option value="crocheting">编织</option>
+        <option value="painting">绘画</option>
+      </select>
+      <div class="grid" id="photoGrid"><div class="status">加载中…</div></div>
+    </div>
+  </div>
+
+  <!-- ---------- 个人信息 ---------- -->
+  <div class="tabpane" id="pane-profile">
+    <div class="card">
+      <h2>个人信息（JSON）</h2>
+      <p class="sub" style="margin-bottom:10px">对应网站上的昵称、简介、技能条等，供以后扩展使用。</p>
+      <textarea class="json" id="pf_json" style="min-height:220px"></textarea>
+      <div class="acts"><button id="saveProfile">保存</button></div>
+      <div class="status" id="profileStatus"></div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
+<script src="js/supabase-config.js"></script>
+<script>
+/* ============================================================
+   内容管理端
+   ============================================================ */
+var cfg = window.SUPABASE_CONFIG || {};
+var sb  = (cfg.url && cfg.anonKey) ? supabase.createClient(cfg.url, cfg.anonKey) : null;
+
+var $ = function (id) { return document.getElementById(id); };
+function msg(text, ok) {
+    var adminOpen = $('adminView') && !$('adminView').hidden;
+    var box = adminOpen ? $('msg') : $('loginMsg');
+    box.className = 'msg ' + (ok ? 'ok' : 'err');
+    box.textContent = text;
+    setTimeout(function () { box.className = 'msg'; }, 4500);
+}
+function status(id, text) { var e = $(id); if (e) e.textContent = text; }
+function esc(s) {
+    return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+if (!sb) {
+    msg('尚未配置 Supabase：请在 js/supabase-config.js 填入 url 与 anonKey', false);
+}
+
+/* ---------- 登录态 ---------- */
+function showAdmin(session) {
+    var ok = !!(session && session.user);
+    $('loginView').hidden = ok;
+    $('adminView').hidden = !ok;
+    if (ok) {
+        $('whoAmI').textContent = session.user.email;
+        loadResume(); loadJournals(); loadPhotos(); loadProfile();
+    }
+}
+if (sb) {
+    sb.auth.getSession().then(function (r) { showAdmin(r.data.session); });
+    sb.auth.onAuthStateChange(function (e, s) { showAdmin(s); });
+}
+
+$('loginForm').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    if (!sb) return;
+    var btn = $('lgBtn'); btn.disabled = true; btn.textContent = '登录中…';
+    sb.auth.signInWithPassword({ email: $('lgEmail').value, password: $('lgPwd').value })
+        .then(function (r) {
+            btn.disabled = false; btn.textContent = '登 录';
+            if (r.error) msg('登录失败：' + r.error.message, false);
+        });
+});
+$('logoutBtn').addEventListener('click', function () { if (sb) sb.auth.signOut(); });
+
+/* ---------- Tab ---------- */
+document.querySelectorAll('.tabs button').forEach(function (b) {
+    b.addEventListener('click', function () {
+        document.querySelectorAll('.tabs button').forEach(function (x) { x.classList.remove('on'); });
+        document.querySelectorAll('.tabpane').forEach(function (x) { x.classList.remove('on'); });
+        b.classList.add('on');
+        $('pane-' + b.dataset.tab).classList.add('on');
+    });
+});
+
+/* ============================================================
+   简历
+   ============================================================ */
+var resumeId = null;
+var resumeData = null;
+
+function loadResume() {
+    if (!sb) return;
+    sb.from('resume').select('*').order('updated_at', { ascending: false }).limit(1)
+      .then(function (r) {
+          if (r.error) { status('resumeStatus', '读取失败：' + r.error.message); return; }
+          if (r.data && r.data.length) {
+              resumeId = r.data[0].id;
+              resumeData = r.data[0].data;
+          } else {
+              resumeId = null;
+              // 云端没有就用仓库里的那份做初始内容
+              fetch('data/resume.json').then(function (x) { return x.json(); })
+                  .then(function (d) { resumeData = d; fillResume(); })
+                  .catch(function () { resumeData = { profile:{}, kpis:[] }; fillResume(); });
+              status('resumeStatus', '云端还没有简历数据，已载入本地模板，保存后即写入云端');
+              return;
+          }
+          fillResume();
+      });
+}
+
+function fillResume() {
+    var p = (resumeData && resumeData.profile) || {};
+    $('r_name').value     = p.name || '';
+    $('r_intent').value   = p.intent || '';
+    $('r_phone').value    = p.phone || '';
+    $('r_email').value    = p.email || '';
+    $('r_location').value = p.location || '';
+    $('r_status').value   = p.status || '';
+    $('r_summary').value  = resumeData.summary || '';
+    $('r_json').value     = JSON.stringify(resumeData, null, 2);
+    renderKpis();
+}
+
+function renderKpis() {
+    var list = (resumeData && resumeData.kpis) || [];
+    $('kpiBox').innerHTML = list.map(function (k, i) {
+        return '<div class="row3" style="margin-bottom:8px">' +
+            '<div><label>数字</label><input type="text" value="' + esc(k.n) + '" data-k="n" data-i="' + i + '"></div>' +
+            '<div><label>单位</label><input type="text" value="' + esc(k.unit) + '" data-k="unit" data-i="' + i + '"></div>' +
+            '<div><label>说明</label><input type="text" value="' + esc(k.label) + '" data-k="label" data-i="' + i + '">' +
+            '<button class="danger" data-delkpi="' + i + '" style="margin-top:6px;width:100%">删除</button></div>' +
+            '</div>';
+    }).join('') || '<div class="status">暂无</div>';
+}
+
+$('kpiBox').addEventListener('input', function (e) {
+    var t = e.target; if (!t.dataset.k) return;
+    var i = +t.dataset.i;
+    if (resumeData.kpis[i]) resumeData.kpis[i][t.dataset.k] = t.value;
+});
+$('kpiBox').addEventListener('click', function (e) {
+    var d = e.target.dataset.delkpi;
+    if (d === undefined) return;
+    resumeData.kpis.splice(+d, 1); renderKpis();
+});
+$('addKpi').addEventListener('click', function () {
+    resumeData.kpis = resumeData.kpis || [];
+    resumeData.kpis.push({ n: '0', unit: '个', label: '新指标', sub: '' });
+    renderKpis();
+});
+$('fmtJson').addEventListener('click', function () {
+    try { $('r_json').value = JSON.stringify(JSON.parse($('r_json').value), null, 2); }
+    catch (e) { status('resumeStatus', 'JSON 有语法错误，无法格式化'); }
+});
+
+$('saveResume').addEventListener('click', function () {
+    if (!sb) return;
+    var obj;
+    try { obj = JSON.parse($('r_json').value); }
+    catch (e) { status('resumeStatus', 'JSON 语法错误：' + e.message); return; }
+
+    // 用表单里的值覆盖基础字段（表单是最新输入）
+    obj.profile = obj.profile || {};
+    obj.profile.name     = $('r_name').value;
+    obj.profile.intent   = $('r_intent').value;
+    obj.profile.phone    = $('r_phone').value;
+    obj.profile.email    = $('r_email').value;
+    obj.profile.location = $('r_location').value;
+    obj.profile.status   = $('r_status').value;
+    obj.summary = $('r_summary').value;
+    obj.kpis = resumeData.kpis || [];
+
+    var payload = { data: obj, updated_at: new Date().toISOString() };
+    var q = resumeId
+        ? sb.from('resume').update(payload).eq('id', resumeId)
+        : sb.from('resume').insert(payload).select();
+
+    status('resumeStatus', '保存中…');
+    q.then(function (r) {
+        if (r.error) { status('resumeStatus', '保存失败：' + r.error.message); msg('保存失败：' + r.error.message, false); return; }
+        if (!resumeId && r.data && r.data[0]) resumeId = r.data[0].id;
+        resumeData = obj;
+        status('resumeStatus', '已保存 ' + new Date().toLocaleTimeString());
+        msg('简历已保存，网站稍后自动更新', true);
+    });
+});
+
+/* ============================================================
+   日志
+   ============================================================ */
+function loadJournals() {
+    if (!sb) return;
+    sb.from('journals').select('id,data,status,created_at').order('created_at', { ascending: false })
+      .then(function (r) {
+          var box = $('journalList');
+          if (r.error) { box.innerHTML = '<div class="status">读取失败：' + esc(r.error.message) + '</div>'; return; }
+          if (!r.data.length) { box.innerHTML = '<div class="status">还没有日志，用上面的表单新建一篇</div>'; return; }
+          box.innerHTML = r.data.map(function (row) {
+              var d = row.data || {};
+              return '<div class="item"><div class="t">' +
+                  '<b>' + esc(d.title || '（无标题）') + '</b>' +
+                  '<small>' + esc(d.categoryName || d.category || '') + ' · ' + esc(d.createdAt || '') +
+                  ' · <span class="badge ' + (row.status === 'published' ? '' : 'draft') + '">' +
+                  esc(row.status || '') + '</span></small></div>' +
+                  '<div class="ops">' +
+                  '<button class="sec" data-edit="' + row.id + '">编辑</button>' +
+                  '<button class="danger" data-del="' + row.id + '">删除</button>' +
+                  '</div></div>';
+          }).join('');
+      });
+}
+
+$('journalList').addEventListener('click', function (e) {
+    var id;
+    if ((id = e.target.dataset.edit)) {
+        sb.from('journals').select('data').eq('id', id).single().then(function (r) {
+            if (r.error) return;
+            var d = r.data.data || {};
+            $('j_title').value   = d.title || '';
+            $('j_cat').value     = d.category || 'study';
+            $('j_date').value    = d.createdAt || '';
+            $('j_read').value    = d.readTime || 3;
+            $('j_excerpt').value = d.excerpt || '';
+            $('j_content').value = d.content || '';
+            $('j_tags').value    = (d.tags || []).join(',');
+            $('j_cover').value   = d.coverImage || '';
+            $('saveJournal').dataset.editing = id;
+            $('saveJournal').textContent = '更新日志';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+    if ((id = e.target.dataset.del)) {
+        if (!confirm('确定删除这篇日志？')) return;
+        sb.from('journals').delete().eq('id', id).then(function (r) {
+            if (r.error) msg('删除失败：' + r.error.message, false);
+            else { msg('已删除', true); loadJournals(); }
+        });
+    }
+});
+
+$('resetJournal').addEventListener('click', function () {
+    ['j_title','j_excerpt','j_content','j_tags','j_cover'].forEach(function (i) { $(i).value = ''; });
+    $('j_date').value = ''; $('j_read').value = 3;
+    delete $('saveJournal').dataset.editing;
+    $('saveJournal').textContent = '保存日志';
+});
+
+$('saveJournal').addEventListener('click', function () {
+    if (!sb) return;
+    var title = $('j_title').value.trim();
+    if (!title) { status('journalStatus', '标题不能为空'); return; }
+    var catMap = { study: '学习', life: '生活', work: '工作' };
+    var cat = $('j_cat').value;
+    var data = {
+        id: 'journal-' + ($('j_date').value || Date.now()).replace(/-/g, ''),
+        title: title,
+        category: cat,
+        categoryName: catMap[cat] || '学习',
+        excerpt: $('j_excerpt').value,
+        content: $('j_content').value,
+        tags: $('j_tags').value.split(/[,，]/).map(function (s) { return s.trim(); }).filter(Boolean),
+        coverImage: $('j_cover').value,
+        createdAt: $('j_date').value || new Date().toISOString().slice(0, 10),
+        readTime: +$('j_read').value || 3,
+        viewCount: 0,
+        isTop: false
+    };
+    var id = $('saveJournal').dataset.editing;
+    var q = id ? sb.from('journals').update({ data: data }).eq('id', id)
+               : sb.from('journals').insert({ data: data, status: 'published' });
+    status('journalStatus', '保存中…');
+    q.then(function (r) {
+        if (r.error) { status('journalStatus', '保存失败：' + r.error.message); msg('保存失败：' + r.error.message, false); return; }
+        status('journalStatus', '已保存');
+        msg(id ? '日志已更新' : '日志已发布', true);
+        $('resetJournal').click();
+        loadJournals();
+    });
+});
+
+/* ============================================================
+   相册
+   ============================================================ */
+$('uploadBtn').addEventListener('click', function () {
+    if (!sb) return;
+    var files = $('p_files').files;
+    if (!files.length) { status('photoStatus', '请先选择照片'); return; }
+    var album = $('p_album').value, loc = $('p_location').value;
+    var done = 0, fail = 0;
+
+    Array.prototype.forEach.call(files, function (f) {
+        var path = album + '/' + Date.now() + '-' + f.name.replace(/[^\w.\-]/g, '_');
+        status('photoStatus', '上传中 ' + (done + fail + 1) + '/' + files.length + '…');
+        sb.storage.from('photos').upload(path, f).then(function (up) {
+            if (up.error) { fail++; return; }
+            var url = sb.storage.from('photos').getPublicUrl(path).data.publicUrl;
+            return sb.from('photos').insert({
+                album: album,
+                data: { url: url, caption: '', location: loc, takenAt: new Date().toISOString().slice(0, 10) },
+                sort_order: Math.floor(Date.now() / 1000)
+            }).then(function (r) { r.error ? fail++ : done++; });
+        }).then(function () {
+            if (done + fail === files.length) {
+                status('photoStatus', '完成：成功 ' + done + ' 张' + (fail ? '，失败 ' + fail + ' 张' : ''));
+                msg('上传完成', fail === 0);
+                $('p_view').value = album;
+                loadPhotos();
+            }
+        });
+    });
+});
+
+$('p_view').addEventListener('change', loadPhotos);
+
+function loadPhotos() {
+    if (!sb) return;
+    var album = $('p_view').value;
+    sb.from('photos').select('id,data').eq('album', album).order('sort_order', { ascending: false })
+      .then(function (r) {
+          var g = $('photoGrid');
+          if (r.error) { g.innerHTML = '<div class="status">读取失败：' + esc(r.error.message) + '</div>'; return; }
+          if (!r.data.length) { g.innerHTML = '<div class="status">这个相册还没有照片</div>'; return; }
+          g.innerHTML = r.data.map(function (row) {
+              var d = row.data || {};
+              return '<figure><img src="' + esc(d.url) + '" alt="">' +
+                  '<figcaption><span>' + esc(d.location || '') + '</span>' +
+                  '<button class="danger" data-delphoto="' + row.id + '">删</button></figcaption></figure>';
+          }).join('');
+      });
+}
+
+$('photoGrid').addEventListener('click', function (e) {
+    var id = e.target.dataset.delphoto;
+    if (!id) return;
+    if (!confirm('删除这张照片？')) return;
+    sb.from('photos').delete().eq('id', id).then(function (r) {
+        if (r.error) msg('删除失败：' + r.error.message, false);
+        else { msg('已删除', true); loadPhotos(); }
+    });
+});
+
+/* ============================================================
+   个人信息
+   ============================================================ */
+var profileId = null;
+function loadProfile() {
+    if (!sb) return;
+    sb.from('profile').select('*').limit(1).then(function (r) {
+        if (r.error) { status('profileStatus', '读取失败：' + r.error.message); return; }
+        if (r.data && r.data.length) { profileId = r.data[0].id; $('pf_json').value = JSON.stringify(r.data[0].data, null, 2); }
+        else {
+            fetch('data/about.json').then(function (x) { return x.json(); })
+                .then(function (d) { $('pf_json').value = JSON.stringify(d, null, 2); })
+                .catch(function () { $('pf_json').value = '{}'; });
+        }
+    });
+}
+$('saveProfile').addEventListener('click', function () {
+    if (!sb) return;
+    var obj;
+    try { obj = JSON.parse($('pf_json').value); }
+    catch (e) { status('profileStatus', 'JSON 语法错误：' + e.message); return; }
+    var payload = { data: obj, updated_at: new Date().toISOString() };
+    var q = profileId ? sb.from('profile').update(payload).eq('id', profileId)
+                      : sb.from('profile').insert(payload).select();
+    status('profileStatus', '保存中…');
+    q.then(function (r) {
+        if (r.error) { status('profileStatus', '保存失败：' + r.error.message); return; }
+        if (!profileId && r.data && r.data[0]) profileId = r.data[0].id;
+        status('profileStatus', '已保存');
+        msg('个人信息已保存', true);
+    });
+});
+</script>
+</body>
+</html>
