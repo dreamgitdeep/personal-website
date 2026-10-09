@@ -119,23 +119,22 @@ a{color:var(--primary-deep)}
 <div id="loginView">
   <div class="card">
     <h1>内容管理</h1>
-    <p class="sub">登录后即可修改网站内容</p>
+    <p class="sub">输入管理密码即可进入</p>
     <div id="loginMsg" class="msg"></div>
     <form id="loginForm">
-      <label>邮箱</label>
-      <input type="email" id="lgEmail" required placeholder="you@example.com" autocomplete="username">
-      <label>密码</label>
-      <input type="password" id="lgPwd" required placeholder="登录密码" autocomplete="current-password">
+      <label>管理密码</label>
+      <input type="password" id="lgPwd" required placeholder="至少 6 位" autocomplete="current-password">
       <div class="acts">
-        <button type="submit" id="lgBtn">登 录</button>
+        <button type="submit" id="lgBtn">进 入</button>
       </div>
     </form>
     <div class="card info" style="margin-top:20px;margin-bottom:0">
-      <b>还没有账号？</b><br>
-      管理端不开放注册，需要你先在 Supabase 后台创建一个专属账号：<br>
-      <code>Authentication</code> → <code>Users</code> → <code>Add user</code>
-      → 填邮箱和密码，<b>勾选 Auto Confirm User</b> → 保存。<br>
-      然后用这个邮箱密码在这里登录。
+      <b>第一次使用？</b><br>
+      直接想一个密码输进去就行，系统会自动用它建好你的专属账号并登录；<br>
+      以后就用<b>同一个密码</b>进入，不用去后台创建用户。<br><br>
+      <b>如果提示「需要邮箱验证」</b>（极少见）：<br>
+      Supabase → <code>Authentication</code> → <code>Sign In / Providers</code> →
+      <code>Email</code> → 关掉 <code>Confirm email</code>，回来重试一次即可。
     </div>
   </div>
 </div>
@@ -315,6 +314,43 @@ if (!sb) {
     msg('尚未配置 Supabase：请在 js/supabase-config.js 填入 url 与 anonKey', false);
 }
 
+/* ---------- 登录：只要一个密码 ---------- */
+var ADMIN_EMAIL = cfg.adminEmail || '';
+var INIT_KEY = 'adminInited_v1';
+function inited() { try { return localStorage.getItem(INIT_KEY) === '1'; } catch (e) { return false; } }
+function markInited() { try { localStorage.setItem(INIT_KEY, '1'); } catch (e) {} }
+
+function btnBack() { var b = $('lgBtn'); b.disabled = false; b.textContent = '进 入'; }
+
+// 先尝试正常登录
+function doSignIn(pwd, allowSignup) {
+    sb.auth.signInWithPassword({ email: ADMIN_EMAIL, password: pwd }).then(function (r) {
+        if (!r.error && r.data && r.data.session) { markInited(); btnBack(); return; }
+        if (allowSignup) { doSignUp(pwd); return; }
+        btnBack();
+        msg('密码不对：' + (r.error ? r.error.message : '请重试'), false);
+    });
+}
+
+// 本机首次使用：用这个密码自动建号
+function doSignUp(pwd) {
+    sb.auth.signUp({ email: ADMIN_EMAIL, password: pwd }).then(function (s) {
+        if (s.data && s.data.session) { markInited(); btnBack(); msg('已用这个密码创建账号，记住它', true); return; }
+        if (s.error) {
+            btnBack();
+            var m = s.error.message || '';
+            // 多半是这个账号已经建过了，那就当密码输错处理
+            msg(/not allowed|signup/i.test(m)
+                ? '创建账号失败：' + m + '（项目可能关闭了自助注册）'
+                : '这个账号已经创建过了，请输入你最初设置的那个密码', false);
+            return;
+        }
+        // 建号成功但要邮箱验证
+        btnBack();
+        msg('账号已创建，但这个项目开了邮箱验证：Supabase → Authentication → Sign In / Providers → Email → 关掉 Confirm email，再回来重试。', false);
+    });
+}
+
 /* ---------- 登录态 ---------- */
 function showAdmin(session) {
     var ok = !!(session && session.user);
@@ -333,12 +369,12 @@ if (sb) {
 $('loginForm').addEventListener('submit', function (ev) {
     ev.preventDefault();
     if (!sb) return;
-    var btn = $('lgBtn'); btn.disabled = true; btn.textContent = '登录中…';
-    sb.auth.signInWithPassword({ email: $('lgEmail').value, password: $('lgPwd').value })
-        .then(function (r) {
-            btn.disabled = false; btn.textContent = '登 录';
-            if (r.error) msg('登录失败：' + r.error.message, false);
-        });
+    if (!ADMIN_EMAIL) { msg('尚未配置管理账号：请在 js/supabase-config.js 填 adminEmail', false); return; }
+    var pwd = $('lgPwd').value;
+    if (pwd.length < 6) { msg('密码至少 6 位', false); return; }
+    var btn = $('lgBtn'); btn.disabled = true; btn.textContent = '验证中…';
+    // 本机没成功登录过 → 允许自动建号；登录过 → 只认密码
+    doSignIn(pwd, !inited());
 });
 $('logoutBtn').addEventListener('click', function () { if (sb) sb.auth.signOut(); });
 

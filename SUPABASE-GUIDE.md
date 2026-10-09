@@ -84,15 +84,14 @@ window.SUPABASE_CONFIG = {
 > 也可以手动建：Storage → New bucket → 名字 `photos` → 勾 Public。
 > 但**手动建完仍要执行 `init-storage.sql`**，否则上传会被安全策略拦下。
 
-### 第 5 步：创建管理端登录账号
+### 第 5 步：进管理端设一个密码（不用建账号）
 
-1. 左侧点 **Authentication** → **Users**
-2. 点 **Add user** → **Create new user**
-3. 填你的邮箱和密码
-4. **务必勾选 `Auto Confirm User`**（不勾会登录失败）
-5. 点 **Create user**
+打开 `admin.html`，**直接想一个密码输进去就行**——第一次输入时系统会自动用它建好你的账号并登录，
+以后都用同一个密码进入。不需要去后台创建用户。
 
-管理端不开放公开注册，只有你在这里建过的账号能登录。
+> 万一提示「需要邮箱验证」：Supabase → **Authentication** → **Sign In / Providers** →
+> **Email** → 关掉 `Confirm email`，回来重试一次就好。这是项目默认设置，关掉不影响安全，
+> 因为管理端没有公开注册入口。
 
 ---
 
@@ -104,7 +103,8 @@ window.SUPABASE_CONFIG = {
 https://dreamgitdeep.github.io/personal-website/admin.html
 ```
 
-用第 5 步建的邮箱密码登录，登录后有四个页签：
+输入管理密码即可进入（第一次输的密码会自动成为你的账号密码，之后沿用）。
+登录状态会记住一段时间，下次打开通常不用重输。登录后有四个页签：
 
 | 页签 | 能做什么 |
 |---|---|
@@ -224,9 +224,16 @@ A：可以，但体验会差很多。替代方案是 Decap CMS（在仓库上加
 | `data/resume.json` | 简历内容（云端没数据时的兜底来源） |
 | `resume.html` | 关于我 / 简历页面 |
 
-**Q：管理端登录失败？**
-A：多半是建用户时没勾 `Auto Confirm User`；或者邮箱密码输错。
-去 Supabase → Authentication → Users 看一下该用户 `Confirmed` 列有没有时间戳，没有就删掉重建并勾选。
+**Q：管理端进不去 / 提示密码不对？**
+A：按顺序排查——
+1. 密码至少 6 位，且必须和你第一次设的那个**完全一致**
+2. 提示「需要邮箱验证」→ 按第 5 步关掉 `Confirm email` 再试
+3. 提示「项目关闭了自助注册」→ Supabase → Authentication → Sign In / Providers → 打开 `Allow new users to sign up`
+4. 换过 `adminEmail` 等于换了账号，需要用新密码重新设一次
+
+**Q：忘了密码？**
+A：Supabase → Authentication → Users → 点你的账号 → 右上角 **Send password recovery**
+（或直接在那里 `Reset password`）；也可以删掉该用户，回管理端重新设一次密码。
 
 **Q：管理端保存时提示权限错误（row-level security）？**
 A：说明没登录成功，或 `supabase-schema.sql` 的写入策略没执行到。重新执行一次该脚本即可（它可重复执行）。

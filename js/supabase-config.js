@@ -21,6 +21,11 @@ window.SUPABASE_CONFIG = {
     // 例：'https://abcdefghijklmnop.supabase.co'
     url: 'https://dqfzlmjdicticwzfxjoq.supabase.co',
 
+    // 管理端的登录账号名（只会存在这里，登录界面不显示）。
+    // 第一次进管理端时会自动用它建号，你只管输密码，不用去后台创建用户。
+    // 想换就改这个邮箱（换后等于换一个新账号，需要重新设一次密码）。
+    adminEmail: '1208376659@qq.com',
+
     // 例：'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.xxxxx'
     anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRxZnpsbWpkaWN0aWN3emZ4am9xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE1Mjc5NzQsImV4cCI6MjEwNzEwMzk3NH0.g3mYhxURKFAWESAUT88aeHkN17xEoP-wGg8imMKmLaU',
 };
