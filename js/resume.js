@@ -72,7 +72,7 @@ function renderProfile(p) {
     const btn = document.getElementById('rMailBtn');
     if (btn && p.email) btn.href = 'mailto:' + p.email;
 
-    document.title = '简历 - ' + (p.name || '我的个人空间');
+    document.title = '关于我 - ' + (p.name || '我的个人空间');
 }
 
 function renderKpis(list) {
