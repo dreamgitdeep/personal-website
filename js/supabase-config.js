@@ -19,8 +19,9 @@
 
 window.SUPABASE_CONFIG = {
     // 例：'https://abcdefghijklmnop.supabase.co'
-    url: '',
+    url: 'https://dqfzlmjdicticwzfxjoq.supabase.co',
 
     // 例：'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.xxxxx'
+    // ⚠️ 还差这一步：到 Supabase → Settings → API → 复制 anon public 填进来
     anonKey: '',
 };
