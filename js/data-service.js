@@ -138,16 +138,6 @@
                 if (!d || !d.kpis || !d.experience || !d.capabilities) return null;
                 return d;
             });
-        },
-
-        /** 相册照片 */
-        getPhotos: function (album) {
-            return query('photos',
-                { order: 'sort_order', eq: album ? ['album', album] : null },
-                album ? 'data/gallery/' + album + '.json' : null,
-                function (rows) {
-                    return { photos: rows.map(function (r) { return r.data || r; }) };
-                });
         }
     };
 })();

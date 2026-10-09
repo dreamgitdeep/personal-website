@@ -103,13 +103,6 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11.5px;background:var(--bg2);color:var(--primary-deep)}
 .badge.draft{background:#fef3c7;color:var(--warn)}
 
-/* ---------- 相册 ---------- */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:14px}
-.grid figure{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
-.grid img{width:100%;height:110px;object-fit:cover;display:block}
-.grid figcaption{padding:7px 9px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:6px;align-items:center}
-.grid figcaption button{padding:3px 9px;font-size:11.5px}
-
 code{background:var(--bg);padding:1px 6px;border-radius:4px;font-size:12.5px;color:var(--primary-deep)}
 a{color:var(--primary-deep)}
 @media(max-width:640px){
@@ -197,7 +190,6 @@ where email = '1208376659@qq.com';</code>
   <div class="tabs">
     <button data-tab="resume" class="on">简历 / 关于我</button>
     <button data-tab="journals">日志</button>
-    <button data-tab="photos">相册</button>
     <button data-tab="profile">个人信息</button>
   </div>
 
@@ -271,47 +263,6 @@ where email = '1208376659@qq.com';</code>
     <div class="card">
       <h2>已有日志</h2>
       <div id="journalList"><div class="status">加载中…</div></div>
-    </div>
-  </div>
-
-  <!-- ---------- 相册 ---------- -->
-  <div class="tabpane" id="pane-photos">
-    <div class="card warn">
-      <b>首次使用请先建一个存储空间</b><br>
-      Supabase 控制台 → <code>Storage</code> → <code>New bucket</code> →
-      名称填 <code>photos</code>，<b>勾选 Public bucket</b> → 保存。<br>
-      只需要做一次。
-    </div>
-    <div class="card">
-      <h2>上传照片</h2>
-      <div class="row">
-        <div><label>相册</label>
-          <select id="p_album">
-            <option value="hiking">徒步</option>
-            <option value="travel">旅游</option>
-            <option value="cycling">骑行</option>
-            <option value="crocheting">编织</option>
-            <option value="painting">绘画</option>
-          </select>
-        </div>
-        <div><label>拍摄地点（可留空）</label><input type="text" id="p_location"></div>
-      </div>
-      <label>选择照片（可多选）</label>
-      <input type="file" id="p_files" accept="image/*" multiple>
-      <div class="acts"><button id="uploadBtn">上传</button></div>
-      <div class="status" id="photoStatus"></div>
-    </div>
-
-    <div class="card">
-      <h2>相册内容</h2>
-      <select id="p_view" style="max-width:220px">
-        <option value="hiking">徒步</option>
-        <option value="travel">旅游</option>
-        <option value="cycling">骑行</option>
-        <option value="crocheting">编织</option>
-        <option value="painting">绘画</option>
-      </select>
-      <div class="grid" id="photoGrid"><div class="status">加载中…</div></div>
     </div>
   </div>
 
@@ -446,7 +397,7 @@ function showAdmin(session) {
     $('adminView').hidden = !ok;
     if (ok) {
         $('whoAmI').textContent = session.user.email;
-        loadResume(); loadJournals(); loadPhotos(); loadProfile();
+        loadResume(); loadJournals(); loadProfile();
     }
 }
 if (sb) {
@@ -671,67 +622,6 @@ $('saveJournal').addEventListener('click', function () {
         msg(id ? '日志已更新' : '日志已发布', true);
         $('resetJournal').click();
         loadJournals();
-    });
-});
-
-/* ============================================================
-   相册
-   ============================================================ */
-$('uploadBtn').addEventListener('click', function () {
-    if (!sb) return;
-    var files = $('p_files').files;
-    if (!files.length) { status('photoStatus', '请先选择照片'); return; }
-    var album = $('p_album').value, loc = $('p_location').value;
-    var done = 0, fail = 0;
-
-    Array.prototype.forEach.call(files, function (f) {
-        var path = album + '/' + Date.now() + '-' + f.name.replace(/[^\w.\-]/g, '_');
-        status('photoStatus', '上传中 ' + (done + fail + 1) + '/' + files.length + '…');
-        sb.storage.from('photos').upload(path, f).then(function (up) {
-            if (up.error) { fail++; return; }
-            var url = sb.storage.from('photos').getPublicUrl(path).data.publicUrl;
-            return sb.from('photos').insert({
-                album: album,
-                data: { url: url, caption: '', location: loc, takenAt: new Date().toISOString().slice(0, 10) },
-                sort_order: Math.floor(Date.now() / 1000)
-            }).then(function (r) { r.error ? fail++ : done++; });
-        }).then(function () {
-            if (done + fail === files.length) {
-                status('photoStatus', '完成：成功 ' + done + ' 张' + (fail ? '，失败 ' + fail + ' 张' : ''));
-                msg('上传完成', fail === 0);
-                $('p_view').value = album;
-                loadPhotos();
-            }
-        });
-    });
-});
-
-$('p_view').addEventListener('change', loadPhotos);
-
-function loadPhotos() {
-    if (!sb) return;
-    var album = $('p_view').value;
-    sb.from('photos').select('id,data').eq('album', album).order('sort_order', { ascending: false })
-      .then(function (r) {
-          var g = $('photoGrid');
-          if (r.error) { g.innerHTML = '<div class="status">读取失败：' + esc(r.error.message) + '</div>'; return; }
-          if (!r.data.length) { g.innerHTML = '<div class="status">这个相册还没有照片</div>'; return; }
-          g.innerHTML = r.data.map(function (row) {
-              var d = row.data || {};
-              return '<figure><img src="' + esc(d.url) + '" alt="">' +
-                  '<figcaption><span>' + esc(d.location || '') + '</span>' +
-                  '<button class="danger" data-delphoto="' + row.id + '">删</button></figcaption></figure>';
-          }).join('');
-      });
-}
-
-$('photoGrid').addEventListener('click', function (e) {
-    var id = e.target.dataset.delphoto;
-    if (!id) return;
-    if (!confirm('删除这张照片？')) return;
-    sb.from('photos').delete().eq('id', id).then(function (r) {
-        if (r.error) msg('删除失败：' + r.error.message, false);
-        else { msg('已删除', true); loadPhotos(); }
     });
 });
 

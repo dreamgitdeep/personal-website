@@ -40,13 +40,12 @@
 
 看到 `Success. No rows returned` 就成功了。
 
-这一步创建了 5 张表：
+这一步创建了 4 张表：
 
 | 表名 | 存什么 |
 |---|---|
 | `journals` | 日志 / 文章 |
 | `plans` | 计划目标 |
-| `photos` | 相册照片 |
 | `profile` | 个人信息 |
 | `resume` | 简历（整份存一行） |
 
@@ -74,17 +73,7 @@ window.SUPABASE_CONFIG = {
 
 > ⚠️ 只填 **anon public** 这个，**千万不要**填 `service_role` 那个（它是最高权限密钥，泄露等于把数据库交给别人）。
 
-### 第 4 步：建相册存储空间
-
-1. 左侧点 **SQL Editor** → **New query**
-2. 把仓库里的 `init-storage.sql` 全部内容粘贴进去 → **Run**
-
-这一步会建好 `photos` 公开存储桶，并配好权限（所有人能看图，只有登录后能传图）。
-
-> 也可以手动建：Storage → New bucket → 名字 `photos` → 勾 Public。
-> 但**手动建完仍要执行 `init-storage.sql`**，否则上传会被安全策略拦下。
-
-### 第 5 步：进管理端设一个密码（不用建账号）
+### 第 4 步：进管理端设一个密码（不用建账号）
 
 打开 `admin.html`，**直接想一个密码输进去就行**——第一次输入时系统会自动用它建好你的账号并登录，
 以后都用同一个密码进入。不需要去后台创建用户。
@@ -107,13 +96,12 @@ https://dreamgitdeep.github.io/personal-website/admin.html
 管理端本身也带网站的导航栏和页脚，来回切换和站内翻页一样。
 
 输入管理密码即可进入（第一次输的密码会自动成为你的账号密码，之后沿用）。
-登录状态会记住一段时间，下次打开通常不用重输。登录后有四个页签：
+登录状态会记住一段时间，下次打开通常不用重输。登录后有三个页签：
 
 | 页签 | 能做什么 |
 |---|---|
 | 简历 / 关于我 | 改姓名、意向、电话、邮箱、城市、状态、个人概述、6 项数据看板；下方还有完整的 JSON 可改经历、教育、科研、技能 |
 | 日志 | 新建 / 编辑 / 删除日志，填标题、分类、日期、摘要、正文、标签即可 |
-| 相册 | 一次选多张照片批量上传，自动进对应相册；也能删 |
 | 个人信息 | 直接编辑 JSON |
 
 保存后**刷新网站页面**就能看到最新内容，不用改代码、不用 git push。
@@ -156,28 +144,6 @@ https://dreamgitdeep.github.io/personal-website/admin.html
 ```
 
 改已有日志：直接点那一行，双击 `data` 单元格编辑，改完点 Save。
-
-### 上传照片（重点，这是你最想要的）
-
-1. 左侧点 **Storage** → **New bucket**
-   - Name 填 `photos`
-   - **勾上 Public bucket**（必须勾，否则网站读不到图）
-2. 进入 `photos` bucket → **Upload files** → 选中你的照片上传
-3. 上传完点照片名 → 点 **Get URL** → 复制那个链接
-4. 回到 **Table Editor** → `photos` 表 → Insert row：
-   - `album`：填 `hiking` / `travel` / `cycling` / `crocheting` / `painting`
-   - `data`：填 JSON，把刚才复制的 URL 粘进去
-
-```json
-{
-  "url": "https://xxxx.supabase.co/storage/v1/object/public/photos/xxx.jpg",
-  "caption": "照片描述",
-  "location": "拍摄地点",
-  "takenAt": "2026-10-09"
-}
-```
-
-**为什么这样更好**：照片不再进 GitHub 仓库，仓库不会越来越大；手机上也能直接上传。
 
 ### 改简历
 
@@ -222,7 +188,6 @@ A：可以，但体验会差很多。替代方案是 Decap CMS（在仓库上加
 | `js/supabase-config.js` | 填 URL 和密钥（已填好，一般不用再动） |
 | `js/data-service.js` | 统一数据层，自动判断用云端还是本地数据 |
 | `supabase-schema.sql` | 建表脚本，只需执行一次 |
-| `init-storage.sql` | 建相册存储桶 + 权限，只需执行一次 |
 | `init-resume-data.sql` | 把简历初始内容写入云端，只需执行一次 |
 | `data/resume.json` | 简历内容（云端没数据时的兜底来源） |
 | `resume.html` | 关于我 / 简历页面 |
