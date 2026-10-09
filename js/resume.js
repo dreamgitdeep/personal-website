@@ -68,9 +68,6 @@ function renderProfile(p) {
     if (tel && p.phone) { tel.textContent = p.phone; tel.href = 'tel:' + p.phone; }
     const mail = document.getElementById('rMailLink');
     if (mail && p.email) { mail.textContent = p.email; mail.href = 'mailto:' + p.email; }
-    // 顶部「邮件联系」按钮
-    const btn = document.getElementById('rMailBtn');
-    if (btn && p.email) btn.href = 'mailto:' + p.email;
 
     document.title = '关于我 - ' + (p.name || '我的个人空间');
 }
@@ -193,9 +190,3 @@ function initReveal() {
     }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
     items.forEach(el => io.observe(el));
 }
-
-/* ---------- 打印 / 导出 PDF ---------- */
-function printResume() {
-    window.print();
-}
-window.printResume = printResume;

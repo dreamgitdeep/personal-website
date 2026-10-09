@@ -5,23 +5,6 @@
 
 .resume-main { padding: 46px 0 60px; }
 
-/* ---------- 顶部操作条 ---------- */
-.resume-bar {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 14px; flex-wrap: wrap;
-    margin-bottom: 26px; padding: 14px 20px;
-    background: var(--bg-card);
-    border: 1px solid var(--primary-light);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-}
-.resume-bar .tip {
-    font-size: 14px; color: var(--text-light);
-    display: flex; align-items: center; gap: 8px;
-}
-.resume-bar .tip i { color: var(--primary); }
-.resume-bar .acts { display: flex; gap: 10px; flex-wrap: wrap; }
-
 /* ---------- 名片 ---------- */
 .rcard {
     background: var(--bg-card);
@@ -270,10 +253,10 @@
     text-align: center; color: var(--text-light); padding: 40px 0; font-size: 15px;
 }
 
-/* ---------- 打印 / 导出 PDF ---------- */
+/* ---------- 浏览器打印 ---------- */
 @media print {
     @page { size: A4; margin: 12mm; }
-    .navbar, .footer, .back-to-top, .resume-bar, .page-header-bg { display: none !important; }
+    .navbar, .footer, .back-to-top, .page-header-bg { display: none !important; }
     body { background: #fff !important; }
     .resume-main { padding: 0 !important; }
     .page-header { padding: 0 0 10px !important; min-height: auto !important; }
