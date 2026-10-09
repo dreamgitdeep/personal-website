@@ -156,15 +156,22 @@ a{color:var(--primary-deep)}
       <input type="password" id="lgPwd" required placeholder="至少 6 位" autocomplete="current-password">
       <div class="acts">
         <button type="submit" id="lgBtn">进 入</button>
+        <button type="button" class="sec" id="forgotBtn">忘记密码？点这里发重置邮件</button>
       </div>
     </form>
     <div class="card info" style="margin-top:20px;margin-bottom:0">
       <b>第一次使用？</b><br>
-      直接想一个密码输进去就行，系统会自动用它建好你的专属账号并登录；<br>
-      以后就用<b>同一个密码</b>进入，不用去后台创建用户。<br><br>
-      <b>如果提示「需要邮箱验证」</b>（极少见）：<br>
-      Supabase → <code>Authentication</code> → <code>Sign In / Providers</code> →
-      <code>Email</code> → 关掉 <code>Confirm email</code>，回来重试一次即可。
+      直接想一个密码输进去就行，系统会自动建好账号并登录；以后用<b>同一个密码</b>进入。<br><br>
+      <b>⚠️ 如果卡在「账号已创建过」进不去（多半是这个原因）：</b><br>
+      你的项目默认开了<b>邮箱验证</b>，而免费版确认邮件经常发不出来，
+      所以账号建好了但一直没激活。按下面做一次，以后就顺了：<br><br>
+      <b>① </b> <code>Authentication</code> → <code>Sign In / Providers</code> →
+      <code>Email</code> → 关掉 <code>Confirm email</code> → <b>Save</b><br>
+      <b>② </b> <code>Authentication</code> → <code>Users</code> → 找到你的账号 →
+      右侧 <code>⋯</code> → <b>Reset password</b>（或直接 <b>Delete user</b> 后回本页重设）<br>
+      <b>③ </b> 回本页输新密码即可进入<br><br>
+      <span style="color:var(--muted)">关掉邮箱验证不影响安全：管理端没有公开注册入口，
+      且数据库写入仍然需要登录身份。</span>
     </div>
   </div>
 </div>
@@ -363,6 +370,7 @@ function inited() { try { return localStorage.getItem(INIT_KEY) === '1'; } catch
 function markInited() { try { localStorage.setItem(INIT_KEY, '1'); } catch (e) {} }
 
 function btnBack() { var b = $('lgBtn'); b.disabled = false; b.textContent = '进 入'; }
+function btnBack2() { var b = $('forgotBtn'); if (b) { b.disabled = false; b.textContent = '忘记密码？点这里发重置邮件'; } }
 
 // 先尝试正常登录
 function doSignIn(pwd, allowSignup) {
@@ -370,7 +378,14 @@ function doSignIn(pwd, allowSignup) {
         if (!r.error && r.data && r.data.session) { markInited(); btnBack(); return; }
         if (allowSignup) { doSignUp(pwd); return; }
         btnBack();
-        msg('密码不对：' + (r.error ? r.error.message : '请重试'), false);
+        var m = r.error ? (r.error.message || '') : '';
+        if (/invalid/i.test(m)) {
+            msg('密码不对。如果不记得了，点下面的「忘记密码」发重置邮件。', false);
+        } else if (/not confirmed|confirm/i.test(m)) {
+            msg('账号还没通过邮箱验证：去 Supabase → Authentication → Sign In / Providers → Email，关掉 Confirm email，再回来重试。', false);
+        } else {
+            msg('登录失败：' + (m || '请重试'), false);
+        }
     });
 }
 
@@ -378,18 +393,44 @@ function doSignIn(pwd, allowSignup) {
 function doSignUp(pwd) {
     sb.auth.signUp({ email: ADMIN_EMAIL, password: pwd }).then(function (s) {
         if (s.data && s.data.session) { markInited(); btnBack(); msg('已用这个密码创建账号，记住它', true); return; }
-        if (s.error) {
+
+        // 没有任何错误但也没有 session → 就是「等邮箱验证」
+        if (!s.error) {
             btnBack();
-            var m = s.error.message || '';
-            // 多半是这个账号已经建过了，那就当密码输错处理
-            msg(/not allowed|signup/i.test(m)
-                ? '创建账号失败：' + m + '（项目可能关闭了自助注册）'
-                : '这个账号已经创建过了，请输入你最初设置的那个密码', false);
+            msg('账号已创建，但这个项目要求先验证邮箱，而且确认邮件没发出来（免费版邮件限流）。请按下面「第一次使用」最后一段，去后台关掉 Confirm email 并重置一次密码。', false);
             return;
         }
-        // 建号成功但要邮箱验证
+
         btnBack();
-        msg('账号已创建，但这个项目开了邮箱验证：Supabase → Authentication → Sign In / Providers → Email → 关掉 Confirm email，再回来重试。', false);
+        var m = s.error.message || '';
+        if (/already|registered|exists/i.test(m)) {
+            msg('这个账号已经创建过了。如果你不记得当时设的密码，点下面的「忘记密码」发重置邮件。', false);
+        } else if (/rate limit|over_email/i.test(m)) {
+            msg('邮件发送过于频繁被限流（免费版限制）。稍等一会儿，或直接去 Supabase 后台按下面说明操作。', false);
+        } else if (/not allowed|signup.*disabled/i.test(m)) {
+            msg('项目关闭了自助注册：Supabase → Authentication → Sign In / Providers → 打开 Allow new users to sign up。', false);
+        } else {
+            msg('无法创建账号：' + m, false);
+        }
+    });
+}
+
+// 发送密码重置邮件
+function doRecover() {
+    if (!sb) return;
+    var b = $('forgotBtn'); b.disabled = true; b.textContent = '发送中…';
+    sb.auth.resetPasswordForEmail(ADMIN_EMAIL, {
+        redirectTo: location.origin + location.pathname
+    }).then(function (r) {
+        btnBack2();
+        if (r.error) {
+            var m = r.error.message || '';
+            msg(/rate limit|over_email/i.test(m)
+                ? '邮件被限流了（免费版每天有上限）。更快的办法是去 Supabase 后台直接改密码，见下方说明。'
+                : '发送失败：' + m, false);
+        } else {
+            msg('重置邮件已发送到 ' + ADMIN_EMAIL + '，去邮箱点链接设置新密码（注意查垃圾箱）。', true);
+        }
     });
 }
 
@@ -418,6 +459,7 @@ $('loginForm').addEventListener('submit', function (ev) {
     // 本机没成功登录过 → 允许自动建号；登录过 → 只认密码
     doSignIn(pwd, !inited());
 });
+$('forgotBtn').addEventListener('click', doRecover);
 $('logoutBtn').addEventListener('click', function () { if (sb) sb.auth.signOut(); });
 
 /* ---------- Tab ---------- */
