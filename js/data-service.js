@@ -108,27 +108,6 @@
             });
         },
 
-        /** 计划数据（结构：{ plans: {...}, stats: {...} }） */
-        getPlans: function () {
-            return query('plans', { order: 'created_at' }, 'data/plans.json', function (rows) {
-                var out = { plans: { 'short-term': [], 'medium-term': [], 'long-term': [] }, stats: null };
-                rows.forEach(function (r) {
-                    var d = r.data || r;
-                    if (r.plan_type && out.plans[r.plan_type]) out.plans[r.plan_type].push(d);
-                });
-                var s = rows.find(function (r) { return r.plan_type === '__stats__'; });
-                if (s) out.stats = s.data;
-                return out;
-            });
-        },
-
-        /** 个人信息 */
-        getAbout: function () {
-            return query('profile', { select: '*' }, 'data/about.json', function (rows) {
-                return (rows[0] && rows[0].data) || rows[0] || null;
-            });
-        },
-
         /** 简历（整份 JSON 存在一行里）
          *  注意：云端那行如果缺主体字段，视为无效并回退本地 JSON，
          *  否则简历页会只剩姓名和联系方式。 */

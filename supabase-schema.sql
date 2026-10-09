@@ -14,23 +14,14 @@ create table if not exists public.journals (
 );
 create index if not exists journals_created_idx on public.journals (created_at desc);
 
--- 2. 计划表（plan_type = short-term / medium-term / long-term；__stats__ 存统计）
-create table if not exists public.plans (
-    id          uuid primary key default gen_random_uuid(),
-    plan_type   text        not null,
-    data        jsonb       not null,
-    created_at  timestamptz default now()
-);
-create index if not exists plans_type_idx on public.plans (plan_type);
-
--- 3. 个人信息表（只保留一行）
+-- 2. 个人信息表（只保留一行）
 create table if not exists public.profile (
     id          uuid primary key default gen_random_uuid(),
     data        jsonb       not null,
     updated_at  timestamptz default now()
 );
 
--- 4. 简历表（整份简历存一行，改简历只改这一行）
+-- 3. 简历表（整份简历存一行，改简历只改这一行）
 create table if not exists public.resume (
     id          uuid primary key default gen_random_uuid(),
     data        jsonb       not null,
@@ -44,29 +35,24 @@ create table if not exists public.resume (
 -- ============================================================
 
 alter table public.journals enable row level security;
-alter table public.plans    enable row level security;
 alter table public.profile  enable row level security;
 alter table public.resume   enable row level security;
 
 -- 先清理旧策略，避免重复执行报错
 drop policy if exists "public read journals" on public.journals;
-drop policy if exists "public read plans"    on public.plans;
 drop policy if exists "public read profile"  on public.profile;
 drop policy if exists "public read resume"   on public.resume;
 
 create policy "public read journals" on public.journals for select using (status = 'published');
-create policy "public read plans"    on public.plans    for select using (true);
 create policy "public read profile"  on public.profile  for select using (true);
 create policy "public read resume"   on public.resume   for select using (true);
 
 -- 写入权限：仅限 authenticated（即你在 Supabase 后台登录后的身份）
 drop policy if exists "auth write journals" on public.journals;
-drop policy if exists "auth write plans"    on public.plans;
 drop policy if exists "auth write profile"  on public.profile;
 drop policy if exists "auth write resume"   on public.resume;
 
 create policy "auth write journals" on public.journals for all to authenticated using (true) with check (true);
-create policy "auth write plans"    on public.plans    for all to authenticated using (true) with check (true);
 create policy "auth write profile"  on public.profile  for all to authenticated using (true) with check (true);
 create policy "auth write resume"   on public.resume   for all to authenticated using (true) with check (true);
 

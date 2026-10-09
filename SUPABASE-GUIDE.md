@@ -40,12 +40,11 @@
 
 看到 `Success. No rows returned` 就成功了。
 
-这一步创建了 4 张表：
+这一步创建了 3 张表：
 
 | 表名 | 存什么 |
 |---|---|
 | `journals` | 日志 / 文章 |
-| `plans` | 计划目标 |
 | `profile` | 个人信息 |
 | `resume` | 简历（整份存一行） |
 
@@ -151,9 +150,9 @@ https://dreamgitdeep.github.io/personal-website/admin.html
 
 最简单的做法：把仓库里 `data/resume.json` 的内容整段复制，粘到 `data` 字段里，以后想改就在 Supabase 里改这一行。
 
-### 改个人信息 / 计划
+### 改个人信息
 
-同理，改 `profile` 表和 `plans` 表。
+同理，改 `profile` 表。
 
 ---
 
