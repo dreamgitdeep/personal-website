@@ -28,8 +28,6 @@ h3{font-size:14px;color:var(--text);margin:16px 0 8px}
 
 /* ---------- 卡片 ---------- */
 .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:16px}
-.card.warn{background:#fffbeb;border-color:#fde68a}
-.card.info{background:#f5f3ff;border-color:var(--primary-light)}
 
 /* ---------- 表单 ---------- */
 label{display:block;font-size:13px;color:var(--muted);margin:12px 0 5px}
@@ -103,7 +101,6 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11.5px;background:var(--bg2);color:var(--primary-deep)}
 .badge.draft{background:#fef3c7;color:var(--warn)}
 
-code{background:var(--bg);padding:1px 6px;border-radius:4px;font-size:12.5px;color:var(--primary-deep)}
 a{color:var(--primary-deep)}
 @media(max-width:640px){
   .row,.row3{grid-template-columns:1fr}
@@ -132,25 +129,6 @@ a{color:var(--primary-deep)}
         <button type="button" class="sec" id="forgotBtn">忘记密码？点这里发重置邮件</button>
       </div>
     </form>
-    <div class="card info" style="margin-top:20px;margin-bottom:0">
-      <b>第一次使用？</b><br>
-      直接想一个密码输进去就行，系统会自动建好账号并登录；以后用<b>同一个密码</b>进入。<br><br>
-      <b>⚠️ 如果提示「账号已经创建过了」进不去：</b><br>
-      说明账号早就建好了，只是你记的密码不对。最省事的重置办法（任选一个）：<br><br>
-      <b>方法一（推荐，最快）</b><br>
-      到 Supabase 的 <code>SQL Editor</code> 新建查询，把下面这行邮箱换成你的，然后 Run：<br>
-      <code style="display:block;margin:6px 0;white-space:pre-wrap">update auth.users set encrypted_password = crypt('新密码', gen_salt('bf'))
-where email = '1208376659@qq.com';</code>
-      改完回本页输入这个新密码即可。<br><br>
-      <b>方法二（在界面上点）</b><br>
-      <code>Authentication</code> → <code>Users</code> → 点开你的账号 →
-      页面里的 <b>Reset password</b>（或右侧 <code>⋯</code> 菜单）→ 设新密码。<br><br>
-      <b>方法三（彻底重置）</b><br>
-      <code>Authentication</code> → <code>Users</code> → 删掉这个账号（Delete user）→
-      回本页重新输一个密码，系统会重新建号并直接登录。<br><br>
-      <span style="color:var(--muted)">不需要去关邮箱验证。你的账号已经是「已验证」状态，
-      卡住纯粹是密码对不上。</span>
-    </div>
   </div>
 </div>
 
@@ -307,7 +285,7 @@ function doSignIn(pwd, allowSignup) {
         btnBack();
         var m = r.error ? (r.error.message || '') : '';
         if (/invalid/i.test(m)) {
-            msg('密码不对。按下面「方法一」用一行 SQL 改密码最快，或用「忘记密码」发重置邮件。', false);
+            msg('密码不对，请重新输入。忘记密码可点右侧「忘记密码」发送重置邮件。', false);
         } else if (/not confirmed|confirm/i.test(m)) {
             msg('账号还没通过邮箱验证：去 Supabase → Authentication → Sign In / Providers → Email，关掉 Confirm email，再回来重试。', false);
         } else {
@@ -324,16 +302,16 @@ function doSignUp(pwd) {
         // 没有任何错误但也没有 session → 就是「等邮箱验证」
         if (!s.error) {
             btnBack();
-            msg('账号已创建，但这个项目要求先验证邮箱，而且确认邮件没发出来（免费版邮件限流）。请按下面「第一次使用」最后一段，去后台关掉 Confirm email 并重置一次密码。', false);
+            msg('账号已创建，但项目要求先验证邮箱，且确认邮件没发出来（免费版邮件限流）。去 Supabase → Authentication → Sign In / Providers 关掉 Confirm email，再回来重试。', false);
             return;
         }
 
         btnBack();
         var m = s.error.message || '';
         if (/already|registered|exists|user.*exist/i.test(m)) {
-            msg('这个账号已经建好了，只是密码对不上。看下面「方法一」，用一行 SQL 直接改密码最快。', false);
+            msg('这个账号已经建好了，只是密码对不上。请在 Supabase → Authentication → Users 里给账号重设密码。', false);
         } else if (/rate limit|over_email/i.test(m)) {
-            msg('邮件发送过于频繁被限流（免费版限制）。稍等一会儿，或直接去 Supabase 后台按下面说明操作。', false);
+            msg('邮件发送过于频繁被限流（免费版限制）。稍等一会儿再试。', false);
         } else if (/not allowed|signup.*disabled/i.test(m)) {
             msg('项目关闭了自助注册：Supabase → Authentication → Sign In / Providers → 打开 Allow new users to sign up。', false);
         } else {
@@ -353,7 +331,7 @@ function doRecover() {
         if (r.error) {
             var m = r.error.message || '';
             msg(/rate limit|over_email/i.test(m)
-                ? '邮件被限流了（免费版每天有上限）。更快的办法是去 Supabase 后台直接改密码，见下方说明。'
+                ? '邮件被限流了（免费版每天有上限），稍后再试。'
                 : '发送失败：' + m, false);
         } else {
             msg('重置邮件已发送到 ' + ADMIN_EMAIL + '，去邮箱点链接设置新密码（注意查垃圾箱）。', true);
