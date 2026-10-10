@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的个人空间 - 欢迎来到我的世界</title>
+    <!-- 样式：字体用系统字体栈、图标用本地内联 SVG，不再依赖任何外部字体/CDN -->
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/icons.css">
 </head>
 <body>
     <!-- 导航栏 -->
@@ -21,7 +21,7 @@
         </div>
         <div class="hero-content">
             <div class="hero-avatar">
-                <img src="images/profile/avatar.jpg" alt="个人头像" onerror="this.src='https://placehold.co/300x300/e0c3fc/8b5cf6?text=秋千'">
+                <img src="images/profile/avatar.jpg" alt="个人头像" width="180" height="180" decoding="async" onerror="this.src='https://placehold.co/300x300/e0c3fc/8b5cf6?text=秋千'">
             </div>
             <h1 class="hero-title">你好，我是 <span class="highlight">秋千</span></h1>
             <p class="hero-subtitle">永远在学习 <span class="emoji">📚</span></p>
@@ -37,9 +37,9 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-        <script src="js/supabase-config.js"></script>
-    <script src="js/data-service.js"></script>
-<script src="js/layout.js"></script>
-<script src="js/main.js"></script>
+    <!-- 首页是纯静态内容，不读数据库，因此不需要
+         js/supabase-config.js 与 js/data-service.js，省掉两个脚本请求 -->
+    <script src="js/layout.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

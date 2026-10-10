@@ -2,9 +2,15 @@
    唯美紫色系个人网站样式
    ======================================== */
 
-/* 引入 Google Fonts - 优化中文字体 */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&display=swap');
+/* 字体说明（重要，勿加回 @import）：
+   这里以前用 @import 引入了 Google Fonts 的 Noto Sans SC（4 个字重，
+   会产生 404 条 @font-face 分片）和 ZCOOL XiaoWei。问题有三：
+     1. @import 必须等 style.css 下载解析完才发起，串行阻塞渲染；
+        而 4 个页面又各自用 <link> 重复引了一遍，纯属多余请求；
+     2. 字体文件全在 fonts.gstatic.com，国内基本不可达，请求会长时间挂起；
+     3. ZCOOL XiaoWei 排在字体栈第二顺位，中文字形已被 Noto Sans SC 覆盖，
+        几乎永远不会生效，白付一次中文字体下载。
+   现在改用系统字体栈：零网络请求、零等待，且中文显示效果与系统原生一致。 */
 
 /* ========================================
    CSS 变量定义 - 柔和紫色系配色
@@ -117,7 +123,13 @@ html {
 }
 
 body {
-    font-family: 'Noto Sans SC', 'ZCOOL XiaoWei', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    /* 系统字体栈：中文优先用系统自带的苹方 / 微软雅黑 / 鸿蒙黑体，
+       无需下载任何字体文件，首屏零等待。按平台依次回退。 */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                 'PingFang SC', 'HarmonyOS Sans SC', 'Hiragino Sans GB',
+                 'Microsoft YaHei UI', 'Microsoft YaHei',
+                 'Source Han Sans SC', 'Noto Sans CJK SC', 'WenQuanYi Micro Hei',
+                 Roboto, Helvetica, Arial, sans-serif;
     background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
     background-attachment: fixed;
     color: var(--text-primary);
@@ -527,6 +539,9 @@ img {
     border-radius: var(--radius-full);
     opacity: 0.6;
     filter: blur(40px);
+    /* 提示浏览器把光斑放进独立合成层：否则 blur(40px) 配合无限动画
+       会每帧重新做一次高斯模糊，低端设备滚动时容易掉帧 */
+    will-change: transform;
     animation: float 8s ease-in-out infinite;
 }
 
@@ -612,7 +627,7 @@ img {
     margin-bottom: 15px;
     opacity: 0;
     transform: translateY(20px);
-    animation: title-fade 1s ease forwards 0.5s;
+    animation: title-fade 0.45s ease forwards 0.05s;
 }
 
 @keyframes title-fade {
@@ -636,7 +651,7 @@ img {
     min-height: 2rem;
     opacity: 0;
     transform: translateY(20px);
-    animation: subtitle-fade 1s ease forwards 0.8s;
+    animation: subtitle-fade 0.45s ease forwards 0.12s;
 }
 
 @keyframes subtitle-fade {
@@ -653,7 +668,7 @@ img {
     line-height: 1.8;
     opacity: 0;
     transform: translateY(20px);
-    animation: description-fade 1s ease forwards 1.1s;
+    animation: description-fade 0.45s ease forwards 0.19s;
 }
 
 @keyframes description-fade {
@@ -670,7 +685,7 @@ img {
     flex-wrap: wrap;
     opacity: 0;
     transform: translateY(20px);
-    animation: buttons-fade 1s ease forwards 1.4s;
+    animation: buttons-fade 0.45s ease forwards 0.26s;
 }
 
 @keyframes buttons-fade {
@@ -689,7 +704,7 @@ img {
     margin-top: 30px;
     opacity: 0;
     transform: translateY(20px);
-    animation: buttons-fade 1s ease forwards 1.6s;
+    animation: buttons-fade 0.45s ease forwards 0.33s;
 }
 
 .hero-nav-card {
@@ -833,6 +848,9 @@ img {
     border-radius: var(--radius-full);
     opacity: 0.6;
     filter: blur(40px);
+    /* 提示浏览器把光斑放进独立合成层：否则 blur(40px) 配合无限动画
+       会每帧重新做一次高斯模糊，低端设备滚动时容易掉帧 */
+    will-change: transform;
     animation: float 8s ease-in-out infinite;
 }
 
@@ -1405,11 +1423,37 @@ img {
 }
 
 /* ========================================
-   页面过渡效果
-   ======================================== */
-.page-loading {
-    opacity: 0;
-    transition: opacity 0.3s ease;
+   页面入场
+   ========================================
+   ⚠️ 这里曾经是 .page-loading { opacity: 0 }，由 JS 在加载时加到 <body>，
+   再等 window.load 事件移除。而 window.load 必须等页面上**所有**外部资源
+   加载完毕——只要有一个请求挂起（国内访问 fonts.gstatic.com 等常年超时），
+   整个页面就一直是全透明状态，表现就是「白屏卡住几十秒」。
+   现已彻底删除该状态，改为下面的纯 CSS 入场动画：
+   随渲染立即开始，不等待任何网络请求。 */
+body {
+    animation: pageIn 0.18s ease-out both;
+}
+
+@keyframes pageIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body { animation: none; }
+    /* 下面这些元素初始是 opacity:0，靠动画把自己显示出来。
+       一旦用户系统设置「减少动态效果」而动画被禁用，内容就会永久不可见，
+       所以这里必须显式还原成可见状态。 */
+    .hero-title,
+    .hero-subtitle,
+    .hero-description,
+    .hero-buttons,
+    .hero-nav-cards {
+        opacity: 1;
+        transform: none;
+        animation: none;
+    }
 }
 
 .page-loaded {
@@ -1437,17 +1481,7 @@ img {
     background: var(--scrollbar-thumb-hover);
 }
 
-/* ========================================
-   页面过渡效果
-   ======================================== */
-.page-loading {
-    opacity: 0;
-    transition: opacity var(--transition-normal);
-}
-
-.page-loaded {
-    opacity: 1;
-}
+/* 页面过渡效果：见上方「页面入场」一节（.page-loading 已删除，此处为重复定义，移除） */
 
 /* 淡入动画 */
 .fade-in {
@@ -1839,7 +1873,7 @@ img {
     letter-spacing: -0.02em;
     opacity: 0;
     transform: translateY(20px);
-    animation: title-fade 1s ease forwards 0.5s;
+    animation: title-fade 0.45s ease forwards 0.05s;
 }
 
 .hero-title .highlight {
@@ -1857,7 +1891,7 @@ img {
     font-weight: 400;
     opacity: 0;
     transform: translateY(20px);
-    animation: subtitle-fade 1s ease forwards 0.8s;
+    animation: subtitle-fade 0.45s ease forwards 0.12s;
 }
 
 .hero-subtitle .emoji {
@@ -1876,7 +1910,7 @@ img {
     margin-right: auto;
     opacity: 0;
     transform: translateY(20px);
-    animation: description-fade 1s ease forwards 1.1s;
+    animation: description-fade 0.45s ease forwards 0.19s;
 }
 
 .hero-nav-buttons {
@@ -1888,7 +1922,7 @@ img {
     margin-top: var(--spacing-lg);
     opacity: 0;
     transform: translateY(20px);
-    animation: buttons-fade 1s ease forwards 1.4s;
+    animation: buttons-fade 0.45s ease forwards 0.26s;
 }
 
 .hero-nav-btn {

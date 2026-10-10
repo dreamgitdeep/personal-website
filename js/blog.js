@@ -112,42 +112,31 @@ function sortJournals(list) {
     });
 }
 
-/**
- * 给数据加载加超时保护。
- * 云端 / CDN 卡住时不能一直停在「正在加载…」，
- * 超时后当作拿不到数据，改用内嵌日志把目录渲染出来。
- */
-function withTimeout(promise, ms) {
-    return Promise.race([
-        Promise.resolve(promise).catch(() => null),
-        new Promise(resolve => setTimeout(() => resolve(null), ms))
-    ]);
-}
-
 /* ================== 初始化 ================== */
-document.addEventListener('DOMContentLoaded', async function () {
-    try {
-        const remote = await withTimeout(
-            window.DataService ? window.DataService.getJournals() : Promise.resolve(null),
-            6000
-        );
-        if (remote && remote.length) {
-            journalsData = remote;
-            console.log('☁️ 日志数据来自 Supabase:', remote.length);
-        }
-    } catch (e) {
-        console.warn('云端日志读取失败，使用内嵌数据', e);
-    }
-
+document.addEventListener('DOMContentLoaded', function () {
+    // ① 先用内嵌日志把目录渲染出来 —— 首屏零等待，不看网络脸色。
+    //    以前是「先 await 云端数据（最长 6 秒）再渲染」，网络一慢，
+    //    用户就要盯着「正在加载…」发呆。
     renderJournals();
     initBlogFilters();
     initBlogSearch();
     initReaderControls();
-
-    // 支持带 #id 直接打开某篇日志
-    applyHash();
-
+    applyHash();   // 支持带 #id 直接打开某篇日志
     console.log('✅ 日志目录加载成功:', journalsData.length, '篇');
+
+    // ② 云端数据在后台慢慢取，取到了再替换。
+    //    DataService 内部已有 4 秒上限，慢或失败都会回退本地，不影响首屏。
+    if (!window.DataService) return;
+    window.DataService.getJournals().then(function (remote) {
+        if (!remote || !remote.length) return;
+        if (JSON.stringify(remote) === JSON.stringify(journalsData)) return;  // 无变化就不折腾
+        journalsData = remote;
+        renderJournals();
+        applyHash();   // 若此刻正打开某篇，保持阅读视图
+        console.log('☁️ 日志已换成 Supabase 数据:', remote.length, '篇');
+    }).catch(function () {
+        console.warn('云端日志读取失败，继续使用内嵌数据');
+    });
 });
 
 /* ================== 目录表格 ================== */

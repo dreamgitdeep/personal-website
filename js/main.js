@@ -117,34 +117,51 @@ function initTypingEffect() {
 // ========================================
 function initScrollAnimations() {
     // 为需要动画的元素添加 reveal 类
+    // （.plan-item 所属的「计划」模块已下线，选择器里已移除）
     const animatedElements = document.querySelectorAll(
-        '.nav-card, .blog-item, .plan-item, .section-title, .section-subtitle, .timeline-item, .skill-item, .certificate-item'
+        '.nav-card, .blog-item, .section-title, .section-subtitle, .timeline-item, .skill-item, .certificate-item'
     );
-    
+
     animatedElements.forEach(el => {
         el.classList.add('reveal');
     });
-    
+
+    // 没有 IntersectionObserver 时直接全部显示，
+    // 否则 .reveal 的 opacity:0 会让内容永久不可见
+    if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
+        return;
+    }
+
     // 创建 Intersection Observer
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                // 可选：动画触发后停止观察
-                // observer.unobserve(entry.target);
+                // 动画播完就停止观察，否则每次滚动都会把这批元素重新回调一遍
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
-    
+
     // 观察所有带有 reveal 类的元素
     document.querySelectorAll('.reveal').forEach(el => {
         observer.observe(el);
     });
+
+    // 兜底：万一观察器异常没能触发，确保视口内的内容 3 秒内一定显示出来
+    setTimeout(() => {
+        document.querySelectorAll('.reveal:not(.active)').forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight) {
+                el.classList.add('active');
+            }
+        });
+    }, 3000);
 }
 
 // ========================================
@@ -190,53 +207,56 @@ function initNavbarScroll() {
 // 平滑滚动功能
 // ========================================
 function initSmoothScroll() {
-    // 为所有锚点链接添加平滑滚动
+    // 只处理「页面内锚点」，而且必须目标元素真实存在时才拦下来做平滑滚动。
+    //
+    // ⚠️ 这里有两个坑，改之前先看清楚：
+    //  1. 目标不存在时必须放行浏览器默认行为。日志页的目录行是
+    //     <a href="#journal-20260223">，并不存在同名的元素，它靠 hash 变化
+    //     来切换阅读视图。以前无条件 preventDefault，hash 不更新，
+    //     阅读视图就永远打不开。
+    //  2. href="#"（空锚点）不能丢给 querySelector，会抛 SyntaxError。
+    //     简历页的电话 / 邮箱链接就是 href="#" 的写法。
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (!href || href === '#') return;
+
+            let target = null;
+            try { target = document.querySelector(href); } catch (err) { return; }
+            if (!target) return;      // 交回默认行为（让 hash 正常变化）
+
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                const offset = 70; // 导航栏高度
-                const elementPosition = target.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - offset;
-                
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-            }
+            const offset = 70; // 导航栏高度
+            const elementPosition = target.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
         });
     });
 }
 
 // ========================================
-// 页面过渡效果
+// 页面显示
 // ========================================
 function initPageTransitions() {
-    // 页面加载时的淡入效果
-    document.body.classList.add('page-loading');
-    
-    // 监听页面加载完成
-    window.addEventListener('load', function() {
-        document.body.classList.remove('page-loading');
-        document.body.classList.add('page-loaded');
-    });
-    
-    // 页面切换时的过渡效果
-    const links = document.querySelectorAll('a:not([href^="#"]):not([href^="javascript:"])');
-    links.forEach(link => {
-        link.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href && href !== window.location.href) {
-                e.preventDefault();
-                document.body.classList.add('page-loading');
-                
-                setTimeout(() => {
-                    window.location.href = href;
-                }, 300);
-            }
-        });
-    });
+    // 说明（重要，勿改回 load 事件）：
+    // 这里以前是给 <body> 加 .page-loading（CSS 里 opacity:0），
+    // 然后等 window.load 事件再恢复显示。但 window.load 要等页面上
+    // **所有**外部资源加载完——字体、图标字体、Supabase SDK、图片，
+    // 只要其中一个请求挂起（国内访问 fonts.gstatic.com 等常年超时），
+    // 整个页面就一直是全透明状态，看起来就是「白屏卡住几十秒」。
+    //
+    // 现在改为：DOM 就绪后立刻显示，不等待任何外部资源。
+    // 入场淡入交给纯 CSS 动画（见 style.css 的 pageIn），
+    // CSS 动画随渲染立即开始，不受网络影响。
+    document.body.classList.remove('page-loading');
+    document.body.classList.add('page-loaded');
+
+    // 注意：原来这里还给所有链接绑了「先白屏 300ms 再跳转」的过渡，
+    // 让每次翻页都被强行拖慢 300 毫秒，已移除，交给浏览器原生导航。
 }
 
 // ========================================

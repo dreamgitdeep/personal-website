@@ -1,45 +1,62 @@
 /**
  * 简历页面脚本
- * 数据来源：优先 data/resume.json（后续可切换到 Supabase，见 js/data-service.js）
- * 内容全部由 data/resume.json 驱动，改内容不需要动代码
+ * 数据来源：本地 data/resume.json 优先（同源、几乎瞬时），
+ *          再取 Supabase 云端数据做覆盖（见 js/data-service.js）。
+ * 内容全部由数据驱动，改内容不需要动代码
  */
 
-document.addEventListener('DOMContentLoaded', async function () {
-    const data = await loadResumeData();
-    if (!data) return;
+document.addEventListener('DOMContentLoaded', function () {
+    let lastPainted = null;   // 已渲染数据的指纹：内容一致就不重复渲染，避免页面无谓闪动
 
-    renderProfile(data.profile);
-    renderKpis(data.kpis);
-    renderSummary(data.summary);
-    renderCapabilities(data.capabilities);
-    renderExperience(data.experience);
-    renderEducation(data.education);
-    renderResearch(data.research);
-    renderCampus(data.campus);
-    renderSkills(data.skills);
+    function paint(data, from) {
+        if (!data || !data.profile) return;
+        const fingerprint = JSON.stringify(data);
+        if (fingerprint === lastPainted) return;
+        const first = !lastPainted;
+        lastPainted = fingerprint;
 
-    initReveal();
-    document.body.classList.add('resume-ready');
-});
+        renderProfile(data.profile);
+        renderKpis(data.kpis);
+        renderSummary(data.summary);
+        renderCapabilities(data.capabilities);
+        renderExperience(data.experience);
+        renderEducation(data.education);
+        renderResearch(data.research);
+        renderCampus(data.campus);
+        renderSkills(data.skills);
+        document.body.classList.add('resume-ready');
 
-/* ---------- 数据加载 ---------- */
-async function loadResumeData() {
-    try {
-        // 若接入了 Supabase，走统一数据层；否则回退本地 JSON
-        if (window.DataService && typeof window.DataService.getResume === 'function') {
-            const d = await window.DataService.getResume();
-            if (d) return d;
-        }
-        const res = await fetch('data/resume.json');
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        return await res.json();
-    } catch (e) {
-        console.error('❌ 简历数据加载失败:', e);
+        // 重渲染会换掉 .reveal 节点，必须重新挂一次观察器，
+        // 否则新节点会一直停在 opacity:0（不可见）
+        initReveal();
+        console.log((first ? '📄 简历数据来源：' : '🔄 简历数据已更新为：') + from);
+    }
+
+    function showError() {
+        if (lastPainted) return;   // 已经有内容了就不用报错
         const box = document.getElementById('resumeContent');
         if (box) box.innerHTML = '<p class="resume-error">简历数据加载失败，请检查 data/resume.json 是否存在。</p>';
-        return null;
     }
-}
+
+    // ① 本地 JSON 优先 —— 同源请求，通常几百毫秒内到达，首屏立刻有内容。
+    //    原来是「先 await 云端（最长 4 秒）再回退本地」，首屏要空等。
+    fetch('data/resume.json')
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)); })
+        .then(function (d) { paint(d, '本地 data/resume.json'); })
+        .catch(function (e) { console.warn('本地简历数据读取失败，等云端数据', e); });
+
+    // ② 云端数据在后台慢慢取（DataService 内部有 4 秒上限），
+    //    取到且与本地确实不同才覆盖，完全不影响首屏
+    if (window.DataService && typeof window.DataService.getResume === 'function') {
+        window.DataService.getResume().then(function (remote) {
+            if (remote) paint(remote, 'Supabase 云端');
+            else showError();
+        }).catch(showError);
+    } else {
+        // 没接数据层时，本地也拿不到才算失败
+        setTimeout(showError, 2000);
+    }
+});
 
 /* ---------- 工具：把 {22} 渲染成高亮数字 ---------- */
 function highlight(text) {
