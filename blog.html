@@ -13,71 +13,92 @@
     <!-- 导航栏 -->
     <nav class="navbar" data-layout="nav"></nav>
 
-    <!-- 页面标题区域 -->
-    <section class="page-header">
-        <div class="page-header-bg">
-            <div class="page-header-shape"></div>
-            <div class="page-header-shape"></div>
-            <div class="page-header-shape"></div>
-        </div>
-        <div class="page-header-content">
-            <h1>我的日志</h1>
-            <p>记录生活的点滴与思考</p>
-        </div>
-    </section>
+    <!-- ==================== 目录视图 ==================== -->
+    <div id="listView">
 
-    <!-- 日志筛选区域 -->
-    <section class="blog-filter">
-        <div class="container">
-            <div class="filter-bar">
-                <div class="filter-tags">
-                    <button class="filter-btn active" data-filter="study">学习</button>
-                    <button class="filter-btn" data-filter="life">生活</button>
-                    <button class="filter-btn" data-filter="work">工作</button>
-                </div>
-                <div class="search-box">
-                    <input type="text" placeholder="搜索日志..." id="searchInput">
-                    <i class="fas fa-search"></i>
+        <!-- 标题区（简洁，无大横幅） -->
+        <section class="journal-head">
+            <div class="container">
+                <h1>我的日志</h1>
+                <p class="journal-sub" id="journalSub">正在加载…</p>
+            </div>
+        </section>
+
+        <!-- 筛选 / 搜索 -->
+        <section class="blog-filter">
+            <div class="container">
+                <div class="filter-bar">
+                    <div class="filter-tags">
+                        <button class="filter-btn active" data-filter="all">全部</button>
+                        <button class="filter-btn" data-filter="study">学习</button>
+                        <button class="filter-btn" data-filter="life">生活</button>
+                        <button class="filter-btn" data-filter="work">工作</button>
+                    </div>
+                    <div class="search-box">
+                        <input type="text" placeholder="搜索标题、摘要或标签…" id="searchInput">
+                        <i class="fas fa-search"></i>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- 日志列表区域 -->
-    <section class="blog-section">
-        <div class="container">
-            <div class="blog-grid">
-                <!-- 日志卡片 1 - 网站制作初体验 -->
-                <article class="blog-card" data-category="study">
-                    <div class="blog-image">
-                        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop" alt="网站制作初体验" onerror="this.src='https://placehold.co/600x400/c4b5fd/7c3aed?text=网站制作初体验'">
-                        <span class="blog-category study">学习</span>
-                    </div>
-                    <div class="blog-content">
-                        <div class="blog-meta">
-                            <span class="blog-date">
-                                <i class="far fa-calendar"></i> 2026-02-23
-                            </span>
-                            <span class="blog-read-time">
-                                <i class="far fa-clock"></i> 2分钟阅读
-                            </span>
-                        </div>
-                        <h3 class="blog-title">我的网站制作初体验</h3>
-                        <p class="blog-excerpt">今天，我突然在抖音上刷到了一位博主她自己做了一个属于自己的网站，页面很美观，我感觉十分吸引人！所以我也想做一个属于自己的网站...</p>
-                        <div class="blog-tags">
-                            <span class="tag">#网站制作</span>
-                            <span class="tag">#学习</span>
-                            <span class="tag">#CodebuddyCN</span>
-                        </div>
-                        <a href="#" class="read-more-btn" onclick="showBlogDetail(event, 'blog-detail-20260223')">
-                            阅读全文 <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </article>
+        <!-- 目录表格 -->
+        <section class="journal-section">
+            <div class="container">
+                <div class="journal-table-wrap">
+                    <table class="journal-table">
+                        <thead>
+                            <tr>
+                                <th class="col-idx">#</th>
+                                <th class="col-date">日期</th>
+                                <th class="col-title">标题</th>
+                                <th class="col-cat">分类</th>
+                                <th class="col-tags">标签</th>
+                                <th class="col-time">阅读</th>
+                            </tr>
+                        </thead>
+                        <tbody id="journalBody">
+                            <tr class="journal-loading">
+                                <td colspan="6">
+                                    <i class="fas fa-circle-notch fa-spin"></i> 正在加载日志…
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
+                <div class="journal-empty" id="journalEmpty" hidden>
+                    <i class="fas fa-book-open"></i>
+                    <p>没有找到匹配的日志</p>
+                    <span>换个分类或关键词试试</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ==================== 阅读视图 ==================== -->
+    <div id="readerView" hidden>
+        <div class="reader-bar">
+            <div class="container">
+                <button class="reader-back" id="readerBack" type="button">
+                    <i class="fas fa-arrow-left"></i> 返回目录
+                </button>
             </div>
         </div>
-    </section>
+
+        <div class="container">
+            <article class="reader">
+                <span class="j-cat" id="readerCat"></span>
+                <h1 class="reader-title" id="readerTitle"></h1>
+                <div class="reader-meta" id="readerMeta"></div>
+                <div class="reader-body" id="readerBody"></div>
+                <div class="reader-tags" id="readerTags"></div>
+            </article>
+
+            <!-- 上一篇 / 下一篇（放在卡片外） -->
+            <nav class="reader-nav" id="readerNav"></nav>
+        </div>
+    </div>
 
     <!-- 页脚 -->
     <footer class="footer" data-layout="footer"></footer>
@@ -87,39 +108,10 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <!-- 日志详情弹窗 -->
-    <div class="blog-detail-modal" id="blogDetailModal">
-        <div class="blog-detail-overlay" onclick="closeBlogDetail()"></div>
-        <div class="blog-detail-content">
-            <button class="blog-detail-close" onclick="closeBlogDetail()">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="blog-detail-header">
-                <span class="blog-detail-category">学习</span>
-                <h2 class="blog-detail-title" id="blogDetailTitle">我的网站制作初体验</h2>
-                <div class="blog-detail-meta">
-                    <span><i class="far fa-calendar"></i> 2026-02-23</span>
-                    <span><i class="far fa-clock"></i> 2分钟阅读</span>
-                </div>
-            </div>
-            <div class="blog-detail-body" id="blogDetailBody">
-                <p>今天，我突然在抖音上刷到了一位博主她自己做了一个属于自己的网站，页面很美观，我感觉十分吸引人！所以我也想做一个属于自己的网站。这位博主分享了自己的制作过程，但是我想用自己的方法制作，所以没有采纳她的方法。我前段时间下载了CodebuddyCN这个软件，虽然我不清楚它目前在AI界的地位，但对于目前我的水平而言，足够了。</p>
-                <p>我新建了一个文件夹，命名为"学习制作个人网站"。之后，用Codebuddy打开文件夹，开始和它聊天。首先用plan模式，并且用语音输入的方式快速的说明了我的想法，它很快为我制定了计划，我让它执行。</p>
-                <p>过了一会，一个网站制作出来了。我仔细看了一下，发现有很多细节之处需要调整，但是没有关系，因为它已经想的很全面了！</p>
-                <p>所以我就像一个顾客一样浏览自己的主页，总结了一些问题告诉了它。它持续的进行完善修改。</p>
-                <div class="blog-detail-tags">
-                    <span class="tag">#网站制作</span>
-                    <span class="tag">#学习</span>
-                    <span class="tag">#CodebuddyCN</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-        <script src="js/supabase-config.js"></script>
+    <script src="js/supabase-config.js"></script>
     <script src="js/data-service.js"></script>
-<script src="js/blog.js"></script>
-<script src="js/layout.js"></script>
-<script src="js/main.js"></script>
+    <script src="js/blog.js"></script>
+    <script src="js/layout.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

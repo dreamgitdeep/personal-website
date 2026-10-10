@@ -290,9 +290,12 @@ function initPerformanceOptimization() {
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
+        // 注意：必须用 apply 保留 this，
+        // 否则监听器里以 this.value 取值的回调会拿到 undefined
+        const self = this;
         const later = () => {
             clearTimeout(timeout);
-            func(...args);
+            func.apply(self, args);
         };
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
